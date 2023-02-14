@@ -1,0 +1,2293 @@
+<!doctype html>
+
+<head>
+<title>Duel page</title>
+<link href="./css/mapbox-gl.css" rel="stylesheet">
+<!--<link href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css" rel="stylesheet">--> 
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script> 
+<script src="https://unpkg.com/three@0.106.2/build/three.min.js"></script> 
+<script src="./distrib/threebox.js" type="text/javascript"></script>
+<link href="./distrib/threebox.css" rel="stylesheet" />
+<link rel="stylesheet" href="//yastatic.net/bootstrap/3.3.1/css/bootstrap.min.css">
+<script type="text/javascript" src="./distrib/duel.js"></script>
+	
+<!--	
+<link rel="stylesheet" href="./speedometer/dist/nor86F7.css">
+<link rel="stylesheet" href="speedometer/dist/style.css">	
+	-->
+<script src="config.js"></script> 
+<script src="https://unpkg.com/three@0.106.2/examples/js/controls/OrbitControls"></script> 
+<script src="https://unpkg.com/three@0.106.2/examples/js/loaders/GLTFLoader"></script> 
+<script src="https://unpkg.com/three@0.106.2/examples/js/shaders/LuminosityHighPassShader"></script> 
+<script src="https://unpkg.com/three@0.106.2/examples/js/shaders/CopyShader"></script> 
+<script src="https://unpkg.com/three@0.106.2/examples/js/shaders/AfterimageShader"></script> 
+<!--<script src="https://unpkg.com/three@0.106.2/examples/js/postprocessing/EffectComposer"></script> 
+<script src="https://unpkg.com/three@0.106.2/examples/js/postprocessing/ShaderPass"></script> 
+<script src="https://unpkg.com/three@0.106.2/examples/js/postprocessing/RenderPass"></script> 
+<script src="https://unpkg.com/three@0.106.2/examples/js/postprocessing/UnrealBloomPass"></script> -->
+	
+<script src="https://r105.threejsfundamentals.org/threejs/resources/threejs/r105/js/shaders/CopyShader.js"></script>
+<script src="https://r105.threejsfundamentals.org/threejs/resources/threejs/r105/js/shaders/ConvolutionShader.js"></script>
+<script src="https://r105.threejsfundamentals.org/threejs/resources/threejs/r105/js/shaders/FilmShader.js"></script>
+<script src="https://r105.threejsfundamentals.org/threejs/resources/threejs/r105/js/postprocessing/EffectComposer.js"></script>
+<script src="https://r105.threejsfundamentals.org/threejs/resources/threejs/r105/js/postprocessing/RenderPass.js"></script>
+<script src="https://r105.threejsfundamentals.org/threejs/resources/threejs/r105/js/postprocessing/ShaderPass.js"></script>
+<script src="https://r105.threejsfundamentals.org/threejs/resources/threejs/r105/js/postprocessing/BloomPass.js"></script>
+<script src="https://r105.threejsfundamentals.org/threejs/resources/threejs/r105/js/postprocessing/FilmPass.js"></script>
+	
+	
+	
+<script src="mapbox-gl-traffic.js"></script>
+<link href="mapbox-gl-traffic.css" rel="stylesheet" />
+	<style>
+:root {
+	--larg : 100%;
+	--haut : 50%;
+	--posWinX : 0%;
+	--posWinY : 0%;
+	--blurHeight : 100px;
+	--radiusMap : 0%;
+	--contour : none;
+	--invertWin : 1;
+	--fillCircle : 30%;
+	--contourVisible : visible;
+	--contMapWidth : 60px;
+}
+		</style>
+	<link href="./css/styleMap.css" rel="stylesheet">
+
+</head>
+<body>
+<script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+<h2 style="visibility: hidden;">Window <small id="wndID">...</small></h2>
+	
+	<div id="map" class="forme"></div>
+	
+	<div id="form3" class="forme3"></div>
+	<div id="winFeedback" class="textHelp">W: - H:</div>
+	<div id="HelpText" class="textHelp">press "H" to hide controls panels</div>
+<!--	
+<div><a class="btn btn-default" href="index2.html" target="_blank" style="color:blue; bottom:10%; position:absolute;">Open new window</a>&nbsp;</div>
+ //////////////////////////////////a enlever	-->
+	
+	
+
+	<div id="mydiv">
+			<!--<div class="boxSpeed" id="mydivheader">-->
+		<div class="bigBoxSpeed" id="mydivheader">
+			
+			<div class="boxSpeed" ><p id="0101" class="textSpeed">10</p><p id="0103" class="textSpeed2">10</p><p id="0104" class="textSpeed3">10</p></div>
+		</div>
+	</div>
+	
+	<div id="mydiv2">
+		<div class="boxDKmh" id="mydiv2header">
+			<div class="boxDrive"> <div class="drivePosition">D</div></div>
+			<div class="separDrive"></div>
+			<div class="driveKmh">KMH</div>
+		</div>
+	</div>
+	
+		<div id="mydiv4">
+			<div class="boxChargeKm" id="mydiv4header">
+				<div class="driveKmNum"> 346 </div>
+				<div class="driveKm"> KM </div>
+				<div class="bgBox"></div>
+			</div>
+		</div>
+
+		<div id="mydiv5">
+			<div class="boxChargePercent" id="mydiv5header">
+				<div class="driveKmNum"> 80% </div>
+				<div class="driveKm"> EV </div>
+				<div class="bgBox"></div>
+			</div>
+		</div>
+
+		<div id="mydiv6" >
+			<div class="boxGeoIndic" id="mydiv6header">
+				<div class="driveKmNum driveKmNumG">250</div>
+				<div class="driveKm">M</div>
+				<div class="bgBox "></div>
+			</div>
+
+		</div>
+	<!--</div>-->
+	
+	<!--<div class="filtreFlou">-->
+		
+	
+	
+<!--	// ajout d'une image de fond
+	<div class="imageFondFlou">
+	</div>
+-->
+
+<!--<div class="cacheBlur"></div>
+	
+	
+	
+<div class="dashboard">
+	 <div class="meter meter--rpm meter--big-label visib"></div>
+	<div class="meter meter--gear visib"><div>1</div></div>
+	<div class="meter meter--speed"></div>
+</div>
+
+
+
+<button class="btn-volume active">
+♩</button>-->	
+	
+	
+<!--<div class="cacheBlack"></div>
+<div class="Hline"></div>
+<div class="Vline"></div>-->
+<!-- //////////////////////// menu de changement des maps	////////////////////////-->
+	
+<!--<div id="menu" >
+<input id="kikistef/cl32rlf6c002314qqinxrgo3x" type="radio" name="rtoggle" value="satellite" checked="checked">
+<label for="kikistef/cl32rlf6c002314qqinxrgo3x">Google-Day</label>
+		
+<input id="kikistef/cl42nzbfl000p14pekozi07vc" type="radio" name="rtoggle" value="light">
+<label for="kikistef/cl42nzbfl000p14pekozi07vc">Google-Night</label>
+		
+<input id="mapbox/satellite-v9" type="radio" name="rtoggle" value="dark">
+<label for="mapbox/satellite-v9">Satellite</label>
+	
+<input id="kikistef/cl63iwd67001b14mid6cx7hlf" type="radio" name="rtoggle" value="Dacia1">
+<label for="kikistef/cl63iwd67001b14mid6cx7hlf">Dacia1</label>-->
+	
+<!--		
+<input id="streets-v11" type="radio" name="rtoggle" value="streets">
+<label for="streets-v11">streets</label>
+<input id="outdoors-v11" type="radio" name="rtoggle" value="outdoors">
+<label for="outdoors-v11">outdoors</label>
+</div>-->
+	
+	<!--<div id="boite-container" class="transition boite-container">-->
+
+<div id="ret12-cont" class="retour2-container"></div>
+<div id="ret11-cont" class="retour2-container"></div>
+<div id="ret10-cont" class="retour2-container"></div>
+<div id="ret9-cont" class="retour2-container"></div>
+
+<div id="ret1-cont" class="retour1-container"></div>
+<div id="ret2-cont" class="retour1-container"></div>
+<div id="ret3-cont" class="retour1-container"></div>
+<div id="ret4-cont" class="retour1-container"></div>
+<div id="ret5-cont" class="retour1-container"></div>
+<div id="ret6-cont" class="retour1-container"></div>
+<div id="ret7-cont" class="retour1-container"></div>
+<div id="ret8-cont" class="retour1-container"></div>
+
+<!--<div class="trucLine"></div>--> 
+ <script src="./distrib/hermes.min.js"></script>
+<script type="module">
+	 
+	import { GUI } from './distrib/lil-gui.module.min.js';
+		/*	import { EffectComposer } from 'https://unpkg.com/three@0.106.2/examples/js/postprocessing/EffectComposer.js';
+				import { RenderPass } from 'https://unpkg.com/three@0.106.2/examples/js/postprocessing/RenderPass.js';
+			import { UnrealBloomPass } from './jsm/postprocessing/UnrealBloomPass.js';*/
+	let flightPlan = {//coordonnées de la route (geojson)
+		"geometry": {
+			"coordinates": [
+		  [
+            2.2712639738686535,
+            48.86942845482863
+          ],
+          [
+            2.2713907251838172,
+            48.869529241577034
+          ],
+          [
+            2.272176936763617,
+            48.870198829402995
+          ],
+          [
+            2.2724715216708846,
+            48.87045199117289
+          ],
+          [
+            2.2726893275207605,
+            48.870646250424485
+          ],
+          [
+            2.272891040116507,
+            48.87084403741423
+          ],
+          [
+            2.273289295978156,
+            48.87129503655976
+          ],
+          [
+            2.274570377011411,
+            48.872744253357745
+          ],
+          [
+            2.275240604794724,
+            48.873552002796025
+          ],
+          [
+            2.2758139529465593,
+            48.8742300395776
+          ],
+          [
+            2.276042644174834,
+            48.87448750134938
+          ],
+          [
+            2.2763887446131026,
+            48.87487334326673
+          ],
+          [
+            2.276413602784184,
+            48.87489955564374
+          ],
+          [
+            2.2764411431642806,
+            48.87492356287924
+          ],
+          [
+            2.2764641061564284,
+            48.87494086295163
+          ],
+          [
+            2.2764937746711134,
+            48.8749603681443
+          ],
+          [
+            2.2766791755241433,
+            48.87505053736869
+          ],
+          [
+            2.2770247638101715,
+            48.87523488500068
+          ],
+          [
+            2.2774991486005414,
+            48.875511466435285
+          ],
+          [
+            2.2775960443574395,
+            48.87555743786625
+          ],
+          [
+            2.2776983045323274,
+            48.87559282478405
+          ],
+          [
+            2.2778005647072153,
+            48.87563173983153
+          ],
+          [
+            2.277902824882103,
+            48.87567418300039
+          ],
+          [
+            2.2781340856501986,
+            48.875779105185686
+          ],
+          [
+            2.278245685981135,
+            48.87583564867067
+          ],
+          [
+            2.2784462010595163,
+            48.875942859203235
+          ],
+          [
+            2.2786228605436776,
+            48.87604687390439
+          ],
+          [
+            2.27865376856478,
+            48.876063959674205
+          ],
+          [
+            2.2788068157260843,
+            48.8761623461645
+          ],
+          [
+            2.278882425350366,
+            48.87621572916212
+          ],
+          [
+            2.278994578943978,
+            48.87630011011634
+          ],
+          [
+            2.279084353586458,
+            48.87636908165833
+          ],
+          [
+            2.279355753184933,
+            48.8766163216528
+          ],
+          [
+            2.2795216147785924,
+            48.87676901376664
+          ],
+          [
+            2.279774757072639,
+            48.877010224643186
+          ],
+          [
+            2.279792062592536,
+            48.87702626388664
+          ],
+          [
+            2.2798080270078858,
+            48.87703877506971
+          ],
+          [
+            2.2798256254471916,
+            48.87705090243482
+          ],
+          [
+            2.2798459060955123,
+            48.87706082476334
+          ],
+          [
+            2.2798641933783603,
+            48.877069266034724
+          ],
+          [
+            2.2798838217657558,
+            48.87707726629814
+          ],
+          [
+            2.27991187361396,
+            48.87708647113996
+          ],
+          [
+            2.279943278223473,
+            48.87709170692216
+          ],
+          [
+            2.2799874897168593,
+            48.877095758341916
+          ],
+          [
+            2.2800417594940114,
+            48.87709760472938
+          ],
+          [
+            2.2800876836775874,
+            48.877100463599334
+          ],
+          [
+            2.2801336078611634,
+            48.87710685051976
+          ],
+          [
+            2.280178253860621,
+            48.87711470024534
+          ],
+          [
+            2.2802228998600382,
+            48.87712784204361
+          ],
+          [
+            2.280329023497716,
+            48.8771677983135
+          ],
+          [
+            2.280425047405341,
+            48.87720541207445
+          ],
+          [
+            2.2805776557101343,
+            48.8772642108301
+          ],
+          [
+            2.280704505523947,
+            48.877307561370976
+          ],
+          [
+            2.280801682372915,
+            48.877337393462106
+          ],
+          [
+            2.280904734298068,
+            48.87735628747654
+          ],
+          [
+            2.2811681237647052,
+            48.87738233382007
+          ],
+          [
+            2.2812208849307014,
+            48.87737875386408
+          ],
+          [
+            2.2812513636951337,
+            48.8773655978451
+          ],
+          [
+            2.2816284893621885,
+            48.87714067274922
+          ],
+          [
+            2.281841383167893,
+            48.87705854171829
+          ],
+          [
+            2.2820353876831456,
+            48.87701758509463
+          ],
+          [
+            2.282344243532921,
+            48.876977570397266
+          ],
+          [
+            2.2826621872872055,
+            48.87697624622064
+          ],
+          [
+            2.2829268960827687,
+            48.87700116557483
+          ],
+          [
+            2.2830976905126477,
+            48.87701715851477
+          ],
+          [
+            2.283257907009877,
+            48.87703729966891
+          ],
+          [
+            2.283436206776388,
+            48.87707330717636
+          ],
+          [
+            2.2835498967575774,
+            48.87711638468802
+          ],
+          [
+            2.2837781279450864,
+            48.87722690085174
+          ],
+          [
+            2.2838315324564595,
+            48.87723597511264
+          ],
+          [
+            2.2839159546448196,
+            48.877229758492234
+          ],
+          [
+            2.28414704251366,
+            48.877161000243206
+          ],
+          [
+            2.284208873916418,
+            48.8771438913124
+          ],
+          [
+            2.284272092939874,
+            48.87714329132613
+          ],
+          [
+            2.2843989935282316,
+            48.877147594335725
+          ],
+          [
+            2.2844854579458174,
+            48.877139355643486
+          ],
+          [
+            2.2846439872423074,
+            48.87709750115284
+          ],
+          [
+            2.285119587928861,
+            48.87694136569978
+          ],
+          [
+            2.285298558881159,
+            48.87688148517975
+          ],
+          [
+            2.286506755923572,
+            48.87649436578444
+          ],
+          [
+            2.2871505123808333,
+            48.87628968744898
+          ],
+          [
+            2.2871847358320263,
+            48.87627844103264
+          ],
+          [
+            2.2871989444628182,
+            48.87627531111595
+          ],
+          [
+            2.287213823645864,
+            48.87627394525366
+          ],
+          [
+            2.28722304770562,
+            48.87627543691551
+          ],
+          [
+            2.287229924832448,
+            48.87628045668619
+          ],
+          [
+            2.287240002729405,
+            48.87629277831329
+          ],
+          [
+            2.287250080626322,
+            48.876309510070946
+          ],
+          [
+            2.288009649251519,
+            48.87778727462196
+          ],
+          [
+            2.288014636811644,
+            48.87779727882216
+          ],
+          [
+            2.288019624371729,
+
+            48.87780441651939
+          ],
+          [
+            2.28802497241114,
+            48.877808594433915
+          ],
+          [
+            2.2880330026595264,
+            48.87781233134796
+          ],
+          [
+            2.2880438405000714,
+            48.87781271635757
+          ],
+          [
+            2.288060042758686,
+            48.87781177836685
+          ],
+          [
+            2.2880941600022764,
+            48.877809174614875
+          ],
+          [
+            2.288133373838175,
+            48.8778107338957
+          ],
+          [
+            2.2881754905504925,
+            48.877816830845106
+          ],
+          [
+            2.2882133912933167,
+            48.87782711292709
+          ],
+          [
+            2.2882452124975083,
+            48.87783666587864
+          ],
+          [
+            2.2882766581960334,
+            48.87785405234908
+          ],
+          [
+            2.288298798281758,
+            48.87787143712863
+          ],
+          [
+            2.2883157274283628,
+            48.8778883313593
+          ],
+          [
+            2.2883326540130966,
+            48.87791134556841
+          ],
+          [
+            2.2883413925287677,
+            48.87793227749059
+          ],
+          [
+            2.288345851178377,
+            48.87795149503474
+          ],
+          [
+            2.2883482586482806,
+            48.87798013696371
+          ],
+          [
+            2.288337636208513,
+            48.87801367249398
+          ],
+          [
+            2.288320286837573,
+            48.87804347119231
+          ],
+          [
+            2.288273338559108,
+            48.87808251465147
+          ],
+          [
+            2.288244399638568,
+            48.87809678051668
+          ],
+          [
+            2.2882258927686117,
+            48.878104521174464
+          ],
+          [
+            2.288186650567483,
+            48.87811637131403
+          ],
+          [
+            2.288133324086412,
+            48.878123180626034
+          ],
+          [
+            2.288093034961256,
+            48.878123562986644
+          ],
+          [
+            2.2880625947986255,
+            48.878119906060014
+          ],
+          [
+            2.2880475051233162,
+            48.878118314888276
+          ],
+          [
+            2.288039120970544,
+            48.87811848770608
+          ],
+          [
+            2.288030809504029,
+            48.87812158879868
+          ],
+          [
+            2.2880258507987428,
+            48.87812667437905
+          ],
+          [
+            2.2880207470920855,
+            48.87813484989949
+          ],
+          [
+            2.2879821472343753,
+            48.87822017533029
+          ],
+          [
+            2.287592236517062,
+            48.879012104571245
+          ],
+          [
+            2.287580643796039,
+            48.879034942770176
+          ],
+          [
+            2.287573409664705,
+            48.879050284143176
+          ],
+          [
+            2.2875727718829975,
+            48.87905425493908
+          ],
+          [
+            2.287574816310265,
+            48.87905822573466
+          ],
+          [
+            2.28757820184204,
+            48.8790619760354
+          ],
+          [
+            2.287582928478362,
+            48.87906484435775
+          ],
+          [
+            2.2875983354374707,
+            48.87907185960673
+          ],
+          [
+            2.2876150835010467,
+            48.87907799287686
+          ],
+          [
+            2.2889976149446145,
+            48.87956845921335
+          ]
+				],
+				"type": "LineString"
+			},
+			"type": "Feature",
+			"properties": {}
+		}
+	const optionsTheme = {
+		theme: {
+			//streets_shadows: "",
+			GoogleDay : /* mapbox://styles/ */"kikistef/cl32rlf6c002314qqinxrgo3x",
+			GoogleNight : /* mapbox://styles/ */"kikistef/cl42nzbfl000p14pekozi07vc",
+			Satellite : /* mapbox://styles/ */"mapbox/satellite-v9",
+			Dacia1 : "kikistef/cl63iwd67001b14mid6cx7hlf",
+			streets_D: "D",
+			streets_E: "E",
+			streets_F: "F"
+		}
+	};
+		const optionsTheme2 = ([
+			"kikistef/cl32rlf6c002314qqinxrgo3x",
+			"kikistef/cl42nzbfl000p14pekozi07vc",
+			"mapbox/satellite-v9",
+			"kikistef/cl63iwd67001b14mid6cx7hlf",
+			"D",
+			"E",
+			"F"
+	]);
+	var selectedTheme = 3;
+	let gui = new GUI();
+//	console.log("-----> " + optionsTheme2[selectedTheme])//////////////////*********************** 
+	
+	const retour1Container = document.getElementById('ret1-cont');
+	var value1 = document.createElement('pre');
+	retour1Container.innerHTML = "";
+	value1.textContent = String("vitesses");
+	retour1Container.appendChild(value1);
+			//
+	const retour2Container = document.getElementById('ret2-cont');
+	var value2 = document.createElement('pre');
+	retour2Container.innerHTML = "";
+	value2.textContent = String("vitesses");
+	retour2Container.appendChild(value2);
+			//
+	const retour3Container = document.getElementById('ret3-cont');
+	var value3 = document.createElement('pre');
+	retour3Container.innerHTML = "";
+	value3.textContent = String("rot");
+	retour3Container.appendChild(value3);
+
+	const retour4Container = document.getElementById('ret4-cont');
+	var value4 = document.createElement('pre');
+	retour4Container.innerHTML = "";
+	value4.textContent = String("pit");
+	retour4Container.appendChild(value4);
+		//
+	const retour5Container = document.getElementById('ret5-cont'); ////// disponible
+	var value5 = document.createElement('pre');
+	retour5Container.innerHTML = "";		
+	retour5Container.appendChild(value5);
+
+	const retour6Container = document.getElementById('ret6-cont');
+	var value6 = document.createElement('pre');
+	retour6Container.innerHTML = "";
+	value6.textContent = String("rota");
+	retour6Container.appendChild(value6);
+	
+	const retour7Container = document.getElementById('ret7-cont');
+	var value7 = document.createElement('pre');
+	retour7Container.innerHTML = "";
+	value7.textContent = String("time");
+	retour7Container.appendChild(value7);
+	
+	const retour8Container = document.getElementById('ret8-cont');
+	var value8 = document.createElement('pre');
+	retour8Container.innerHTML = "";
+	value8.textContent = String("altitude");
+	retour8Container.appendChild(value8);
+	
+	const retour9Container = document.getElementById('ret9-cont');
+	var value9 = document.createElement('pre');
+	retour9Container.innerHTML = "";
+	value9.textContent = 0;
+	retour9Container.appendChild(value9);
+	retour9Container.value = true;
+	
+	const retour10Container = document.getElementById('ret10-cont');
+	var value10 = document.createElement('pre');
+	retour10Container.innerHTML = "";
+	value10.textContent = 0;
+	retour10Container.appendChild(value10);
+	retour10Container.value = 0;
+	
+	const retour11Container = document.getElementById('ret11-cont');
+	var value11 = document.createElement('pre');
+	retour11Container.innerHTML = "";
+	value11.textContent = 0;
+	retour11Container.appendChild(value11);
+	retour11Container.value = 0;
+	
+	const retour12Container = document.getElementById('ret12-cont');
+	var value12 = document.createElement('pre');
+	retour12Container.innerHTML = "";
+	value12.textContent = 0;
+	retour12Container.appendChild(value12);
+	retour12Container.value = 0;
+	
+	
+	
+	mapboxgl.accessToken = config.accessToken;
+	let mapConfig = {
+		MAD: {
+			origin: [2.272043600678484,48.8700817475247, 0], 
+			destination: [2.289113514125347,48.879606150739804, 500], 
+			center: [2.272043600678484,48.8700817475247, 0], 
+			zoom: 18, 
+			pitch: 70, 
+			bearing: 35, 
+			scale: 0.5, 
+			timezone: 'Europe/Madrid'
+		},
+		names: {
+			customLayer: "custom-layer"
+		}
+	}
+	let timeMinMax = [30, 6000];
+	let api = {
+			fixedZoom: true,
+			pan: true,
+			carSize: 19.2,
+			terrain: 0.0001,
+			time: 3000,
+			path_Position: 0,
+			tailleLine: 30,
+			carAltitude: 0.001,
+			add: "",
+			theme: "",
+			fov: Math.atan(3 / 4) * 180 / Math.PI,
+			windowWidth: 80,
+			windowHeight: 60,
+			windowRadius: 0,
+			winPositionX: 12,
+			winPositionY: 10,
+			contourWidth: 60,
+			//contour_progressif: true,
+			contour_progressif_plus: true,
+			invert_map: false,
+			label: true,
+		
+			//orthographic: false
+		};
+
+/*	<input id="kikistef/cl32rlf6c002314qqinxrgo3x" type="radio" name="rtoggle" value="satellite" checked="checked">
+<label for="kikistef/cl32rlf6c002314qqinxrgo3x">Google-Day</label>
+		
+<input id="kikistef/cl42nzbfl000p14pekozi07vc" type="radio" name="rtoggle" value="light">
+<label for="kikistef/cl42nzbfl000p14pekozi07vc">Google-Night</label>
+		
+<input id="mapbox/satellite-v9" type="radio" name="rtoggle" value="dark">
+<label for="mapbox/satellite-v9">Satellite</label>
+	
+<input id="kikistef/cl63iwd67001b14mid6cx7hlf" type="radio" name="rtoggle" value="Dacia1">
+<label for="kikistef/cl63iwd67001b14mid6cx7hlf">Dacia1</label>*/
+
+	//////////////////////////////changement de map /////////////////////
+	const layerList = document.getElementById('menu');
+	//const inputs = layerList.getElementsByTagName('input');
+
+	var egoExist = true;
+	let lineBlue0;
+	let lineBlueColor = ['rgba(72, 130,197, 1)', 'rgba(255, 130,0, 1)',  'rgba(72, 130,197, 1)', 'rgba(72, 130,197, 1)'];
+	let lineBlueStrokeColor = ['#144e93', 'rgba(0, 0, 0, 1)', 'rgba(255, 255,197, 1)', 'rgba(0, 0, 0, 1)'];
+	let skyColor = ['#73b8ed', 'hsl(237, 99%, 6%)', '#1aa7ec', 'hsl(237, 99%, 6%)'];
+	let horizonColor = ['#fff', '#000', '#fff', 'rgba(255, 0,197, 0.00)']; //['#fff', '#000', '#fff'];
+	let map;
+	let egoCarCircle;
+	
+	
+	var animLaunched = false; // variable du "play pause camera" boolean
+	var egoLaunched = false; // variable du "play pause car" boolean
+
+	var calcClic1;
+	var calcClic2;
+	var calcClicR;
+	var clic=0;
+	
+	const pathAlt = turf.lineString(flightPlan.geometry.coordinates);
+//	console.log("v    v    v")//////////////////*********************** 
+//	console.log(flightPlan.geometry.coordinates)//////////////////*********************** 
+	const pathDistance = turf.lineDistance(pathAlt);
+	
+	
+var sizeWin = document.querySelector(':root');
+	
+	var dragging = false;
+	var dragging2 = false;
+	var dragging4 = false;
+	var dragging5 = false;
+	var dragging6 = false;
+	
+	var drag1 = document.getElementById("mydiv");	
+	drag1.addEventListener('pointerdown', function(e) { dragging = true; console.log("clclcl")});
+	drag1.addEventListener('pointerup', function(e) { dragging = false; console.log("frfrfr") });
+	
+		drag1.addEventListener('pointermove', function(e) {
+		if (dragging) {
+			const data = {
+				/*x: e.pageX / window.innerWidth,
+				y: e.pageY / window.innerHeight,*/
+				x: drag1.style.left,
+				y: drag1.style.top ,
+			};
+			hermes.send('setSpeedPosXY', data, true);
+		}
+	});
+	
+	var drag2 = document.getElementById("mydiv2");	
+	drag2.addEventListener('pointerdown', function(e) { dragging2 = true});
+	drag2.addEventListener('pointerup', function(e) { dragging2 = false});
+	
+		drag2.addEventListener('pointermove', function(e) {
+		if (dragging2) {
+			const data = {
+				x2: drag2.style.left,
+				y2: drag2.style.top ,
+			};
+			hermes.send('setmyDiv2PosXY', data, true);
+		}
+	});
+	var drag4 = document.getElementById("mydiv4");	
+	drag4.addEventListener('pointerdown', function(e) { dragging4 = true});
+	drag4.addEventListener('pointerup', function(e) { dragging4 = false});
+	
+		drag4.addEventListener('pointermove', function(e) {
+		if (dragging4) {
+			const data = {
+				x4: drag4.style.left,
+				y4: drag4.style.top ,
+			};
+			hermes.send('setmyDiv4PosXY', data, true);
+		}
+	});
+	var drag5 = document.getElementById("mydiv5");	
+	drag5.addEventListener('pointerdown', function(e) { dragging5 = true});
+	drag5.addEventListener('pointerup', function(e) { dragging5 = false});
+	
+		drag5.addEventListener('pointermove', function(e) {
+		if (dragging5) {
+			const data = {
+				x5: drag5.style.left,
+				y5: drag5.style.top ,
+			};
+			hermes.send('setmyDiv5PosXY', data, true);
+		}
+	});
+	
+	var drag6 = document.getElementById("mydiv6");	
+	drag6.addEventListener('pointerdown', function(e) { dragging6 = true});
+	drag6.addEventListener('pointerup', function(e) { dragging6 = false});
+	
+		drag6.addEventListener('pointermove', function(e) {
+		if (dragging6) {
+			const data = {
+				x6: drag6.style.left,
+				y6: drag6.style.top ,
+			};
+			hermes.send('setmyDiv6PosXY', data, true);
+		}
+	});
+	
+function myResizeWin_set(valeur) { //////////////////*********************** 
+	sizeWin.style.setProperty('--larg', valeur)
+	const data = {
+		winWidth: valeur
+	};
+	hermes.send('setWinWidth', data, true);
+}
+function myResizeHeightWin_set(valeur) { //////////////////*********************** 
+	sizeWin.style.setProperty('--haut', valeur)
+	const data = {
+		winHeight: valeur
+	};
+	hermes.send('setWinHeight', data, true);
+}
+	
+function myRadiusWin_set(valeur) { //////////////////*********************** 
+	var val = valeur + "px";
+	sizeWin.style.setProperty('--radiusMap', val)
+	console.log("v1 : " + val)
+}
+function myPositionWinX_set(valeur) { //////////////////*********************** 
+	sizeWin.style.setProperty('--posWinX', valeur)
+	const data = {
+		winPosX: valeur
+	};
+	hermes.send('setWinPosX', data, true);
+}
+function myPositionWinY_set(valeur) { //////////////////*********************** 
+	sizeWin.style.setProperty('--posWinY', valeur);				
+	const data = {
+		winPosY: valeur
+	};
+	hermes.send('setWinPosY', data, true);
+}
+	
+function myWinInvert_set(valeur) { //////////////////*********************** 
+	sizeWin.style.setProperty('--invertWin', valeur)
+	console.log("boubouboubou " + String(valeur))
+	const data = {
+		winInvert: valeur
+	};
+	hermes.send('setWinInvert', data, true);
+}
+	
+function myWinEffect_set(valeur) { //////////////////*********************** 
+	console.log("itemmm " + String(valeur));
+	sizeWin.style.setProperty('--contour', String(valeur));	
+	const data = {
+		winBorder: valeur
+	};
+	hermes.send('setWinBorderSmooth', data, true);
+}
+	
+function myWinEffectPlus_set(valeur) { //////////////////*********************** 
+	console.log("itemmm " + valeur);
+	sizeWin.style.setProperty('--contourVisible', valeur);	
+	const data = {
+		winBorderPlus: valeur
+	};
+	hermes.send('setWinBorderSmooth_plus', data, true);
+}
+	
+	
+
+	
+	function myBlurWin_set(valeur) {
+		console.log("SSheihght " + valeur) //////////////////*********************** 
+		sizeWin.style.setProperty('--blurHeight', valeur + 'px')
+	}
+	
+	
+	//var listClone =  flightPlan;
+	var pathAltClone = turf.lineString(flightPlan.geometry.coordinates);
+	var pathAltDist = turf.lineDistance(pathAltClone);
+	const lineDistance = turf.length(pathAltClone);
+	var pathAlong = turf.along(pathAltClone, 1);
+//	console.log("longueur de liste : " + lineDistance);
+	var pathConverted = [];
+
+var steps = 5.00*60*60; // 5 min (x60 secondes) à 60 images par secondes
+//var speedMove = 10;
+// 
+//// Draw an arc between the `origin` & `destination` of the two points
+
+	function convertPath(){
+		for (var i = 0; i < pathAltDist; i += pathAltDist / steps) {
+			var segment = turf.along(pathAltClone, i);
+			pathConverted.push([segment.geometry.coordinates]);
+		}
+		
+	}
+	
+var onresize = function() {
+   //your code here
+   //this is just an example
+   var width = document.body.clientWidth;
+   var height = document.body.clientHeight;
+	console.log("mm : " + width)
+	document.getElementById('winFeedback').innerHTML = "W: " + width + "px - H: " + height + "px";
+	 
+}
+window.addEventListener("resize", onresize);	
+	
+	
+	
+function mapResize(){
+	map.resize(window.innerWidth, window.innerHeight);
+	//window.addEventListener("resize", () => {map.resize(window.innerWidth, window.innerHeight)});
+	console.log("ddddddddddddddd")
+}	
+	window.addEventListener('resize', mapResize);
+// ////////////////////////////////function INIT////////////////////////////////////////	
+	function init(){
+		(async () => {
+		 map = new mapboxgl.Map({
+			container: 'map',
+			style: "mapbox://styles/" + optionsTheme2[selectedTheme], /*'mapbox://styles/mapbox/satellite-v9',*/
+			center: mapConfig.MAD.center,
+			zoom: mapConfig.MAD.zoom,
+			pitch: mapConfig.MAD.pitch,
+			antialias: true,
+			bearing: mapConfig.MAD.bearing,
+			interactive: true,
+			attributionControl: false,
+		});
+		//mapResize()
+		//await map.once('idle');
+			pathConverted = [];
+			convertPath();
+	//clic sur un de themes de carte (en haut à gauche)
+	/*	for (const input of inputs) {
+			input.onclick = (layer) => {
+				const layerId = layer.target.id;
+				for (const num in  optionsTheme2){
+					if (layerId == optionsTheme2[num]) {
+						console.log("numero " + num) //////////////////********************************
+						selectedTheme = num;
+					}
+				}
+			map.setStyle('mapbox://styles/' + layerId);		
+			};
+		}*/
+// ↓↓ ajoute les bouton zoom + et - et la boussole ↓↓ //
+		const nav = new mapboxgl.NavigationControl({
+			showCompass: true,
+			zoomLevel: "input",
+			visualizePitch: true
+		});
+			
+// ↓↓ ajoute le bouton d'affichage du traffic ↓↓ //
+		
+		//map.addControl(nav, 'top-right');
+		//nav._container.parentNode.className="mapboxgl-ctrl-top-center";
+			
+		//map.addControl(new MapboxTraffic(), 'top-right');
+		// we can add Threebox to mapbox to add built-in mouseover/mouseout and click behaviors
+		window.tb = new Threebox(
+			map,
+			map.getCanvas().getContext('webgl'),
+			{
+				realSunlight: true,
+				enableSelectingObjects: true, //change this to false to disable 3D objects selection
+				enableTooltips: true, // change this to false to disable default tooltips on fill-extrusion and 3D models
+				//enableDraggingObjects: true,
+				
+				outlinePass: true,
+				sky: false,
+				
+				//terrain: true,
+			}
+		);
+		tb.altitudeStep = 1;
+		tb.setSunlight(new Date(2021, 5, 18, 15));
+	
+		let lng;
+		let lat;
+
+function addEgoCircle(){
+	clearInterval(addEgoCircle);
+	egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
+	
+}
+			//var intervalID;
+map.on('mouseup', (event) => {
+	if (!animLaunched){
+		//var intervalID = setInterval(addEgoCircle, 3000)
+		egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
+		//animLaunched = false; 
+		lng = event.lngLat.lng;
+		lat = event.lngLat.lat;
+		//console.log(egoCarCircle)//////////////////********************************
+		//console.log("");//////////////////********************************
+		console.log("uuuuuuuupppppp")
+		console.log("click : " + `${lng}, ${lat}`)//////////////////********************************
+	}
+});
+			
+map.on('mousedown', (event) => {
+	if (!animLaunched){
+	egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
+	console.log("dooooowwwnnn")
+	//animLaunched = true; 
+	}
+});
+
+var egoPresent = false;
+map.on('style.load', function () {
+
+			mapAddEgo();
+			//
+			//}
+			map.setFog({ //////////////////////ajout du fog ///////////////
+				'range': [10.0, 20.0],
+				/*'color': 'rgba(255,104,0, 0.2)',*/
+				'color': horizonColor[selectedTheme],
+				'horizon-blend': 0.025
+			});
+			
+			map.addSource('mapbox-dem', {  //////////////////////ajout du terrain ///////////////
+				'type': 'raster-dem',
+				'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+				'tileSize': 512,
+				'maxzoom': 14
+			 });
+			
+			map.setTerrain({ 
+				'source': 'mapbox-dem', 
+				'exaggeration': 0.0001 
+			});
+			/* map.addLayer(
+            {
+                'id': 'hillshading',
+                'source': 'dem',
+                'type': 'hillshade'
+                // insert below waterway-river-canal-shadow;
+                // where hillshading sits in the Mapbox Outdoors style
+            },
+            'waterway-river-canal-shadow'
+        );*/
+			
+			
+/*		map.on('wheel', (e) => {
+console.log('event type:', e.type);
+// event type: wheel
+});	
+
+map.on('load', function () {
+});*/
+			
+/*	map.on('drag', function () {
+console.log("draggg")
+});*/
+		/*	map.addLayer({ //////////////////////ajout du ciel map sombre ///////////////
+				'id': 'sky',
+				'type': 'sky',
+				'paint': {
+ 							"sky-atmosphere-color": skyColor[0],
+                            "sky-type": {"remove": true},
+                            "sky-atmosphere-sun": [300, 80]
+				}
+        });*/
+			/////////////////////////////////////////////////////
+		
+        
+			
+////////////////////////////////////////
+	});
+
+	async function changeTheme() { ////pour changer le theme de la map
+		console.log("zuut")
+	}
+			
+	function mapAddEgo(){ //ajout gocar + ligne bleue et  de la source (geojson) du trajet ainsi que du chrgt de la gui
+		//ajout de la source
+		//egoPresent = true;
+		//console.log("laaaaaa " + egoPresent)
+		map.addSource('trace', {
+            type: 'geojson',
+			lineMetrics: true,
+            data: {
+                'type': 'Feature',
+                'properties': {},
+                'geometry': {
+                    'type': 'LineString',
+                    'coordinates': flightPlan.geometry.coordinates
+                }
+            }
+        });
+		
+		
+			/*map.addLayer({
+			"id": "points_shadow",
+
+			"source": "trace",
+			"type": "circle",
+			
+			"paint": {
+				"circle-radius": {
+            stops: [
+              [5, 1],
+              [15, 50]
+            ],
+            base: 2
+          },
+				"circle-color": "#f0f",
+				"circle-opacity": 0.4,
+				"circle-blur": 0
+				
+			}
+		});*/
+		/////////////////////////////////////////// ombre de la ligne trajet ////////////////////////
+		map.addLayer({
+            type: 'line',
+            source: 'trace',
+            id: 'lineBlue2',
+            paint: {
+                'line-color': '#000',
+				'line-opacity': 0.98,
+                'line-width': api.tailleLine+13,
+				'line-blur': 15,
+				'line-offset': 5,
+				//'line-gap-width': 5,
+            },
+            layout: {
+                'line-cap': 'round',
+                'line-join': 'round',
+            }
+        });
+		/////////////////////////////////////////// contour de la ligne trajet ////////////////////////
+		map.addLayer({
+            type: 'line',
+            source: 'trace',
+            id: 'lineBlue1',
+            paint: {
+                'line-color': lineBlueStrokeColor[selectedTheme],
+                'line-width': api.tailleLine+3,
+
+            },
+            layout: {
+                'line-cap': 'round',
+                'line-join': 'round'
+            }
+        });
+		
+		/////////////////////////////////////////// la ligne trajet ////////////////////////
+		map.addLayer({
+            type: 'line',
+            source: 'trace',
+            id: 'lineBlue0',
+            paint: {
+               /*'line-color': lineBlueColor[selectedTheme],*/
+                'line-width': api.tailleLine,
+				//'line-trim-offset': [0.0,1.0],
+				'line-gradient': [
+                    'interpolate',
+                    ['linear'],
+                    ['line-progress'],
+                    0, "blue",
+                    0.1, "royalblue",
+                    0.3, "cyan",
+                    0.5, "lime",
+                    0.7, "yellow",
+                    1, "red"
+                ]
+            },
+            layout: {
+                'line-cap': 'round',
+                'line-join': 'round'
+            }
+        });
+
+	
+		/*	"filter": ["in", "$type", "Point"],
+			onAdd: function (map, mbxContext){
+						const circleCar = new THREE.CylinderGeometry(1000, 64);
+						const materialCar = new THREE.MeshLambertMaterial( {color: '#fff', transparent: true, opacity:1,  depthTest: false} );
+
+						var egoCarShadow = new THREE.Mesh(circleCar, materialCar);
+						egoCarShadow = model.setCoords(mapConfig.MAD.origin);
+						egoCarShadow.setRotation({ x: 0, y: 0, z: 0 });
+						egoCarShadow.setScale({ x: 10, y: 10, z: 10 });
+						scene.add(egoCarShadow);
+			}
+		});
+
+				console.log("xx animONOFF : " + animONOFF)
+				console.log("xx egoExist : " + egoExist)*/
+		
+		
+				map.addLayer({ // ajout de l'egocar
+				id: 'custom_shadow',
+				type: 'custom',
+				renderingMode: '3d',
+				onAdd: function (map, mbxContext) {
+					 // use the Mapbox GL JS map canvas for three.js
+					this.renderer = new THREE.WebGLRenderer({
+					  canvas: map.getCanvas(),
+					  context: mbxContext,
+					  antialias: true,
+					});
+					let geometry = new THREE.CylinderGeometry( 5000, 5000, 10000, 32 );
+					var material = new THREE.MeshBasicMaterial( {color: 0xffff00, opacity:1});
+					let cube = new THREE.Mesh(geometry, material);
+					
+					cube.anchor = mapConfig.MAD.origin;
+					/*cube.setCoords(mapConfig.MAD.origin);
+						cube.setRotation({ x: 0, y: 0, z: 0 });*/
+					
+					
+					
+					
+					tb.add(cube);
+				},
+				render: function (gl, matrix) {
+					if (animONOFF == true){
+						tb.update();
+			
+				
+					}else{
+					console.log("ZZZZZZZZZ")
+					}
+				}
+				});
+		
+		
+  const fov = 75;
+  const aspect = 2;  // the canvas default
+  const near = 0.1;
+  const far = 5;
+  const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera.position.z = 2;
+		 const scene = new THREE.Scene();
+		
+		  {
+    const color = 0xFFFFFF;
+    const intensity = 2;
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(-1, 2, 4);
+    scene.add(light);
+  }
+		
+		
+		// ajout de l'egocar
+		map.addLayer({ // ajout de l'egocar
+				id: 'custom_layer',
+				type: 'custom',
+				renderingMode: '3d',
+				onAdd: function (map, mbxContext) {
+					 // use the Mapbox GL JS map canvas for three.js
+					this.renderer = new THREE.WebGLRenderer({
+					  canvas: map.getCanvas(),
+					  context: mbxContext,
+					  antialias: true,
+					});
+
+					
+					
+					
+				const composer = new THREE.EffectComposer(this.renderer);	
+				const bloomPass = new THREE.BloomPass(
+				  1,    // strength
+				  25,   // kernel size
+				  4,    // sigma ?
+				  256,  // blur render target resolution
+			  );
+									//const renderScene = new RenderPass( scene, camera );
+
+				/*const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ));
+				bloomPass.threshold = 0;
+				bloomPass.strength = 3;
+				bloomPass.radius = 0; ///params.bloomRadius*/
+
+				/*composer = new EffectComposer( renderer );
+				composer.addPass( renderScene );
+				composer.addPass( bloomPass );*/
+					
+
+					/*let geometry = new THREE.CylinderGeometry( 50, 50, 0.1, 32 );
+					var material = new THREE.MeshBasicMaterial( {color: 0xff0000, opacity:0.8});
+					let cube = new THREE.Mesh(geometry, material);*/
+					var sphereAxis = new THREE.AxesHelper(1);
+					let options = {
+						obj: './models/vehicles/egoCarCircleShadow2.gltf', //'./models/vehicles/egoCarCircle.fbx',
+						type: 'gltf',
+						scale: mapConfig.MAD.scale,
+						rotation: { x: 90, y: 0, z: 0 },
+						anchor: 'center',
+						bbox: true
+					}
+
+					
+
+
+					if (api.fixedZoom) options.fixedZoom = 19.8;
+					if (egoExist){
+					tb.loadObj(options, function (model) {
+						model.traverse( function ( child ) {
+							//console.log("child.name " + child.name)
+							if ( child.isMesh && child.name=="Socle") {
+							 //console.log("Disc")
+							child.material = new THREE.MeshPhongMaterial( {color: '#fff', transparent: true, opacity:1,  depthTest: false} );
+							}
+							if ( child.isMesh && child.name=="CylinderExt") {
+								//console.log("cercleExter")
+								child.material = new THREE.MeshPhongMaterial( {color: '#024DD9', transparent: true, opacity:1,  depthTest: false} );
+								/*child.material = new THREE.MeshPhysicalMaterial({ color: "#00baff", emissive:"#191919", reflectivity: 1,  roughness: 0.5, metalness: 0, transmission: 0.8, ior: 2.3, opacity: 0,  thickness: 0, clearcoat: 0 });*/
+							}
+							if ( child.isMesh && child.name=="CylinderEpais") {
+								//console.log("cercleExter")
+								child.material = new THREE.MeshPhongMaterial( {color: '#3274ee', transparent: true, opacity:1,  depthTest: false} );
+								/*child.material = new THREE.MeshPhysicalMaterial({ color: "#00baff", emissive:"#191919", reflectivity: 1,  roughness: 0.5, metalness: 0, transmission: 0.8, ior: 2.3, opacity: 0,  thickness: 0, clearcoat: 0 });*/
+							}
+							if ( child.isMesh && child.name=="Cylinder") {
+								//console.log("cercleExter")
+								child.material = new THREE.MeshPhongMaterial( {color: '#fff', transparent: true, opacity:1,  depthTest: false} );
+								/*child.material = new THREE.MeshPhysicalMaterial({ color: "#00baff", emissive:"#191919", reflectivity: 1,  roughness: 0.5, metalness: 0, transmission: 0.8, ior: 2.3, opacity: 0,  thickness: 0, clearcoat: 0 });*/
+								//child.castShadow = true;
+								//child.frustumCulled = true;
+								
+								
+							}
+							if ( child.isMesh && child.name=="fleche") {
+								//console.log("cercleExter")
+								child.material = new THREE.MeshPhongMaterial( {color: '#0222B0', transparent: true, opacity:1,  depthTest: false} );
+								//child.castShadow = true;
+								//child.frustumCulled = true;
+
+								
+							}
+							if ( child.isMesh && child.name=="Circle") {
+								const loader = new THREE.TextureLoader();
+								//console.log("cercleExter")
+								//child.material = new THREE.MeshLambertMaterial( {color: '#000', transparent: true, opacity:0.3,  depthTest: false} );/**/
+								child.material = new THREE.MeshBasicMaterial( {   opacity:1, transparent: true,} );
+								//child.castShadow = true;
+								console.log("youpiiiii")
+								
+							}/**/
+							
+						})
+
+						
+						egoCarCircle = model.setCoords(mapConfig.MAD.origin);
+						egoCarCircle.setRotation({ x: 0, y: 0, z: 0 });
+						egoCarCircle.setScale({ x: 1, y: 1, z: 1 }); 
+						egoCarCircle.addTooltip("Car Position Here", true);
+						egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
+						tb.add(egoCarCircle);
+
+							console.log("egoExist " + egoExist)
+							console.log("fly actif " + egoExist)
+							truc = fly(flightPlan);
+							egoExist = false;
+						
+						
+//						setTimeout(() => {
+//							let opt = {
+//								coords: mapConfig.MAD.destination, duration: 20000
+//							};
+//							egoCarCircle.set(opt)
+//						}, 3000);
+
+					})
+					//renderer.toneMappingExposure = Math.pow( 0.8, 4.0 );
+					}
+				},
+				
+				render: function (gl, matrix) {
+					if (animONOFF == true){
+						tb.update();
+			
+				
+					}else{
+					console.log("ZZZZZZZZZ")
+					}
+				}
+			})
+		} 
+	})();
+};	//////////////////////////// FIN DU INIT() //////////////////////////////
+	
+///////////////////////////////Keyboard////////////////////////////		
+var truc;		
+var deltaPitch = 0.5; // valeur du pitche de la carte, au clavier
+var deltaBearing = 2; // valeur de la rotation autour centre, au clavier
+var deltaZoom = 5; // valeur du zoom sur centre, au clavier
+document.body.onkeydown = function(ev){//raccourcis clavier
+	switch (ev.which) {
+//touche "<- " pour passer au point de vue precedent
+//	case 37:
+//			console.log(" fleche <- ");//////////////////*********************** 
+//				map.setBearing = map.getBearing() - deltaBearing;
+//			/*map.jumpTo({
+//			bearing: map.getBearing() - deltaBearing,
+//			easing: easing
+//			});*/
+//	break;
+//
+////touche " -> " pour passer au point de vue suivant				
+//	case 39:
+//		console.log(" fleche -> ");//////////////////*********************** 
+//			map.setBearing = map.getBearing() + deltaBearing;
+//			/*map.jumpTo({
+//			bearing: map.getBearing() + deltaBearing,
+//			easing: easing
+//			});*/
+//	break;
+
+//touche ----------[ - ]----------  pour ralentir l'ego car	
+	case 109:	
+		/*map.easeTo({
+			zoom: 16,
+			//easing: easing
+			});*/
+		map.setZoom(map.getZoom() - 0.1);
+		var data = {
+			mapZoom: map.getZoom() - 0.1
+		};
+		hermes.send('setZoom', data, true);
+			
+			
+	break;
+			
+//touche ----------[ + ]----------  pour ralentir l'ego car	
+	case 107:
+		map.setZoom(map.getZoom() + 0.1);
+		var data = {
+			mapZoom: map.getZoom() + 0.1
+		};
+		hermes.send('setZoom', data, true);
+	break;
+	//touche ----------[ T ]----------  pour le tilt		
+	case 84:
+		console.log("pitch + : " + map.getPitch() + deltaPitch);
+			map.easeTo({
+			pitch: map.getPitch() + deltaPitch,
+			easing: easing
+			});
+			var data = {
+			mapPitch: map.getPitch() + deltaPitch
+		};
+		hermes.send('setThePitch', data, true);
+			//myBlurWin_set(100)
+	break;
+
+//touche ----------[ G ]----------  pour le tilt		
+	case 71:
+		console.log("pitch - : " + (map.getPitch() - deltaPitch));
+			map.easeTo({
+			pitch: map.getPitch() - deltaPitch,
+			easing: easing
+			});
+			var data = {
+				mapPitch: map.getPitch() - deltaPitch
+			};
+			hermes.send('setThePitch', data, true);
+
+	break;
+//touche ----------[ R ]----------  pour la rotation		
+	case 82:
+		console.log("bearing + : " + map.getBearing() + deltaBearing);
+			map.easeTo({
+			bearing: map.getBearing() + deltaBearing,
+			easing: easing
+			});
+			
+	break;
+
+//touche ----------[ F ]----------  pour la rotation		
+	case 70:
+		console.log("bearing - : " + (map.getBearing() - deltaBearing));
+			map.easeTo({
+			bearing: map.getBearing() - deltaBearing,
+			easing: easing
+			});
+	break;
+//touche ----------[ h ]----------  pour ralentir l'ego car	
+	case 72:
+		console.log("hh ");
+			//console.log(gui.isVisible)
+			//gui.visible = false;
+		/*if (document.getElementById('boite-container').style.display = "block"){
+			document.getElementById('boite-container').style.display = "none";
+		}else if (document.getElementById('boite-container').style.display = "none"){
+			document.getElementById('boite-container').style.display = "block";
+		}*/
+			//console.log(document.getElementById('boite-container').style.visibility = "hidden")
+		let vis = gui.domElement.style.visibility;
+		let	vis2 = document.getElementById('boite-container').style.visibility;
+			
+		document.getElementById('boite-container').style.visibility = vis2 == "" ? "hidden" : "";	
+		gui.domElement.style.visibility = vis == "" ? "hidden" : "";
+		break;
+//touche ----------[ j ]----------  pour ralentir l'ego car	
+	case 74:
+//document.getElementById('boite-container').style.visibility = "";
+//map.update();
+		//isPaused = !isPaused; // flips the pause state
+		//window.resizeTo(800, 600);
+		//console.log(" lettre i ");
+    /*const newChildWindow = window.open(
+      index2.html,
+      'New Child Window',
+      `popup,width=${800},height=${600},left=0,top=0`
+    )
+    newChildWindow.moveTo(screenDetails.screens[1].left, 0)*/
+			changeScreenSize()
+	  console.log("trucmuche");
+ 	break;
+
+			 
+	
+			
+//touche ----------[ i ]----------  pour ralentir l'ego car	
+	case 73:
+		console.log("tt "+ value6);
+		resetPage();
+
+		//isPaused = !isPaused; // flips the pause state
+		
+		//console.log(" lettre i ");
+	break;
+		
+	//touche ----------[ p ]----------  pour ralentir l'ego car	
+	case 80:
+			//egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
+		//console.log("isplaying : " + action);
+		//isPaused = !isPaused; // flips the pause state
+		//egoCarCircle.isPlaying = true;
+			//egoLaunched = !egoLaunched;
+			console.log("isplaying : " );
+			if(document.getElementById('ret9-cont').value) {
+					document.getElementById('ret9-cont').value = false;
+					//document.getElementById('ret11-cont').value = false;
+				api.pan = false;
+				//animONOFF = false;
+				}else{
+					document.getElementById('ret9-cont').value = true;	
+					//document.getElementById('ret11-cont').value = 0;
+					api.pan = true;
+					//animONOFF = true;
+				}
+			//document.getElementById('ret11-cont').value = false
+		//console.log(" lettre i ");
+	break;
+		}
+	};
+/////////////////////////////////////Fin Keyboard/////////////////////////////////	
+ //ajout gocar + ligne bleue et  de la source (geojson) du trajet ainsi que du chrgt de la gui 
+    function changeScreenSize() {        
+        window.resizeTo(screen.width-300,screen.height-500, self)   
+    }
+
+var animONOFF = true;	
+var obj1 = {  // action Play/Pause Camera
+	add:function(){ 
+		console.log("play : " + animLaunched);//////////////////*********************** 
+		if (animLaunched){
+			egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
+
+		}else{
+			egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
+		}	
+		animLaunched = !animLaunched; 
+	}
+};
+
+var obj2 = { // action Play/Pause Car
+	add:function(){ 
+		if (egoLaunched){
+			console.log("joue" );//////////////////*********************** 
+			egoExist = true;
+			document.getElementById('ret12-cont').value =  document.getElementById('ret11-cont').value;
+			document.getElementById('ret12-cont').innerHTML = String(document.getElementById('ret12-cont').value)
+			//animONOFF = true;
+			document.getElementById('ret9-cont').value = true;	
+			api.pan = true
+			
+		}else{
+			console.log("arrete");//////////////////*********************** 
+			document.getElementById('ret9-cont').value = false;
+			api.pan = false
+		}
+		
+		const data = {
+			playPauseCar: egoLaunched
+		};
+		hermes.send('setCarPlayPause', data, true);
+		egoLaunched = !egoLaunched;
+	}
+};// action Play/Pause Car
+	
+var obj3 = { // action Reset 
+	add:function(){ 
+		//egoExist = true;
+		//console.log("triuc " + truc)//////////////////*********************** 
+		/*if (!egoExist){
+			//egoExist = true;
+		}*/
+		//delete window.truc;
+		resetPage();
+		winReset();
+	}
+};// action Reset 
+	
+var obj4 = { // action 
+	add:function(){
+		document.getElementById('ret11-cont').value = document.getElementById('ret11-cont').innerHTML =0;	
+	}
+}	
+var obj5 = { // action 
+	add:function(){
+		//document.getElementById('ret11-cont').value = document.getElementById('ret11-cont').innerHTML =0;	
+		trucStep = !trucStep;
+		if (trucStep){
+			console.log("YYYYYYESSSSS")
+			animate(text1, getRandomIntInclusive(40, 60) , getRandomIntInclusive(40, 60), 14000);
+		}else{
+			console.log("NOOOOOOOOOOO")
+		}
+	}
+}	
+var obj6 = { // action Reset 
+	add:function(){ 
+console.log("open window")
+		window.open("index2.html", "_blank", "location=yes,height=600px,width=800px,scrollbars=no");
+	}
+};// action Reset 
+	
+initGUI();
+function initGUI() {
+
+	//gui = new GUI()
+	//gui.domElement.attr("hidden", true);
+	//gui.toggleHide();
+	gui.domElement.id = 'gui_css';
+
+	// ajout du menu de selection de theme
+	//gui.add(optionsTheme, 'theme', optionsTheme.theme).onChange(changeTheme).setValue(optionsTheme.theme.streets_A);
+	const folderTheme = gui.addFolder('Map Themes');
+	/*const themeMap = {
+		theme: {
+			Google_Day: "kikistef/cl32rlf6c002314qqinxrgo3x",
+			Google_Night: "kikistef/cl42nzbfl000p14pekozi07vc",
+			Satellite: "mapbox/satellite-v9",
+			Dacia1: "kikistef/cl63iwd67001b14mid6cx7hlf"
+		}
+	}*/
+
+//const selector = themeFolder.add(themeMap, "theme", optionsTheme.theme).setValue("Dacia1");
+folderTheme.add(optionsTheme, "theme", optionsTheme.theme).setValue('Dacia1').onChange(changeTheme);		
+
+const mapOptions = gui.addFolder('Map options')
+mapOptions.close();
+	mapOptions.add(api, 'carSize', 18, 21).step(0.1).onChange(changeScale);
+	mapOptions.add(api, 'terrain', 0.0001, 2).step(0.01).onChange(changeTerrain);
+	mapOptions.add(api, 'time', timeMinMax[0], timeMinMax[1]).step(10).onChange(changetime);
+	mapOptions.add(api, 'path_Position', 0, 1).step(0.0001).onChange(changePosPath);
+	mapOptions.add(api, 'tailleLine', 1, 40).step(1).onChange(changeLineWidth);
+	mapOptions.add(api, 'carAltitude', 0, 1).step(0.0001).onChange(changeCarHeight);
+	// going above 45 degrees will also produce clipping and performance issues
+	mapOptions.add(api, 'fov', 2.5, 55.0).step(0.1).onChange(changeFOV); 
+	mapOptions.add(api, 'label').onChange(labelChange);
+//href="index2.html" target="_blank"
+	gui.add(obj6, 'add').name('Open 2nd Window');
+	gui.add(obj1, 'add').name('play/pause Camera');
+	gui.add(obj4, 'add').name('back to normal timing');
+	gui.add(obj2, 'add').name('play/pause Car');//.onChange(onSelectedChange)
+	
+	gui.add(obj5, 'add').name('stop speed');
+	gui.add(obj3, 'add').name('reset').listen();
+
+const mapWinOptions = gui.addFolder('Map window')
+	mapWinOptions.add(api, 'windowWidth', 0, 100).step(1).onChange(changeWinSize).setValue(80).listen();
+	mapWinOptions.add(api, 'windowHeight', 0, 100).step(1).onChange(changeWinHeight).setValue(56).listen();
+	mapWinOptions.add(api, 'windowRadius', 0, 400).step(1).onChange(changeWinRadius).listen();
+	mapWinOptions.add(api, 'winPositionX', -68, 68).step(1).onChange(changeWinPosX).setValue(12).listen();
+	mapWinOptions.add(api, 'winPositionY', 0, 50).step(1).onChange(changeWinPosY).setValue(10).listen();
+	
+	mapWinOptions.add(api, 'contourWidth', 0, 100).step(1).onChange(changecontourWidth).listen().setValue(60);
+	
+	/*mapWinOptions.add(api, "contour_progressif").onChange(borderDiffus).setValue(false).listen();*/
+	mapWinOptions.add(api, "contour_progressif_plus").onChange(borderDiffus_plus).setValue(true).listen();/**/
+	mapWinOptions.add(api, "invert_map").onChange(invertMap).setValue(false).listen();/**/
+}
+
+//dragElement(document.getElementById("myDiv"));	
+/*	
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id)) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id).onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}*/
+	
+	
+	
+	
+	/////////////////////////////////fonctions de la GUI///////////////////////////////////
+		function changeTheme() { ////pour changer la taille de l'egocar
+			var val = optionsTheme.theme;
+			for (const num in  optionsTheme2){
+				if(val == optionsTheme2[num]){
+
+					map.setStyle('mapbox://styles/' + val);	
+					const data = {
+						mapTheme: val
+					};
+					hermes.send('setTheme', data, true);
+				}
+			}
+		} 
+	
+		function changeScale() { ////pour changer la taille de l'egocar
+			egoCarCircle.fixedZoom = (api.fixedZoom ? api.carSize : null);
+			egoCarCircle.setObjectScale(map.transform.scale);
+			tb.map.repaint = true;
+		} //pour changer la taille de l'egocar
+		function changeTerrain() { ////pour changer la hauteur du sol
+			console.log("changé : " + api.terrain)//////////////////*********************** 
+			map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': api.terrain });
+		} //pour changer la hauteur du sol
+		function changetime() { ////pour changer la durée du parcours
+			console.log("time : " + secondsToTime(api.time))//////////////////*********************** 
+			console.log("gui.time " + gui.api)//////////////////*********************** 
+			console.log(egoCarCircle.animationQueue[0].parameters.duration)//////////////////*********************** 
+			egoCarCircle.animationQueue[0].parameters.duration = api.time*100;
+		} //pour changer la durée du parcours
+		
+		function changePosPath(e) { ////pour changer la position de l'egocar sur le parcours
+			console.log("valeur : " + e)//////////////////*********************** 
+
+		} //pour changer la position de l'egocar sur le parcours
+	
+		function changeLineWidth() { ////pour changer la durée du parcours
+			console.log("changeLineWidth : " + api.tailleLine)//////////////////*********************** 
+			//const myLayer = map.getLayer('line').paint._values['line-width'].value;
+			map.setPaintProperty('lineBlue2', 'line-width', api.tailleLine+23);
+			map.setPaintProperty('lineBlue1', 'line-width', api.tailleLine+3);
+			map.setPaintProperty('lineBlue0', 'line-width', api.tailleLine);
+			//map.getLayer('line').paint._values['line-width'].value.value = api.tailleLine;
+			console.log(map.getLayer('lineBlue0'))//////////////////*********************** 
+		} //pour changer la durée du parcours
+		function changeCarHeight() {////pour changer la hauteur de l'egocar
+			console.log("altitude slider " + api.carAltitude)//////////////////*********************** 
+		}//pour changer la hauteur de l'egocar
+	
+		var newPathDistance;
+
+		function onObjectChanged(e) {//// boucle permettant de bouger l'egocar et retourner les valeurs "retour1-container"
+			let model = e.detail.object; //here's the object already modified
+			let action = e.detail.action;
+			let selected = e.detail.selected;
+			//console.log(model.coordinates)
+			//////////////////////////////////////////// ici ////////////
+			
+			if (api.pan) {
+				map.setBearing(-THREE.Math.radToDeg(action.rotation.z)+180);
+				map.panTo(model.coordinates, {duration: 100});
+				//map.panBy([model.coordinates[0], model.coordinates[1]], {duration: 10});
+			}
+			changeScale();
+			//////////////////////////////////////////// ici ////////////
+			
+			value1.textContent = String("coords Lon : " + model.coordinates[1]);
+			value2.textContent = String("coords Lat : " + model.coordinates[0]);
+			value3.textContent = String("map bearing " + map.getBearing());
+			value4.textContent = String("map pitch " + map.getPitch());
+			value6.textContent = String("car rotation " + (-THREE.Math.radToDeg(action.rotation.z)+180).toFixed(2)+"%");
+			value7.textContent = String("timing " + retour7Container.value.toFixed(4));
+			
+			
+			//pour retrouver l'altitude du terrain pour listClone 
+			const alongPath = turf.along(pathAltClone, pathDistance * retour7Container.value);
+			//newPathDistance = turf.lineDistance(pathConverted); //2.1352441159688587
+			pathConverted = pathConverted.slice(1, pathConverted.length);
+			//newPathDistance = turf.lineDistance(pathConverted);
+	/*		
+pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, pathAltClone.geometry.coordinates.length);*/
+			
+			const lngLat = {
+				lng: alongPath.geometry.coordinates[0],
+				lat: alongPath.geometry.coordinates[1]
+				//lng: alongPath.geometry.coordinates[0],
+				//lat: alongPath.geometry.coordinates[1]
+			};
+			
+			const elevation = Math.floor(
+			// Do not use terrain exaggeration to get actual meter values
+				map.queryTerrainElevation(lngLat, { exaggerated: false })
+			);
+
+			model.position.z = api.carAltitude;
+			model.traverse( function ( child ) {
+
+				if ( child.isMesh && child.name=="Circle") {
+					child.position.x =  0.05;
+					child.position.y =  -api.carAltitude * 1.02 -0.04;
+					var value = 0.5-api.carAltitude;
+					child.material = new THREE.MeshBasicMaterial( { /*map: loader.load('./images/circleShadow.png'),*/ color: '#000', opacity: value, transparent: true, depthTest: false, } );
+					//child.material = new THREE.MeshBasicMaterial( {color: '#ff0', map: loader.load('./images/circleShadow.png'),  depthTest: false, opacity:1, transparent: true} );
+
+					child.scale.x = child.scale.y = api.carAltitude*0.7 +0.3;
+					//child.set.opacity = api.carAltitude;
+				}
+			} );
+
+			value8.textContent = String("altitude " + (elevation));
+
+			map.setPaintProperty('lineBlue0', 'line-gradient', [
+				'step',
+				['line-progress'],
+				'rgba(72, 130,197, 0.4)',
+				retour7Container.value,
+				lineBlueColor[selectedTheme]
+			]);/**/
+
+			map.dragRotate.enable();
+			map.touchPitch.enable();
+		}// boucle permettant de bouger l'egocar et retourner les valeurs "retour1-container"
+	
+		function changeFOV() {
+			//tb.orthographic = api.orthographic;
+			tb.fov = api.fov;
+		}
+
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////////////
+
+	
+	
+	
+	var channel = duel.channel('test');
+    document.title = 'Master ' + duel.getWindowID();
+    document.getElementById('wndID').innerHTML = (duel.getWindowID()).toString();
+
+    channel.on('demo_trigger', function (message, wndID) {
+        console.info(wndID, (new Date), message);
+    });
+
+    setInterval(function () {
+        document.title = (window.isMaster() ? 'Master ' : 'Slave ') + duel.getWindowID();
+    }, 100);
+	
+	
+	/*hermes.on('setWinPosX', function(data) {
+		console.log("zzz : " + data.winPosX);
+		
+		//win.style.left = data.ballAlpha3 + "px";
+	});*/
+	
+////////////////////////////////////////////////////////Zone buttons functions/////////////////////////////////////////////////////
+	
+function winReset() {
+	const data = {
+		resetWin: true
+	};
+	hermes.send('setWinReset', data, true);
+}
+/////////////////////////////////////////////////////Map Window folder functions////////////////////////////////////////////////////////	
+	
+function changeWinSize() {
+	var percen = String(api.windowWidth+"%");
+	myResizeWin_set(percen);
+}
+	
+function changeWinHeight() {
+	var percen = String(api.windowHeight+"%");
+	myResizeHeightWin_set(percen);
+}
+	
+function changeWinRadius() {
+	var rad = String(api.windowRadius);
+	myRadiusWin_set(rad);
+	const data = {
+		winRadius: rad
+	};
+	hermes.send('setWinRadius', data, true);/**/
+}
+	
+function changeWinPosX() {
+	var posXWin = String(api.winPositionX+"%");
+	myPositionWinX_set(posXWin);
+}
+	
+	
+function changeWinPosY() {
+	var posYWin = String(api.winPositionY+"%");
+	myPositionWinY_set(posYWin);
+}
+	
+function changecontourWidth(){
+	
+	var val = api.contourWidth;
+	const data = {
+		MapWidth: val
+	};
+	var valpx = val + "px";
+	hermes.send('setMapWidth', data, true);/**/
+	sizeWin.style.setProperty('--contMapWidth', valpx);
+}
+	
+function invertMap() {
+	if (!api.invert_map){
+		myWinInvert_set(1);
+		const data = {
+			winInvert: 1
+		};
+	}else{
+		myWinInvert_set(-1);
+		const data = {
+			winInvert: -1
+		};
+	}
+}
+
+	
+function borderDiffus() {
+	if (api.contour_progressif){
+		var item = 'url("./images/degradeBord.png")';
+	}else{
+		var item = String("none");
+	}
+	myWinEffect_set(item);			
+}
+	
+function borderDiffus_plus() {
+	if (api.contour_progressif_plus){
+		var item = 'visible';
+	}else{
+		var item = 'hidden';
+	}
+	myWinEffectPlus_set(item);	
+	console.log("bord : " + item)
+}
+	
+
+	function labelChange() {
+		if (api.label){
+			map.getStyle().layers.forEach(l => { if (l.type == "symbol") map.setLayoutProperty(l.id, "visibility", "visible") });
+		}else{
+			map.getStyle().layers.forEach(l => { if (l.type == "symbol") map.setLayoutProperty(l.id, "visibility", "none") });	
+		}
+		console.log("labelsON : " + api.label)
+	}
+	
+		function resetPage(){ //fonction Reset 
+			egoCarCircle.stop();
+			document.getElementById('ret12-cont').value = document.getElementById('ret12-cont').innerHTML = 0;
+			document.getElementById('ret11-cont').value = document.getElementById('ret11-cont').innerHTML = 0;
+			document.getElementById('ret10-cont').value = document.getElementById('ret10-cont').innerHTML = 0;
+			document.getElementById('ret9-cont').innerHTML = 0;
+			document.getElementById('ret9-cont').value = true;
+			map.remove();
+			animONOFF = true;
+			egoExist = true;
+			init();
+		} //fonction Reset
+		function fly(data) {
+			// extract path geometry from callback geojson, and set duration of travel
+				var options = {
+					path: data.geometry.coordinates,
+					duration: api.time*100,
+					//trackHeading: false,
+				}
+		if (egoExist){	}else{}
+			// start the truck animation with above options, and remove the line when animation ends
+			egoCarCircle.followPath(
+				options,
+				function () {
+					console.log("c'est finiiiiii !!")//////////////////*********************** 
+					egoExist = true;
+					map.remove();
+					//egoCarCircle.stop();
+					//init();
+					resetPage();
+				}
+			);
+		}
+		
+		function secondsToTime(e){ // fonction de conversion secondes en 00:00:00
+		var h = Math.floor(e / 3600).toString().padStart(2,'0'),
+			m = Math.floor(e % 3600 / 60).toString().padStart(2,'0'),
+			s = Math.floor(e % 60).toString().padStart(2,'0');
+
+		return h + ':' + m + ':' + s;
+    //return `${h}:${m}:${s}`;
+	} // fonction de conversion secondes en 00:00:00
+	function easing(t) { ////easing des actions claviers
+		return t * (10 - t);
+	} //easing des actions claviers
+
+	let text3;
+	let trucStep = true;	  
+	
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min +1)) + min;
+}
+	
+function animate(obj, initVal, lastVal, duration) {
+      let startTime = null;
+      //get the current timestamp and assign it to the currentTime variable
+      let currentTime = Date.now();
+
+      //pass the current timestamp to the step function
+      const step = (currentTime ) => {
+
+      //if the start time is null, assign the current time to startTime
+      if (!startTime) {
+         startTime = currentTime ;
+      }
+
+	  //calculate the value to be used in calculating the number to be displayed
+	  const progress = Math.min((currentTime - startTime)/ duration, 1);
+	  //calculate what to be displayed using the value gotten above
+	  obj.innerHTML = Math.floor(progress * (lastVal - initVal) + initVal);
+	  obj.value = (progress * (lastVal - initVal) + initVal);
+	  //console.log("ppppppp" + obj.innerHTML +"%")
+	  text3 = obj.innerHTML +"%";
+	  sizeWin.style.setProperty('--fillCircle', text3);
+	  //checking to make sure the counter does not exceed the last value (lastVal)
+      	 if (progress < 1) {
+         	window.requestAnimationFrame(step);
+      	 } else {
+            window.cancelAnimationFrame(window.requestAnimationFrame(step));
+			if (trucStep){
+				//vitMin = vitMax;
+				var vitMa = getRandomIntInclusive(0, 60);
+            	animate(text1, vitMin , vitMa, 12000);
+				animate(text03, vitMin , vitMa, 12000);
+				animate(text04, vitMin , vitMa, 12000);
+			}
+         }
+    };
+	//trucStep = step;
+    //start animating
+    window.requestAnimationFrame(step);
+}
+	
+      let text1 = document.getElementById('0101');
+	let text03 = document.getElementById('0103');
+	let text04 = document.getElementById('0104');
+      let text2 = document.getElementById('0102');
+
+	  var vitMin = getRandomIntInclusive(30, 97);
+      var vitMax = getRandomIntInclusive(30, 97);
+      
+      //const load = () => {
+	 animate(text1, vitMin, vitMax , 7000);
+	animate(text03, vitMin, vitMax , 7000);
+	animate(text04, vitMin, vitMax , 7000);
+	 //animate(text2, 0, 232, 7000);
+     // }
+
+		init(); // lancement de la premiere initialisation de la map
+	</script>
+	<script src="./distrib/drag6.js"></script>
+	<script src="./distrib/drag5.js"></script>
+	<script src="./distrib/drag4.js"></script>
+	<!--<script src="./distrib/drag3.js"></script>-->
+	<script src="./distrib/drag2.js"></script><!---->
+	<script src="./distrib/drag1.js"></script>
+
+	<!--<script  src="speedometer/dist/script.js"></script>-->
+</body>

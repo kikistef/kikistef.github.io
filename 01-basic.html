@@ -1,0 +1,168 @@
+<!doctype html>
+<head>
+	<title>Sphere Example</title>
+	<link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet">
+	<script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
+	<script src="./distrib/threeboxOrigin.js" type="text/javascript"></script>
+	<link href="./distrib/threebox.css" rel="stylesheet" type="text/css" />
+	<script src="config.js"></script>
+	<style>
+		body, html {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+		}
+
+		#map {
+			width: 100%;
+			height: 100%;
+		}
+
+	</style>
+</head>
+<body>
+	<div id='map' class='map'></div>
+
+	<script type="module">
+
+		if(!config) console.error("Config not set! Make a copy of 'config_template.js', add in your access token, and save the file as 'config.js'.");
+		
+		mapboxgl.accessToken = config.accessToken;
+
+		//starting location for both map and eventual sphere
+		var origin = [6.843495, 45.842733, 7];
+
+		var map = new mapboxgl.Map({
+			container: 'map',
+			style: 'mapbox://styles/kikistef/cl4x3jc0s002q14llis179t33',
+			center: origin,
+			zoom: 17,
+			pitch: 72,
+			antialias:true,
+			//projection: 'globe',
+		});
+let mixer;
+		const clock = new THREE.Clock();
+		const renderer = new THREE.WebGLRenderer();
+		const camera = new THREE.PerspectiveCamera();
+		let stats;
+		import Stats from 'https://threejs.org/examples/jsm/libs/stats.module.js';
+		function animatestats() {
+			requestAnimationFrame(animate);
+			stats.update();
+		}
+
+		map.on('load', function() {
+			// stats
+			stats = new Stats();
+			map.getContainer().appendChild(stats.dom);
+			animatestats();
+
+			map.addLayer({
+				id: 'custom_layer',
+				type: 'custom',
+				renderingMode: '3d',
+				onAdd: function(map, mbxContext){
+					
+					
+					this.renderer = new THREE.WebGLRenderer({
+					  canvas: map.getCanvas(),
+					  context: mbxContext,
+					  antialias: true,
+					});
+					
+					let options = {
+						obj: './models/Matchosblend.fbx',
+						type: 'fbx',
+						scale: 0.05,
+						rotation: { x: 90, y: 0, z: 0 },
+						anchor: 'center',
+						bbox: true
+					}
+					
+					// instantiate threebox
+					window.tb = new Threebox(
+						map, 
+						mbxContext,
+						{
+							defaultLights: true,
+							enableSelectingObjects: true
+						}
+					);
+					
+					tb.loadObj(options, function (model) {
+						
+						model.traverse( function ( child ) {
+							
+						})
+						var sphere2  = model.setCoords(origin);
+						sphere2.setRotation({ x: 0, y: 0, z: 0 });
+						sphere2.setScale({ x: 1, y: 1, z: 1 });
+						sphere2.position.z = 2.8;
+						//egoCarCircle.setScale({ x: 1, y: 1, z: 1 });
+ 
+			
+						//egoCarCircle.addEventListener('SelectedChange', onSelectedChange, false);
+						sphere2.castShadow = true;
+						tb.add(sphere2);
+						
+						mixer = new THREE.AnimationMixer( model );
+						mixer.clipAction( model.animations[ 0 ] ).play();
+
+					})
+					
+
+					//instantiate a red sphere and position it at the origin lnglat
+					/*var sphere = tb.sphere({color: 'red', material: 'MeshToonMaterial'})
+						.setCoords(origin);
+					sphere.addEventListener('ObjectMouseOver', onObjectMouseOver, false);
+					sphere.addEventListener('ObjectMouseOut', onObjectMouseOut, false);
+					// add sphere to the scene
+					tb.add(sphere);*/
+
+				},
+				
+				render: function (gl, matrix) {
+					tb.update();
+				}
+			})
+			
+		});
+
+		//actions to execute onObjectMouseOver
+		function onObjectMouseOver(e) {
+			console.log("ObjectMouseOver: " + e.detail.name);
+		}
+
+		//actions to execute onObjectMouseOut
+		function onObjectMouseOut(e) {
+			console.log("ObjectMouseOut: " + e.detail.name);
+		}
+		
+		window.onresize = function () {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			};
+		
+		function animate() {
+
+				requestAnimationFrame( animate );
+
+				const delta = clock.getDelta();
+
+				mixer.update( delta );
+
+				//controls.update();
+
+				//stats.update();
+
+				renderer.render( tb, camera );
+
+			}/*	*/
+
+	</script>
+</body>

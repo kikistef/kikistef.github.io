@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Duel page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//yastatic.net/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script type="text/javascript" src="lib/duel.js"></script>
+	<style>
+	body, html {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		background-color: black;
+		background-image:url(images/fondMap.png);
+		background-size: 100%;
+		background-repeat: no-repeat;
+	}
+	h2 {
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		color: #fff;
+	}
+	.noselect{
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		}
+	.ball {
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		background-color: green;
+		position: fixed;
+		border: rgba(0,0,0,1.00) 3px solid;
+		top: calc(50% - 50px);
+		left: calc(50% - 50px);
+		z-index: 10;
+		cursor: move;
+	}
+	.ball:li{
+		background-color: yellow;
+		z-index: 10;
+	}
+	.coul {	
+		/*height: 30px;*/
+		width: 100px;
+		color: white;
+		background-color: #454545;
+		position: relative;
+		padding: 0px 10px 5px 10px;
+		margin: 5px;
+		vertical-align: middle;
+		border: rgba(255,255,255,1.00) 1px solid;
+		top: 110px;
+		left: 50;
+		z-index: 10;
+		}
+		.coul:active {
+			background-color: #ff0000;
+		}
+	.winStyle{
+		position: relative;
+		top: 30px;
+		left: 400px;	
+		width: 500px;
+		height: 280px;
+		outline: solid #fff 1px;
+		border: 1px;	
+		-moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px;
+		transition: 0.3s ;
+	}
+	#mydiv {
+		position: absolute;
+		top:50px;
+		z-index: 9;
+	}
+	#mydivheader {
+		padding: 0px;
+		cursor: move;
+		z-index: 10;
+		background-color: rgba(25,25,25,0.70);
+		color: #fff;
+		backdrop-filter: blur(5px);
+		-moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
+	}
+		#gui_css {
+	position: absolute;
+	right: 10px;
+	top: 0%;
+	border-radius: 4px;
+	width: 300px;
+	padding: 2px 2px 4px 2px;
+	background-color: rgba(0,0,0,0.50);
+	color: rgba(255,255,255,0.50);
+	backdrop-filter: blur(10px);/**/
+	transform: scale(var(--invertWin), 1);
+	/*box-shadow: 1px 1px 10px rgba(0,0,0,0.9);*/
+}
+
+		
+</style>
+</head>
+<body>
+	
+	
+<div class="container-fluid noselect">
+	<h2>Window <small id="wndID">...</small></h2>
+	<!--<div><a class="btn btn-default" href="index.html" target="_blank">Open window A</a>&nbsp;</div>-->
+	<div class="coul" id="couleur">...</div>
+	<div class="coul" id="couleur2">...</div>
+	<div id="mydiv">
+		<div id="mydivheader" class="winStyle">&emsp; title here</div>
+	</div>
+	<p class="ball"></p>
+
+	<!--  <button class="btn btn-default" onclick="channel.broadcast('demo_trigger', 'ya', duel.getWindowID())">
+        channel.broadcast('demo_trigger', 'ya', duel.getWindowID())
+    </button></div>
+    <div style="margin-top: 10px; color: #777777"><em>
+        Hint: open the developer console before broadcasting.
+    </em></div>-->
+</div>
+	<!--<div id="mydiv">
+		<div id="gui_css"></div>
+	</div>-->
+	 <script src="dist/hermes.min.js"></script>
+<script type="module">
+	import { GUI } from 'https://threejs.org/examples/jsm/libs/lil-gui.module.min.js';
+	
+	const retour1Container = document.getElementById('couleur');
+	var value1 = document.createElement('pre');
+	retour1Container.innerHTML = 100;
+	value1.textContent = "ttt";
+	
+	const retour2Container = document.getElementById('couleur2');
+	var value2 = document.createElement('pre');
+	retour2Container.innerHTML = 50;
+	value2.textContent = "ttt";
+	
+	let api = {
+		'slider_1': 100,
+		'slider_2': 50,
+		'slider_3': 0,
+	};
+	
+	var slider1Value = api.slider_1;
+	var slider2Value= api.slider_2;
+	var slider3Value= api.slider_3;
+		
+	let gui = new GUI();
+	//gui.close();
+	//gui.domElement.style.visibility = "hidden";
+	gui.domElement.id = 'gui_css';
+	const mapOptions = gui.addFolder('Map options');
+	
+	
+		var controller1 = mapOptions.add(api, 'slider_1', 0, 100).step(1).onChange(function(sld1Value) {
+			slider1Value = sld1Value;
+			//console.log("slidValue : " +  slider1Value);
+			const data = {
+				ballAlpha: slider1Value,
+			};
+			hermes.send('moveball', data, true);
+		}).listen();
+	
+		var controller2 = mapOptions.add(api, 'slider_2', 0, 100).step(1).onChange(function(sld2Value) {
+			slider2Value = sld2Value;
+			//console.log("slidValue : " +  slider2Value);
+			const data = {
+				ballAlpha2: slider2Value
+			};
+			hermes.send('setWin', data, true);
+		}).listen();
+	
+	var controller3 = mapOptions.add(api, 'slider_3', 0, 100).step(1).onChange(s3Value).listen();
+	
+	function s3Value(){
+		var sld3Value = api.slider_3;
+		
+		const data = {
+			ballAlpha3: sld3Value
+		};
+		hermes.send('setWinPos', data, true);
+		
+	}
+		
+	
+	//retour1Container.appendChild(value1);
+	
+	
+    var channel = duel.channel('test');
+    document.title = 'Master ' + duel.getWindowID();
+    document.getElementById('wndID').innerHTML = (duel.getWindowID()).toString();
+
+    channel.on('demo_trigger', function (message, wndID) {
+        console.info(wndID, (new Date), message);
+    });
+
+    setInterval(function () {
+        document.title = (window.isMaster() ? 'Master ' : 'Slave ') + duel.getWindowID();
+    }, 1);
+
+	const ball = document.querySelector('.ball');
+	const win = document.querySelector('.winStyle');
+	let dragging = false;
+	//let select = false;
+	
+	
+	hermes.on('setWinPos', function(data) {
+			console.log("eeeeee22222222")
+		console.log("vvv : " + data.ballAlpha3)
+		win.style.left = data.ballAlpha3 + "px";
+	});
+	////////////////////////////////////////////////////////////ICI pour la fenetre /////////////////////////
+	hermes.on('setWin', function(data) {
+
+		win.style.opacity = api.slider_2/100;
+		retour2Container.innerHTML = data.ballAlpha2;
+		api.slider_2 = retour2Container.innerHTML;
+/*		retour2Container.style.backgroundColor = 'red';
+		retour2Container.style.transition = '1.5s';
+		retour2Container.style.transitionDelay = "1s";
+		retour2Container.style.iterationCount = 3;*/
+		//retour2Container.style.backgroundColor = 'black';
+		
+	});
+	////////////////////////////////////////////////////////////ICI pour la boule /////////////////////////
+	hermes.on('moveball', function(data) {
+		ball.style.top = 'calc(' + (data.y * 100) + '% - 50px)';
+		ball.style.left = 'calc(' + (data.x * 100) + '% - 50px)';
+
+		ball.style.opacity = api.slider_1/100;
+		console.log("sld1 " + api.slider_1);
+		retour1Container.innerHTML = data.ballAlpha;
+		api.slider_1 = retour1Container.innerHTML;
+
+		ball.style.backgroundColor = data.col;
+	});
+			
+	ball.addEventListener('pointerover', function(e) { 
+		ball.style.backgroundColor = 'red';
+		const data = {
+			col: ball.style.backgroundColor //'#ff2e82'
+		};
+		hermes.send('moveball', data, true);
+		//dragging = true;
+	});
+			
+	ball.addEventListener('pointerout', function(e) { 
+		ball.style.backgroundColor = 'green';
+		const data = {
+			col: ball.style.backgroundColor //'#ff2e82'
+		};
+		hermes.send('moveball', data, true);
+		//dragging = true;
+	});
+			
+	ball.addEventListener('pointerdown', function(e) { 
+		dragging = true;
+	});
+
+	document.addEventListener('pointerup', function(e) { 
+		dragging = false;
+	});
+			
+	document.addEventListener('pointermove', function(e) {
+		if (dragging) {
+			ball.style.backgroundColor = 'yellow';
+			const data = {
+				x: e.pageX / window.innerWidth,
+				y: e.pageY / window.innerHeight,
+				col: ball.style.backgroundColor, //'#ff2e82'
+				//posx:
+				//ballAlpha: e.slider1Value,
+			};
+			hermes.send('moveball', data, true);
+		}
+	});
+	
+        </script>
+	<script src="dist/drag1.js"></script>
+</body>
+</html>
