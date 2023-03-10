@@ -925,22 +925,23 @@ console.log("drag7 : " + drag7.style.left + " -- " + drag7.style.top)
 	const optionsTheme = {
 		theme: {
 			//streets_shadows: "",
+
 			GoogleDay : /* mapbox://styles/ */"kikistef/cl32rlf6c002314qqinxrgo3x",
 			GoogleNight : /* mapbox://styles/ */"kikistef/cl42nzbfl000p14pekozi07vc",
 			Satellite : /* mapbox://styles/ */"mapbox/satellite-v9",
 			Dacia1 : "kikistef/cl63iwd67001b14mid6cx7hlf",
-			'streets and building': "kikistef/cldylqwxk000001ocj1ff7kx7",//"kikistef/cl63eh1px001c14p54ao2sfst",
+			NicoMichel : "kikistef/clf2o5qhh001901lnq0cl4nxh",
 			streets_E: "E",
 			streets_F: "F"
 		}
 	};
 		const optionsTheme2 = ([
+
 			"kikistef/cl32rlf6c002314qqinxrgo3x",
 			"kikistef/cl42nzbfl000p14pekozi07vc",
 			"mapbox/satellite-v9",
 			"kikistef/cl63iwd67001b14mid6cx7hlf",
-			"kikistef/cldylqwxk000001ocj1ff7kx7",
-			//"kikistef/cl63eh1px001c14p54ao2sfst",
+			"kikistef/clf2o5qhh001901lnq0cl4nxh",
 			"E",
 			"F"
 	]);
@@ -948,7 +949,7 @@ console.log("drag7 : " + drag7.style.left + " -- " + drag7.style.top)
 	
 
 	
-	var selectedTheme = 3;
+	var selectedTheme = 4;
 	let gui = new GUI();
 //	console.log("-----> " + optionsTheme2[selectedTheme])//////////////////*********************** ///////////
 	
@@ -1092,9 +1093,9 @@ console.log("drag7 : " + drag7.style.left + " -- " + drag7.style.top)
 
 	var egoExist = true;
 	let lineBlue0;
-	let lineBlueColor = ['rgba(72, 130,197, 1)', 'rgba(255, 130,0, 1)',  'rgba(72, 130,197, 1)', 'rgba(72, 130,197, 1)'];
-	let lineBlueStrokeColor = ['#144e93', 'rgba(0, 0, 0, 1)', 'rgba(255, 255,197, 1)', 'rgba(0, 0, 0, 1)', 'rgba(0, 0, 0, 1)'];
-	let skyColor = ['#73b8ed', 'hsl(237, 99%, 6%)', '#1aa7ec', 'hsl(237, 99%, 6%)'];
+	let lineBlueColor = ['rgba(72, 130,197, 1)', 'rgba(255, 130,0, 1)',  'rgba(72, 130,197, 1)', 'rgba(72, 130,197, 1)', 'rgba(255, 200,0, 1)'];
+	let lineBlueStrokeColor = ['#144e93', 'rgba(0, 0, 0, 1)', 'rgba(255, 255,197, 1)', 'rgba(0, 0, 0, 1)', 'rgba(255, 200,0, 0.2)'];
+	let skyColor = ['#73b8ed', 'hsl(237, 99%, 6%)', '#1aa7ec', 'hsl(237, 99%, 6%)', 'hsl(237, 99%, 6%)'];
 	let horizonColor = ['#fff', '#000', '#fff', 'rgba(255, 0,197, 0.00)', '#000']; //['#fff', '#000', '#fff'];
 	var map;
 	let egoCarCircle;
@@ -1319,7 +1320,7 @@ var onresize = function() {
    var width = document.body.clientWidth;
    var height = document.body.clientHeight;
 	//console.log("width Doc : " + width + " -- " + "height Doc : " + height)
-	//console.log(" taille ego : " + egoCarCircle)
+	//console.log(" taille ego : " + egoCarCircle)setFov
 	//console.log(" map style : "  )
 	
 	//egoCarCircle.stop();;
@@ -1646,7 +1647,7 @@ console.log("draggg")
 			}
 		});*/
 		/////////////////////////////////////////// ombre de la ligne trajet ////////////////////////
-		map.addLayer({
+		/*map.addLayer({
             type: 'line',
             source: 'trace',
             id: 'lineBlue2',
@@ -1662,7 +1663,7 @@ console.log("draggg")
                 'line-cap': 'round',
                 'line-join': 'round',
             }
-        });
+        });*/
 		/////////////////////////////////////////// contour de la ligne trajet ////////////////////////
 		console.log("selectedTheme] : " + selectedTheme)
 		map.addLayer({
@@ -2284,6 +2285,7 @@ function dragElement(elmnt) {
 			for (const num in  optionsTheme2){
 				if(val == optionsTheme2[num]){
 					selectedTheme = num;
+					console.log("vla le numero : " + selectedTheme)
 					map.setStyle('mapbox://styles/' + val);	
 					const data = {
 						mapTheme: val
@@ -2425,7 +2427,8 @@ pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, p
 			map.setPaintProperty('lineBlue0', 'line-gradient', [
 				'step',
 				['line-progress'],
-				'rgba(255, 130,197, 1)',
+				/*'rgba(255, 130,197, 1)',*/
+				'rgba(130, 130, 0, 1)',
 				retour7Container.value,
 				lineBlueColor[selectedTheme]
 			]);/**/
