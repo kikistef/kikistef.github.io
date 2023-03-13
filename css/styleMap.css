@@ -69,7 +69,7 @@ z-index: 0;
 	border-right: 0px rgba(255,147,0,0.5) solid;
 	z-index: 0;
 	/*-webkit-clip-path: polygon(var(--larg2) 0, 100% 0, 100% var(--haut), var(--larg2) var(--haut));*/
-	-webkit-clip-path: inset(0px 0px 0px 0px );
+	-webkit-clip-path: inset(0px var(--larg2) 0px round var(--radiusMap));
 	/* au dessus (top right bottom left)
 	 /*   -webkit-box-shadow: inset 0 0 150px #00f;
     -moz-box-shadow: inset 0 0 150px #00f;
