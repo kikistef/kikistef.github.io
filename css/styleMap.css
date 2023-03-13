@@ -303,10 +303,13 @@
 		text-align: middle;
 		width: 260px;/**/
 		height: 50px;
-		transition: 0.3s;
+		 ;
 		/*outline: white 0px solid;*/
 		border-radius: 8px;
 		outline-offset: -10px;
+
+
+		transition: 0.2
 		/*outline: #ceff00 1px solid;
 		backdrop-filter: blur(4px);*/
 	}
@@ -326,6 +329,7 @@
 		z-index: -1;
 		outline: white 1px solid;
 		outline-offset: 2px;
+	
 	}
 	.boxCarIndic {
 		display: flex;
@@ -333,13 +337,15 @@
 		text-align: middle;
 		width: 280px;/**/
 		height: 50px;
-		transition: 0.3s;
+		transition: 0.1s;
 		/*outline: white 0px solid;*/
 		border-radius: 8px;
 		outline-offset: 0px;
-		outline: #ceff00 1px solid;
+		outline: rgba(255, 200,0, 1) 1px solid;
 		backdrop-filter: blur(4px);/**/
 		background: rgba(0,0,0, 0.3);
+		transition-delay: 0.7s;
+
 	}
 	.boxCarIndic:hover {
 		display: flex;
@@ -351,11 +357,13 @@
 		height: 50px;
 		/*margin:0 -20px 0 40px;
 		-webkit-mask-image: linear-gradient(0deg, black 40%, transparent 100%);*/
-		backdrop-filter: blur(10px);/**/
+		/*backdrop-filter: blur(10px);*/
 		border-radius: 8px;
 		z-index: -1;
 		outline: white 1px solid;
 		outline-offset: 4px;
+		transition: 0.1s;
+
 	}
 	
 	.driveKm { 
@@ -371,6 +379,7 @@
 		width: 50px;
 		height: 20px;
 		text-shadow: 0px 5px 6px rgba(0,0,0,1);
+					
 		/* 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue; */
 		/*background-color: rgba(255,37,41,0.45);*/
 	}
@@ -383,11 +392,11 @@
 		padding: 0 15px 0 0;
 		pointer-events: none;
 		user-select: none;
-		text-shadow: 0px 5px 6px rgba(0,0,0,1);
-		transition: 0.3s;
+		/*text-shadow: 0px 5px 6px rgba(0,0,0,1);*/
+		transition: 0.1s;
 	}
 	.driveKmNumG {
-		color: #ceff00;
+		color: rgba(255, 200,0, 1);
 	}
 	.boxChargePercent:hover .driveKmNum{
 		font-size: 38px;
@@ -946,7 +955,7 @@ color: #FF0004;
 		visibility: hidden;
 		width: 100%;
 		height: 100%;
-		-webkit-mask-image: linear-gradient(180deg, black 40%, transparent 100%);
+		/*-webkit-mask-image: linear-gradient(180deg, black 40%, transparent 100%);*/
 		backdrop-filter: blur(10px);
 		border-radius: 8px;
 		z-index: 50;
