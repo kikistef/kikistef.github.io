@@ -125,12 +125,12 @@
 
 		</div>
 	
-			<div id="mydiv7" >
+			<!--<div id="mydiv7" >
 			<div class="boxCarIndic" id="mydiv7header">
 				<div class="driveKmNum driveKmNumG">info</div>
 				<div class="driveKm">here</div>
 				<div class="bgBox "></div>
-			</div>
+			</div>-->
 
 		</div>
 	<!--</div>-->
@@ -315,7 +315,7 @@
         .addEventListener('change', handleFileSelect, false);/**/
 	
 	
-	
+	/*
 	var drag7 = document.getElementById("mydiv7");	
 	var	hautLigne = 310 + "px";
 	var largeLigne = 915 + "px";				
@@ -354,7 +354,7 @@
 			};
 			hermes.send('setmyDiv7PosXY', data, true);
 		}
-	});	
+	});	*/
 	
 	
 	
@@ -376,7 +376,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
 }*/
 
 //makeLine(largeLigne, hautLigne, destLargeLigne, destHautLigne);
-console.log("drag7 : " + drag7.style.left + " -- " + drag7.style.top)
+//console.log("drag7 : " + drag7.style.left + " -- " + drag7.style.top)
 	
 	//import * as THREE from './distrib/three.min.js'; 
 	import { GUI } from './distrib/lil-gui.module.min.js';
@@ -387,535 +387,210 @@ console.log("drag7 : " + drag7.style.left + " -- " + drag7.style.top)
 	let flightPlan = {//coordonnées de la route (geojson)
 		"geometry": {
 			"coordinates": [
-		  [
-            2.2712639738686535,
-            48.86942845482863
-          ],
-          [
-            2.2713907251838172,
-            48.869529241577034
-          ],
-          [
-            2.272176936763617,
-            48.870198829402995
-          ],
-          [
-            2.2724715216708846,
-            48.87045199117289
-          ],
-          [
-            2.2726893275207605,
-            48.870646250424485
-          ],
-          [
-            2.272891040116507,
-            48.87084403741423
-          ],
-          [
-            2.273289295978156,
-            48.87129503655976
-          ],
-          [
-            2.274570377011411,
-            48.872744253357745
-          ],
-          [
-            2.275240604794724,
-            48.873552002796025
-          ],
-          [
-            2.2758139529465593,
-            48.8742300395776
-          ],
-          [
-            2.276042644174834,
-            48.87448750134938
-          ],
-          [
-            2.2763887446131026,
-            48.87487334326673
-          ],
-          [
-            2.276413602784184,
-            48.87489955564374
-          ],
-          [
-            2.2764411431642806,
-            48.87492356287924
-          ],
-          [
-            2.2764641061564284,
-            48.87494086295163
-          ],
-          [
-            2.2764937746711134,
-            48.8749603681443
-          ],
-          [
-            2.2766791755241433,
-            48.87505053736869
-          ],
-          [
-            2.2770247638101715,
-            48.87523488500068
-          ],
-          [
-            2.2774991486005414,
-            48.875511466435285
-          ],
-          [
-            2.2775960443574395,
-            48.87555743786625
-          ],
-          [
-            2.2776983045323274,
-            48.87559282478405
-          ],
-          [
-            2.2778005647072153,
-            48.87563173983153
-          ],
-          [
-            2.277902824882103,
-            48.87567418300039
-          ],
-          [
-            2.2781340856501986,
-            48.875779105185686
-          ],
-          [
-            2.278245685981135,
-            48.87583564867067
-          ],
-          [
-            2.2784462010595163,
-            48.875942859203235
-          ],
-          [
-            2.2786228605436776,
-            48.87604687390439
-          ],
-          [
-            2.27865376856478,
-            48.876063959674205
-          ],
-          [
-            2.2788068157260843,
-            48.8761623461645
-          ],
-          [
-            2.278882425350366,
-            48.87621572916212
-          ],
-          [
-            2.278994578943978,
-            48.87630011011634
-          ],
-          [
-            2.279084353586458,
-            48.87636908165833
-          ],
-          [
-            2.279355753184933,
-            48.8766163216528
-          ],
-          [
-            2.2795216147785924,
-            48.87676901376664
-          ],
-          [
-            2.279774757072639,
-            48.877010224643186
-          ],
-          [
-            2.279792062592536,
-            48.87702626388664
-          ],
-          [
-            2.2798080270078858,
-            48.87703877506971
-          ],
-          [
-            2.2798256254471916,
-            48.87705090243482
-          ],
-          [
-            2.2798459060955123,
-            48.87706082476334
-          ],
-          [
-            2.2798641933783603,
-            48.877069266034724
-          ],
-          [
-            2.2798838217657558,
-            48.87707726629814
-          ],
-          [
-            2.27991187361396,
-            48.87708647113996
-          ],
-          [
-            2.279943278223473,
-            48.87709170692216
-          ],
-          [
-            2.2799874897168593,
-            48.877095758341916
-          ],
-          [
-            2.2800417594940114,
-            48.87709760472938
-          ],
-          [
-            2.2800876836775874,
-            48.877100463599334
-          ],
-          [
-            2.2801336078611634,
-            48.87710685051976
-          ],
-          [
-            2.280178253860621,
-            48.87711470024534
-          ],
-          [
-            2.2802228998600382,
-            48.87712784204361
-          ],
-          [
-            2.280329023497716,
-            48.8771677983135
-          ],
-          [
-            2.280425047405341,
-            48.87720541207445
-          ],
-          [
-            2.2805776557101343,
-            48.8772642108301
-          ],
-          [
-            2.280704505523947,
-            48.877307561370976
-          ],
-          [
-            2.280801682372915,
-            48.877337393462106
-          ],
-          [
-            2.280904734298068,
-            48.87735628747654
-          ],
-          [
-            2.2811681237647052,
-            48.87738233382007
-          ],
-          [
-            2.2812208849307014,
-            48.87737875386408
-          ],
-          [
-            2.2812513636951337,
-            48.8773655978451
-          ],
-          [
-            2.2816284893621885,
-            48.87714067274922
-          ],
-          [
-            2.281841383167893,
-            48.87705854171829
-          ],
-          [
-            2.2820353876831456,
-            48.87701758509463
-          ],
-          [
-            2.282344243532921,
-            48.876977570397266
-          ],
-          [
-            2.2826621872872055,
-            48.87697624622064
-          ],
-          [
-            2.2829268960827687,
-            48.87700116557483
-          ],
-          [
-            2.2830976905126477,
-            48.87701715851477
-          ],
-          [
-            2.283257907009877,
-            48.87703729966891
-          ],
-          [
-            2.283436206776388,
-            48.87707330717636
-          ],
-          [
-            2.2835498967575774,
-            48.87711638468802
-          ],
-          [
-            2.2837781279450864,
-            48.87722690085174
-          ],
-          [
-            2.2838315324564595,
-            48.87723597511264
-          ],
-          [
-            2.2839159546448196,
-            48.877229758492234
-          ],
-          [
-            2.28414704251366,
-            48.877161000243206
-          ],
-          [
-            2.284208873916418,
-            48.8771438913124
-          ],
-          [
-            2.284272092939874,
-            48.87714329132613
-          ],
-          [
-            2.2843989935282316,
-            48.877147594335725
-          ],
-          [
-            2.2844854579458174,
-            48.877139355643486
-          ],
-          [
-            2.2846439872423074,
-            48.87709750115284
-          ],
-          [
-            2.285119587928861,
-            48.87694136569978
-          ],
-          [
-            2.285298558881159,
-            48.87688148517975
-          ],
-          [
-            2.286506755923572,
-            48.87649436578444
-          ],
-          [
-            2.2871505123808333,
-            48.87628968744898
-          ],
-          [
-            2.2871847358320263,
-            48.87627844103264
-          ],
-          [
-            2.2871989444628182,
-            48.87627531111595
-          ],
-          [
-            2.287213823645864,
-            48.87627394525366
-          ],
-          [
-            2.28722304770562,
-            48.87627543691551
-          ],
-          [
-            2.287229924832448,
-            48.87628045668619
-          ],
-          [
-            2.287240002729405,
-            48.87629277831329
-          ],
-          [
-            2.287250080626322,
-            48.876309510070946
-          ],
-          [
-            2.288009649251519,
-            48.87778727462196
-          ],
-          [
-            2.288014636811644,
-            48.87779727882216
-          ],
-          [
-            2.288019624371729,
-
-            48.87780441651939
-          ],
-          [
-            2.28802497241114,
-            48.877808594433915
-          ],
-          [
-            2.2880330026595264,
-            48.87781233134796
-          ],
-          [
-            2.2880438405000714,
-            48.87781271635757
-          ],
-          [
-            2.288060042758686,
-            48.87781177836685
-          ],
-          [
-            2.2880941600022764,
-            48.877809174614875
-          ],
-          [
-            2.288133373838175,
-            48.8778107338957
-          ],
-          [
-            2.2881754905504925,
-            48.877816830845106
-          ],
-          [
-            2.2882133912933167,
-            48.87782711292709
-          ],
-          [
-            2.2882452124975083,
-            48.87783666587864
-          ],
-          [
-            2.2882766581960334,
-            48.87785405234908
-          ],
-          [
-            2.288298798281758,
-            48.87787143712863
-          ],
-          [
-            2.2883157274283628,
-            48.8778883313593
-          ],
-          [
-            2.2883326540130966,
-            48.87791134556841
-          ],
-          [
-            2.2883413925287677,
-            48.87793227749059
-          ],
-          [
-            2.288345851178377,
-            48.87795149503474
-          ],
-          [
-            2.2883482586482806,
-            48.87798013696371
-          ],
-          [
-            2.288337636208513,
-            48.87801367249398
-          ],
-          [
-            2.288320286837573,
-            48.87804347119231
-          ],
-          [
-            2.288273338559108,
-            48.87808251465147
-          ],
-          [
-            2.288244399638568,
-            48.87809678051668
-          ],
-          [
-            2.2882258927686117,
-            48.878104521174464
-          ],
-          [
-            2.288186650567483,
-            48.87811637131403
-          ],
-          [
-            2.288133324086412,
-            48.878123180626034
-          ],
-          [
-            2.288093034961256,
-            48.878123562986644
-          ],
-          [
-            2.2880625947986255,
-            48.878119906060014
-          ],
-          [
-            2.2880475051233162,
-            48.878118314888276
-          ],
-          [
-            2.288039120970544,
-            48.87811848770608
-          ],
-          [
-            2.288030809504029,
-            48.87812158879868
-          ],
-          [
-            2.2880258507987428,
-            48.87812667437905
-          ],
-          [
-            2.2880207470920855,
-            48.87813484989949
-          ],
-          [
-            2.2879821472343753,
-            48.87822017533029
-          ],
-          [
-            2.287592236517062,
-            48.879012104571245
-          ],
-          [
-            2.287580643796039,
-            48.879034942770176
-          ],
-          [
-            2.287573409664705,
-            48.879050284143176
-          ],
-          [
-            2.2875727718829975,
-            48.87905425493908
-          ],
-          [
-            2.287574816310265,
-            48.87905822573466
-          ],
-          [
-            2.28757820184204,
-            48.8790619760354
-          ],
-          [
-            2.287582928478362,
-            48.87906484435775
-          ],
-          [
-            2.2875983354374707,
-            48.87907185960673
-          ],
-          [
-            2.2876150835010467,
-            48.87907799287686
-          ],
-          [
-            2.2889976149446145,
-            48.87956845921335
-          ]
+		                  [9.230103, 45.462399],
+                [9.228135, 45.462407],
+                [9.227947, 45.462399],
+                [9.227813, 45.462377],
+                [9.227598, 45.462294],
+                [9.2274, 45.462196],
+                [9.227271, 45.462177],
+                [9.224138, 45.462204],
+                [9.224224, 45.456247],
+                [9.224208, 45.456168],
+                [9.223768, 45.456199],
+                [9.222003, 45.45618],
+                [9.221853, 45.456236],
+                [9.221842, 45.457541],
+                [9.219611, 45.457523],
+                [9.219498, 45.457534],
+                [9.219444, 45.457489],
+                [9.219375, 45.457414],
+                [9.21938, 45.456184],
+                [9.217245, 45.455879],
+                [9.217116, 45.455864],
+                [9.217025, 45.455898],
+                [9.216907, 45.45598],
+                [9.216827, 45.455931],
+                [9.216714, 45.455924],
+                [9.216623, 45.455958],
+                [9.216548, 45.45598],
+                [9.216274, 45.455442],
+                [9.215958, 45.4549],
+                [9.215308, 45.45397],
+                [9.214842, 45.453376],
+                [9.214118, 45.452514],
+                [9.212701, 45.450783],
+                [9.212589, 45.450621],
+                [9.211231, 45.448966],
+                [9.210234, 45.44772],
+                [9.210078, 45.447705],
+                [9.209939, 45.447664],
+                [9.209842, 45.447626],
+                [9.209756, 45.44757],
+                [9.209295, 45.447852],
+                [9.209204, 45.447901],
+                [9.209091, 45.447931],
+                [9.208474, 45.448326],
+                [9.206538, 45.449515],
+                [9.206548, 45.449948],
+                [9.20716, 45.450704],
+                [9.207959, 45.451691],
+                [9.207975, 45.45192],
+                [9.20606, 45.452688],
+                [9.207122, 45.453975],
+                [9.207573, 45.454524],
+                [9.208227, 45.455344],
+                [9.209102, 45.456432],
+                [9.210706, 45.458392],
+                [9.210765, 45.458486],
+                [9.210802, 45.458573],
+                [9.211376, 45.460857],
+                [9.211398, 45.460947],
+                [9.21136, 45.462302],
+                [9.207916, 45.462313],
+                [9.207809, 45.462309],
+                [9.207707, 45.462343],
+                [9.207149, 45.468009],
+                [9.206849, 45.470785],
+                [9.20657, 45.473663],
+                [9.206564, 45.473817],
+                [9.206527, 45.473957],
+                [9.206446, 45.474058],
+                [9.206361, 45.474137],
+                [9.206243, 45.474212],
+                [9.205862, 45.474401],
+                [9.205459, 45.474664],
+                [9.205379, 45.47475],
+                [9.202815, 45.472222],
+                [9.201806, 45.471267],
+                [9.201109, 45.470612],
+                [9.200765, 45.470319],
+                [9.200417, 45.470003],
+                [9.19929, 45.468837],
+                [9.198512, 45.467941],
+                [9.198271, 45.467629],
+                [9.198062, 45.467317],
+                [9.197933, 45.467208],
+                [9.197783, 45.467012],
+                [9.197665, 45.466839],
+                [9.197531, 45.466854],
+                [9.197257, 45.466847],
+                [9.193749, 45.466978],
+                [9.193743, 45.467038],
+                [9.19369, 45.467148],
+                [9.193717, 45.467208],
+                [9.195315, 45.468156],
+                [9.197155, 45.469179],
+                [9.198207, 45.469777],
+                [9.197756, 45.470157],
+                [9.195201, 45.472262],
+                [9.195058, 45.472358],
+                [9.195063, 45.472618],
+                [9.195063, 45.472907],
+                [9.194709, 45.475198],
+                [9.194725, 45.475292],
+                [9.194682, 45.475567],
+                [9.194618, 45.475657],
+                [9.194607, 45.475747],
+                [9.194634, 45.475822],
+                [9.194752, 45.475996],
+                [9.195825, 45.477158],
+                [9.195916, 45.477184],
+                [9.195991, 45.477233],
+                [9.19641, 45.477541],
+                [9.196581, 45.477703],
+                [9.196844, 45.478],
+                [9.197021, 45.478128],
+                [9.197284, 45.478429],
+                [9.198228, 45.479452],
+                [9.198738, 45.479986],
+                [9.198861, 45.480223],
+                [9.198936, 45.48034],
+                [9.199296, 45.480724],
+                [9.200149, 45.481551],
+                [9.200288, 45.481732],
+                [9.201576, 45.483003],
+                [9.20223, 45.48371],
+                [9.202445, 45.483921],
+                [9.202573, 45.483939],
+                [9.202777, 45.483917],
+                [9.203002, 45.483939],
+                [9.203174, 45.483992],
+                [9.203314, 45.484071],
+                [9.203383, 45.484127],
+                [9.203469, 45.484124],
+                [9.203855, 45.483917],
+                [9.20576, 45.48289],
+                [9.206951, 45.484052],
+                [9.207074, 45.484195],
+                [9.207922, 45.485007],
+                [9.208866, 45.485139],
+                [9.209016, 45.485161],
+                [9.209075, 45.485218],
+                [9.209048, 45.485282],
+                [9.208978, 45.485342],
+                [9.20885, 45.485338],
+                [9.208496, 45.485285],
+                [9.208421, 45.485338],
+                [9.208388, 45.485443],
+                [9.208437, 45.485508],
+                [9.208694, 45.485763],
+                [9.209746, 45.485278],
+                [9.210169, 45.485101],
+                [9.210405, 45.485015],
+                [9.213855, 45.483285],
+                [9.215126, 45.484575],
+                [9.216773, 45.483774],
+                [9.217411, 45.483431],
+                [9.220566, 45.481856],
+                [9.220421, 45.481818],
+                [9.219359, 45.481664],
+                [9.219385, 45.480287],
+                [9.219412, 45.479159],
+                [9.220989, 45.479174],
+                [9.221107, 45.479166],
+                [9.221161, 45.479091],
+                [9.221161, 45.478858],
+                [9.221215, 45.478756],
+                [9.221322, 45.47873],
+                [9.221467, 45.478764],
+                [9.221649, 45.47885],
+                [9.223462, 45.478004],
+                [9.2235, 45.475781],
+                [9.223527, 45.473407],
+                [9.223543, 45.471425],
+                [9.222722, 45.471417],
+                [9.222448, 45.471429],
+                [9.222207, 45.4715],
+                [9.222041, 45.471624],
+                [9.221767, 45.471722],
+                [9.221628, 45.471775],
+                [9.221585, 45.471846],
+                [9.221531, 45.471907],
+                [9.221456, 45.47194],
+                [9.221397, 45.471967],
+                [9.221386, 45.472057],
+                [9.221365, 45.473385],
+                [9.217932, 45.473377],
+                [9.217814, 45.473655],
+                [9.217728, 45.473761],
+                [9.217642, 45.473735],
+                [9.217315, 45.473588],
+                [9.21702, 45.473482],
+                [9.217073, 45.472061],
+                [9.217084, 45.470827],
+                [9.217138, 45.467994],
+                [9.217154, 45.4679],
+                [9.217191, 45.467825],
+                [9.217272, 45.467776],
+                [9.217476, 45.467855],
+                [9.221456, 45.467911],
+                [9.222792, 45.467915],
+                [9.223602, 45.467543],
+                [9.223618, 45.467388],
+                [9.223623, 45.46556],
+                [9.223655, 45.464134],
+                [9.226155, 45.464157]
 				],
 				"type": "LineString"
 			},
@@ -1036,8 +711,8 @@ console.log("drag7 : " + drag7.style.left + " -- " + drag7.style.top)
 			origin: [2.272043600678484,48.8700817475247, 0], 
 			destination: [2.289113514125347,48.879606150739804, 500], 
 			center: [2.272043600678484,48.8700817475247, 0], 
-			zoom: 18, 
-			pitch: 70, 
+			zoom: 14, 
+			pitch: 0, 
 			bearing: 35, 
 			scale: 0.5, 
 			timezone: 'Europe/Madrid'
@@ -1046,15 +721,15 @@ console.log("drag7 : " + drag7.style.left + " -- " + drag7.style.top)
 			customLayer: "custom-layer"
 		}
 	}
-	let timeMinMax = [30, 6000];
+	let timeMinMax = [200, 15000];
 	let api = {
 			fixedZoom: true,
 			pan: true,
-			carSize: 19.2,
+			carSize: 18.2,
 			terrain: 0.0001,
-			time: 3000,
+			time: 12000,
 			path_Position: 0,
-			tailleLine: 30,
+			tailleLine: 5,
 			carAltitude: 0.001,
 			add: "",
 			theme: "",
@@ -1070,7 +745,7 @@ console.log("drag7 : " + drag7.style.left + " -- " + drag7.style.top)
 			contour_progressif_plus: true,
 			invert_map: false,
 			label: true,
-			Show_Hide_Overlays: true,
+			Show_Hide_Overlays: false,
 		
 			//orthographic: false
 		};
@@ -1092,7 +767,7 @@ console.log("drag7 : " + drag7.style.left + " -- " + drag7.style.top)
 	//const inputs = layerList.getElementsByTagName('input');
 
 	var egoExist = true;
-	let lineBlue0;
+	let lineBlue0 = ['rgba(10, 60,100, 0.9)', 'rgba(130, 60,0, 0.9)',  'rgba(72, 130,197, 0.3)', 'rgba(10, 60,100, 0.9)', 'rgba(130, 130,0, 0.9)'];
 	let lineBlueColor = ['rgba(72, 130,197, 1)', 'rgba(255, 130,0, 1)',  'rgba(72, 130,197, 1)', 'rgba(72, 130,197, 1)', 'rgba(255, 200,0, 1)'];
 	let lineBlueStrokeColor = ['#144e93', 'rgba(0, 0, 0, 1)', 'rgba(255, 255,197, 1)', 'rgba(0, 0, 0, 1)', 'rgba(255, 200,0, 0.2)'];
 	let skyColor = ['#73b8ed', 'hsl(237, 99%, 6%)', '#1aa7ec', 'hsl(237, 99%, 6%)', 'hsl(237, 99%, 6%)'];
@@ -1289,7 +964,7 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 //	console.log("longueur de liste : " + lineDistance);
 	var pathConverted = [];
 
-var steps = 5.00*60*60; // 5 min (x60 secondes) à 60 images par secondes
+var steps = 35.00*60*60; // 5 min (x60 secondes) à 60 images par secondes
 //var speedMove = 10;
 // 
 //// Draw an arc between the `origin` & `destination` of the two points
@@ -1457,15 +1132,15 @@ function dragStart(e) {
 			//largeLigne = drag7.style.left;
 	
 	
-			if (hautLigne != "" || largeLigne != ""){
-				hautLigne = drag7.style.top;
-				largeLigne = drag7.style.left;
+			//if (hautLigne != "" || largeLigne != ""){
+			//	hautLigne = drag7.style.top;
+				//largeLigne = drag7.style.left;
 
-			}else{
-				hautLigne = 310 + "px";
-				largeLigne = 915 + "px";
-			}
-	console.log(" hautligne : " + hautLigne)
+			//}else{
+			//	hautLigne = 310 + "px";
+			//	largeLigne = 915 + "px";
+			//}
+//	console.log(" hautligne : " + hautLigne)
 	  		pointX = point.x;
 			pointY = point.y + 90;
 			//makeLine(largeLigne, hautLigne , pointX, pointY);
@@ -1481,14 +1156,14 @@ function dragEnd(e) {
 		isDragging = false;
 		egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
 		  	
-			if (hautLigne != "" || largeLigne != ""){
-				hautLigne = drag7.style.top;
-				largeLigne = drag7.style.left;
+			//if (hautLigne != "" || largeLigne != ""){
+			//	hautLigne = drag7.style.top;
+			//	largeLigne = drag7.style.left;
 
-			}else{
-				hautLigne = 310 + "px";
-				largeLigne = 915 + "px";
-			}
+			//}else{
+			//	hautLigne = 310 + "px";
+			//	largeLigne = 915 + "px";
+			//}
 			toto = egoCarCircle.coordinates;
 			point = map.project(toto);
 	  		pointX = point.x;
@@ -1514,14 +1189,14 @@ function dragIt(e) {
 	  
 	  		toto = egoCarCircle.coordinates;
 			point = map.project(toto);
-			if (hautLigne != "" || largeLigne != ""){
-				hautLigne = drag7.style.top;
-				largeLigne = drag7.style.left;
+			//if (hautLigne != "" || largeLigne != ""){
+			//	hautLigne = drag7.style.top;
+			//	largeLigne = drag7.style.left;
 
-			}else{
-				hautLigne = 310 + "px";
-				largeLigne = 915 + "px";
-			}
+			//}else{
+			//	hautLigne = 310 + "px";
+			//	largeLigne = 915 + "px";
+			//}
 	  		pointX = point.x;
 			pointY = point.y + 60;
 			//makeLine(largeLigne, hautLigne , pointX, pointY);
@@ -1672,7 +1347,7 @@ console.log("draggg")
             id: 'lineBlue1',
             paint: {
                 'line-color': lineBlueStrokeColor[selectedTheme],
-                'line-width': api.tailleLine+3,
+                'line-width': api.tailleLine+2,
 
             },
             layout: {
@@ -1687,7 +1362,7 @@ console.log("draggg")
             source: 'trace',
             id: 'lineBlue0',
             paint: {
-               /*'line-color': lineBlueColor[selectedTheme],*/
+               'line-color': lineBlue0[selectedTheme],/**/
                 'line-width': api.tailleLine,
 				//'line-trim-offset': [0.0,1.0],
 				'line-gradient': [
@@ -1825,29 +1500,29 @@ console.log("draggg")
 							//console.log("child.name " + child.name)
 							if ( child.isMesh && child.name=="Socle") {
 							 //console.log("Disc")
-							child.material = new THREE.MeshPhongMaterial( {color: '#fff', transparent: true, opacity:1,  depthTest: false} );
+							child.material = new THREE.MeshPhongMaterial( {color: 'rgba(255, 200,0, 1)' , transparent: true, opacity:1,  depthTest: false} );
 							}
 							if ( child.isMesh && child.name=="CylinderExt") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshPhongMaterial( {color: '#024DD9', transparent: true, opacity:1,  depthTest: false} );
+								child.material = new THREE.MeshPhongMaterial( {color: '#fff' /*'#024DD9'*/, transparent: true, opacity:1,  depthTest: false} );
 								
 								/*child.material = new THREE.MeshPhysicalMaterial({ color: "#00baff", emissive:"#191919", reflectivity: 1,  roughness: 0.5, metalness: 0, transmission: 0.8, ior: 2.3, opacity: 0,  thickness: 0, clearcoat: 0 });*/
 							}
 							if ( child.isMesh && child.name=="CylinderEpais") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshPhongMaterial( {color: '#3274ee', transparent: true, opacity:1,  depthTest: false} );
+								child.material = new THREE.MeshPhongMaterial( {color: 'rgba(0, 0, 0, 1)' /*'#3274ee'*/, transparent: true, opacity:1,  depthTest: false} );
 
 							}
 							if ( child.isMesh && child.name=="Cylinder") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshPhongMaterial( {color: '#fff', transparent: true, opacity:1,  depthTest: false} );
+								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(255, 200,0, 1)', transparent: true, opacity:1,  depthTest: false} );
 								//child.castShadow = true;
 								//child.frustumCulled = true;
 								
 							}
 							if ( child.isMesh && child.name=="fleche") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshPhongMaterial( {color: '#0222B0', transparent: true, opacity:1,  depthTest: false} );
+								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(0, 0, 0, 1)' /*'#0222B0'*/, transparent: true, opacity:1,  depthTest: false} );
 								//child.castShadow = true;
 								//child.frustumCulled = true;
 
@@ -2194,7 +1869,7 @@ function initGUI() {
 	}*/
 
 //const selector = themeFolder.add(themeMap, "theme", optionsTheme.theme).setValue("Dacia1");
-folderTheme.add(optionsTheme, "theme", optionsTheme.theme).setValue('Dacia1').onChange(changeTheme);		
+folderTheme.add(optionsTheme, "theme", optionsTheme.theme).setValue('NicoMichel').onChange(changeTheme);		
 
 const mapOptions = gui.addFolder('Map options')
 mapOptions.close();
@@ -2219,14 +1894,14 @@ mapOptions.close();
 	gui.add(obj3, 'add').name('reset').listen();
 
 const mapWinOptions = gui.addFolder('Map window')
-	mapWinOptions.add(api, 'windowWidth2', 0, 50).step(1).onChange(changeWinSize2).setValue(0).listen();
+	mapWinOptions.add(api, 'windowWidth2', 0, 50).step(1).onChange(changeWinSize2).setValue(16).listen();
 	//mapWinOptions.add(api, 'windowWidth', 0, 100).step(1).onChange(changeWinSize).setValue(100).listen();
-	mapWinOptions.add(api, 'windowHeight', 0, 100).step(1).onChange(changeWinHeight).setValue(60).listen();
+	mapWinOptions.add(api, 'windowHeight', 0, 100).step(1).onChange(changeWinHeight).setValue(78).listen();
 	mapWinOptions.add(api, 'windowRadius', 0, 400).step(1).onChange(changeWinRadius).listen();
 	mapWinOptions.add(api, 'winPositionX', -68, 68).step(1).onChange(changeWinPosX).listen().setValue(0);
 	mapWinOptions.add(api, 'winPositionY', 0, 50).step(1).onChange(changeWinPosY).setValue(10).listen();
 	
-	mapWinOptions.add(api, 'contourWidth', 0, 100).step(1).onChange(changecontourWidth).listen().setValue(60);
+	mapWinOptions.add(api, 'contourWidth', 0, 100).step(1).onChange(changecontourWidth).listen().setValue(12);
 	
 	/*mapWinOptions.add(api, "contour_progressif").onChange(borderDiffus).setValue(false).listen();*/
 	mapWinOptions.add(api, "contour_progressif_plus").onChange(borderDiffus_plus).setValue(false).listen();/**/
@@ -2320,7 +1995,7 @@ function dragElement(elmnt) {
 			console.log("changeLineWidth : " + api.tailleLine)//////////////////*********************** 
 			//const myLayer = map.getLayer('line').paint._values['line-width'].value;
 			map.setPaintProperty('lineBlue2', 'line-width', api.tailleLine+23);
-			map.setPaintProperty('lineBlue1', 'line-width', api.tailleLine+3);
+			map.setPaintProperty('lineBlue1', 'line-width', api.tailleLine+2);
 			map.setPaintProperty('lineBlue0', 'line-width', api.tailleLine);
 			//map.getLayer('line').paint._values['line-width'].value.value = api.tailleLine;
 			console.log(map.getLayer('lineBlue0'))//////////////////*********************** 
@@ -2381,14 +2056,14 @@ pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, p
 
 			
 			//console.log("coor X Y egocar : " + point.x + " -- " + point.y)
-			if (hautLigne != "" || largeLigne != ""){
-				hautLigne = drag7.style.top;
-				largeLigne = drag7.style.left;
+			// if (hautLigne != "" || largeLigne != ""){
+			//	hautLigne = drag7.style.top;
+			//	largeLigne = drag7.style.left;
 
-			}else{
-				hautLigne = 310;
-				largeLigne = 915;
-			}
+			// }else{
+			//	hautLigne = 310;
+			//	largeLigne = 915;
+			// }
 			//makeLine(largeLigne, hautLigne , pointX, pointY);
 			const lngLat = {
 				lng: alongPath.geometry.coordinates[0],
@@ -2427,8 +2102,9 @@ pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, p
 			map.setPaintProperty('lineBlue0', 'line-gradient', [
 				'step',
 				['line-progress'],
-				/*'rgba(255, 130,197, 1)',*/
-				'rgba(130, 130, 0, 1)',
+				/*'rgba(255, 130,197, 1)',
+				'rgba(130, 130, 0, 1)',*/
+				lineBlue0[selectedTheme], 
 				retour7Container.value,
 				lineBlueColor[selectedTheme]
 			]);/**/
@@ -2573,7 +2249,7 @@ function labelChange() {
 
 
 function SHOverlays(){
-	if (api.Show_Hide_Overlays){
+	if (!api.Show_Hide_Overlays){
 		//document.getElementById('myDiv').display = "block";
 
 		sizeWin.style.setProperty('--SHOverlays', "block");	
@@ -2703,7 +2379,7 @@ async function animate(elem, initVal, lastVal, duration) {
 
 		init(); // lancement de la premiere initialisation de la map
 	</script>
-	<script src="./distrib/drag7.js"></script><!---->
+	<!--<script src="./distrib/drag7.js"></script>-->
 	<script src="./distrib/drag6.js"></script>
 	<script src="./distrib/drag5.js"></script>
 	<script src="./distrib/drag4.js"></script>
