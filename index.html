@@ -50,7 +50,7 @@
 :root {
 	--larg : 100%;
 	--larg2 : 0%;
-	--haut : 60%;
+	--haut : 100%;
 	--posWinX : 0%;
 	--posWinY : 0%;
 	--blurHeight : 100px;
@@ -76,8 +76,8 @@
 	</div>
 		</h>
 	<div id="form3" class="forme3"></div>
-	<div id="winFeedback" class="textHelp">W: - H:</div>
-	<div id="HelpText" class="textHelp">press "H" to hide controls panels</div>
+<!--	<div id="winFeedback" class="textHelp">W: - H:</div>
+	<div id="HelpText" class="textHelp">press "H" to hide controls panels</div> -->
 <!--	
 <div><a class="btn btn-default" href="index2.html" target="_blank" style="color:blue; bottom:10%; position:absolute;">Open new window</a>&nbsp;</div>
  //////////////////////////////////a enlever	-->
@@ -201,11 +201,11 @@
 <div id="ret7-cont" class="retour1-container"></div>
 <div id="ret8-cont" class="retour1-container"></div>
 
-	<input
+<!--	<input
     type="file"
     id="file"
     name="file"
-    accept="application/geo+json,application/vnd.geo+json,.geojson"/>
+    accept="application/geo+json,application/vnd.geo+json,.geojson"/> -->
 	
 <!--<div class="svgLine" >
 	
@@ -274,7 +274,7 @@
 	
 	var flightPlan2;
 	
-	 function handleFileSelect(evt) {
+/*	 function handleFileSelect(evt) {
         var file = evt.target.files[0]; // Read first selected file
 
         var reader = new FileReader();
@@ -312,7 +312,7 @@
 
     document
         .getElementById('file')
-        .addEventListener('change', handleFileSelect, false);/**/
+        .addEventListener('change', handleFileSelect, false);*/
 	
 	
 	/*
@@ -816,8 +816,8 @@ function makeLine(x1P, y1P, x2P, y2P) {
 	mapboxgl.accessToken = config.accessToken;
 	let mapConfig = {
 		MAD: {
-			origin: [2.272043600678484,48.8700817475247, 0], 
-			destination: [2.289113514125347,48.879606150739804, 500], 
+			origin: [9.230103, 45.462399, 0], 
+			destination: [9.226155, 45.464157, 500], 
 			center: [2.272043600678484,48.8700817475247, 0], 
 			zoom: 14, 
 			pitch: 0, 
@@ -847,7 +847,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
 			windowHeight: 100,
 			windowRadius: 0,
 			winPositionX: 12,
-			winPositionY: 10,
+			winPositionY: 0,
 			contourWidth: 60,
 			//contour_progressif: true,
 			contour_progressif_plus: true,
@@ -880,7 +880,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
 	let lineBlueStrokeColor = ['#144e93', 'rgba(0, 0, 0, 1)', 'rgba(255, 255,197, 1)', 'rgba(0, 0, 0, 1)', 'rgba(255, 200,0, 0.2)'];
 	let skyColor = ['#73b8ed', 'hsl(237, 99%, 6%)', '#1aa7ec', 'hsl(237, 99%, 6%)', 'hsl(237, 99%, 6%)'];
 	let horizonColor = ['#fff', '#000', '#fff', 'rgba(255, 0,197, 0.00)', '#000']; //['#fff', '#000', '#fff'];
-	var map;
+	let map;
 	let egoCarCircle;
 	
 	
@@ -2004,10 +2004,10 @@ mapOptions.close();
 const mapWinOptions = gui.addFolder('Map window')
 	mapWinOptions.add(api, 'windowWidth2', 0, 50).step(1).onChange(changeWinSize2).setValue(0).listen();
 	//mapWinOptions.add(api, 'windowWidth', 0, 100).step(1).onChange(changeWinSize).setValue(100).listen();
-	mapWinOptions.add(api, 'windowHeight', 0, 100).step(1).onChange(changeWinHeight).setValue(100).listen();
+	mapWinOptions.add(api, 'windowHeight', 0, 120).step(1).onChange(changeWinHeight).setValue(100).listen();
 	mapWinOptions.add(api, 'windowRadius', 0, 400).step(1).onChange(changeWinRadius).listen();
 	mapWinOptions.add(api, 'winPositionX', -68, 68).step(1).onChange(changeWinPosX).listen().setValue(0);
-	mapWinOptions.add(api, 'winPositionY', 0, 50).step(1).onChange(changeWinPosY).setValue(10).listen();
+	mapWinOptions.add(api, 'winPositionY', 0, 50).step(1).onChange(changeWinPosY).setValue(0).listen();
 	
 	mapWinOptions.add(api, 'contourWidth', 0, 100).step(1).onChange(changecontourWidth).listen().setValue(12);
 	
