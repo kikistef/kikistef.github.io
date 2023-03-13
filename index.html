@@ -71,10 +71,11 @@
 <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
 <h2 style="visibility: hidden;">Window <small id="wndID">...</small></h2>
 	<h>
-	<div id="map" >
+
+		</h>
+		<div id="map" >
 	<!--<div class="forme"><div class="couvre">toto</div></div>-->
 	</div>
-		</h>
 	<div id="form3" class="forme3"></div>
 <!--	<div id="winFeedback" class="textHelp">W: - H:</div>
 	<div id="HelpText" class="textHelp">press "H" to hide controls panels</div> -->
@@ -219,9 +220,9 @@
 	
 <!--<div class="trucLine"></div>--> 
  <script src="./distrib/hermes.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.0/gsap.min.js"></script>
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.0/gsap.min.js"></script>
 	
-	<!--		<script type="importmap">
+			<script type="importmap">
 			{
 				"imports": {
 					"three": "./three/build/three.module.js",
@@ -399,6 +400,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
                 [9.224219, 45.462211],
                 [9.224154, 45.462177],
                 [9.224144, 45.462118],
+                [9.224164, 45.460651],
                 [9.224184, 45.459183],
                 [9.224229, 45.456296],
                 [9.224224, 45.456247],
@@ -428,6 +430,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
                 [9.219337, 45.456183],
                 [9.219262, 45.456161],
                 [9.218253, 45.45602],
+                [9.217985, 45.455982],
                 [9.217245, 45.455879],
                 [9.217116, 45.455864],
                 [9.217025, 45.455898],
@@ -464,21 +467,25 @@ function makeLine(x1P, y1P, x2P, y2P) {
                 [9.206564, 45.449944],
                 [9.206602, 45.450001],
                 [9.20716, 45.450704],
+                [9.207802, 45.451487],
                 [9.207922, 45.451634],
                 [9.207954, 45.451702],
                 [9.207981, 45.451867],
                 [9.207943, 45.451916],
                 [9.207895, 45.45195],
+                [9.206611, 45.452461],
                 [9.206124, 45.452654],
                 [9.206098, 45.452703],
                 [9.206119, 45.452748],
                 [9.207122, 45.453975],
                 [9.207573, 45.454524],
+                [9.207873, 45.454897],
                 [9.208227, 45.455344],
                 [9.209102, 45.456432],
                 [9.210706, 45.458392],
                 [9.210765, 45.458486],
                 [9.210802, 45.458573],
+                [9.210985, 45.459258],
                 [9.211089, 45.459715],
                 [9.211355, 45.460763],
                 [9.211376, 45.460857],
@@ -542,6 +549,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
                 [9.195063, 45.472618],
                 [9.195063, 45.472907],
                 [9.194886, 45.474053],
+                [9.194763, 45.474811],
                 [9.194709, 45.475145],
                 [9.194709, 45.475198],
                 [9.194725, 45.475292],
@@ -584,6 +592,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
                 [9.205706, 45.482905],
                 [9.205754, 45.482901],
                 [9.205797, 45.482931],
+                [9.206374, 45.483492],
                 [9.206951, 45.484052],
                 [9.207074, 45.484195],
                 [9.207873, 45.484955],
@@ -605,6 +614,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
                 [9.209746, 45.485278],
                 [9.210169, 45.485101],
                 [9.210405, 45.485015],
+                [9.211414, 45.484507],
                 [9.21213, 45.48415],
                 [9.213796, 45.483319],
                 [9.213881, 45.483315],
@@ -623,6 +633,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
                 [9.219423, 45.481671],
                 [9.219369, 45.481637],
                 [9.219364, 45.48157],
+                [9.219375, 45.480929],
                 [9.219385, 45.480287],
                 [9.219412, 45.479204],
                 [9.21946, 45.479159],
@@ -833,7 +844,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
 	let api = {
 			fixedZoom: true,
 			pan: true,
-			carSize: 18.2,
+			carSize: 17.3,
 			terrain: 0.0001,
 			time: 12000,
 			path_Position: 0,
@@ -982,7 +993,7 @@ var sizeWin = document.querySelector(':root');
 
 function myResizeWin_set2(valeur) { //////////////////*********************** 
 	sizeWin.style.setProperty('--larg2', valeur);
-	
+	console.log("--larg2 : " + valeur)
 		const data = {
 		winWidth2: valeur 
 	};
@@ -1069,13 +1080,13 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 	var pathAltDist = turf.lineDistance(pathAltClone);
 	const lineDistance = turf.length(pathAltClone);
 	var pathAlong = turf.along(pathAltClone, 1);
-//	console.log("longueur de liste : " + lineDistance);
+    //	console.log("longueur de liste : " + lineDistance);
 	var pathConverted = [];
 
-var steps = 35.00*60*60; // 5 min (x60 secondes) à 60 images par secondes
-//var speedMove = 10;
-// 
-//// Draw an arc between the `origin` & `destination` of the two points
+	var steps = 35.00*60*60; // 5 min (x60 secondes) à 60 images par secondes
+	//var speedMove = 10;
+	// 
+	//// Draw an arc between the `origin` & `destination` of the two points
 
 	function convertPath(){
 		for (var i = 0; i < pathAltDist; i += pathAltDist / steps) {
@@ -1087,7 +1098,7 @@ var steps = 35.00*60*60; // 5 min (x60 secondes) à 60 images par secondes
 	
 	
 	
-		var bbbox = pathAltClone;
+	var bbbox = pathAltClone;
 	function fit() {
     	map.fitBounds(bbbox, {padding: 20});
 	}
@@ -1174,7 +1185,7 @@ window.addEventListener("resize", onresize);
 		// we can add Threebox to mapbox to add built-in mouseover/mouseout and click behaviors
 		window.tb = new Threebox(
 			map,
-			map.getCanvas().getContext('3D'),
+			map.getCanvas().getContext('2D'),
 			{
 				realSunlight: true,
 				enableSelectingObjects: true, //change this to false to disable 3D objects selection
@@ -1555,7 +1566,7 @@ console.log("draggg")
 					  context: mbxContext,
 					  antialias: true,
 					});
-					renderer.autoClear = false;
+					renderer.autoClear = true;
 					//this.renderer.setSize( window.innerWidth, window.innerHeight );
 					//this.renderer.setPixelRatio( window.devicePixelRatio );
 					renderer.toneMapping = THREE.ReinhardToneMapping;
@@ -1630,7 +1641,7 @@ console.log("draggg")
 							}
 							if ( child.isMesh && child.name=="fleche") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(0, 0, 0, 1)' /*'#0222B0'*/, transparent: true, opacity:1,  depthTest: false} );
+								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(255, 200,0, 1)' /*'#0222B0'*/, transparent: true, opacity:1,  depthTest: false} );
 								//child.castShadow = true;
 								//child.frustumCulled = true;
 
@@ -1957,6 +1968,7 @@ console.log("open window")
 };// action Reset 
 	
 initGUI();
+	init();
 function initGUI() {
 
 	//gui = new GUI()
@@ -1981,7 +1993,7 @@ folderTheme.add(optionsTheme, "theme", optionsTheme.theme).setValue('NicoMichel'
 
 const mapOptions = gui.addFolder('Map options')
 mapOptions.close();
-	mapOptions.add(api, 'carSize', 18, 21).step(0.1).onChange(changeScale);
+	mapOptions.add(api, 'carSize', 12, 21).step(0.1).onChange(changeScale);
 	mapOptions.add(api, 'terrain', 0.0001, 2).step(0.01).onChange(changeTerrain);
 	mapOptions.add(api, 'time', timeMinMax[0], timeMinMax[1]).step(10).onChange(changetime);
 	mapOptions.add(api, 'path_Position', 0, 1).step(0.0001).onChange(changePosPath);
@@ -2002,7 +2014,7 @@ mapOptions.close();
 	gui.add(obj3, 'add').name('reset').listen();
 
 const mapWinOptions = gui.addFolder('Map window')
-	mapWinOptions.add(api, 'windowWidth2', 0, 50).step(1).onChange(changeWinSize2).setValue(0).listen();
+	mapWinOptions.add(api, 'windowWidth2', 0, 100).step(1).onChange(changeWinSize2).setValue(0).listen();
 	//mapWinOptions.add(api, 'windowWidth', 0, 100).step(1).onChange(changeWinSize).setValue(100).listen();
 	mapWinOptions.add(api, 'windowHeight', 0, 120).step(1).onChange(changeWinHeight).setValue(100).listen();
 	mapWinOptions.add(api, 'windowRadius', 0, 400).step(1).onChange(changeWinRadius).listen();
@@ -2485,7 +2497,7 @@ async function animate(elem, initVal, lastVal, duration) {
 	 //animate(text2, 0, 232, 7000);
      // }
 
-		init(); // lancement de la premiere initialisation de la map
+		 // lancement de la premiere initialisation de la map
 	</script>
 	<!--<script src="./distrib/drag7.js"></script>-->
 	<script src="./distrib/drag6.js"></script>
