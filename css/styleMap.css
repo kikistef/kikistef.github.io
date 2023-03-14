@@ -609,7 +609,7 @@ svg {
 		/*outline: white 0px solid;*/
 		border-radius: 8px;
 		outline-offset: 0px;
-		outline: rgba(255, 200,0, 1) 1px solid;
+		outline: rgba(247, 247,47, 1) 1px solid;
 		backdrop-filter: blur(4px);/**/
 		background: rgba(0,0,0, 0.3);
 		transition-delay: 0.7s;
@@ -664,7 +664,7 @@ svg {
 		transition: 0.1s;
 	}
 	.driveKmNumG {
-		color: rgba(255, 200,0, 1);
+		color: rgba(247, 247,47, 1);
 	}
 	.boxChargePercent:hover .driveKmNum{
 		font-size: 38px;
