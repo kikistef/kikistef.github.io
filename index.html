@@ -830,7 +830,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
 			origin: [9.230103, 45.462399, 0], 
 			destination: [9.226155, 45.464157, 500], 
 			center: [2.272043600678484,48.8700817475247, 0], 
-			zoom: 14, 
+			zoom: 14.5, 
 			pitch: 0, 
 			bearing: 35, 
 			scale: 0.5, 
@@ -887,8 +887,8 @@ function makeLine(x1P, y1P, x2P, y2P) {
 
 	var egoExist = true;
 	let lineBlue0 = ['rgba(10, 60,100, 0.9)', 'rgba(130, 60,0, 0.9)',  'rgba(72, 130,197, 0.3)', 'rgba(10, 60,100, 0.9)', 'rgba(130, 130,0, 0.9)'];
-	let lineBlueColor = ['rgba(72, 130,197, 1)', 'rgba(255, 130,0, 1)',  'rgba(72, 130,197, 1)', 'rgba(72, 130,197, 1)', 'rgba(255, 200,0, 1)'];
-	let lineBlueStrokeColor = ['#144e93', 'rgba(0, 0, 0, 1)', 'rgba(255, 255,197, 1)', 'rgba(0, 0, 0, 1)', 'rgba(255, 200,0, 0.2)'];
+	let lineBlueColor = ['rgba(72, 130,197, 1)', 'rgba(255, 130,0, 1)',  'rgba(72, 130,197, 1)', 'rgba(72, 130,197, 1)', 'rgba(247, 247,47, 1)'];
+	let lineBlueStrokeColor = ['#144e93', 'rgba(0, 0, 0, 1)', 'rgba(255, 255,197, 1)', 'rgba(0, 0, 0, 1)', 'rgba(247, 247,47, 0.2)'];
 	let skyColor = ['#73b8ed', 'hsl(237, 99%, 6%)', '#1aa7ec', 'hsl(237, 99%, 6%)', 'hsl(237, 99%, 6%)'];
 	let horizonColor = ['#fff', '#000', '#fff', 'rgba(255, 0,197, 0.00)', '#000']; //['#fff', '#000', '#fff'];
 	let map;
@@ -1619,7 +1619,7 @@ console.log("draggg")
 							//console.log("child.name " + child.name)
 							if ( child.isMesh && child.name=="Socle") {
 							 //console.log("Disc")
-							child.material = new THREE.MeshPhongMaterial( {color: 'rgba(255, 200,0, 1)' , transparent: true, opacity:1,  depthTest: false} );
+							child.material = new THREE.MeshPhongMaterial( {color: 'rgba(247, 247,47, 1)' , transparent: true, opacity:1,  depthTest: false} );
 							}
 							if ( child.isMesh && child.name=="CylinderExt") {
 								//console.log("cercleExter")
@@ -1634,14 +1634,14 @@ console.log("draggg")
 							}
 							if ( child.isMesh && child.name=="Cylinder") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(255, 200,0, 1)', transparent: true, opacity:1,  depthTest: false} );
+								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)', transparent: true, opacity:1,  depthTest: false} );
 								//child.castShadow = true;
 								//child.frustumCulled = true;
 								
 							}
 							if ( child.isMesh && child.name=="fleche") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(255, 200,0, 1)' /*'#0222B0'*/, transparent: true, opacity:1,  depthTest: false} );
+								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)' /*'#0222B0'*/, transparent: true, opacity:1,  depthTest: false} );
 								//child.castShadow = true;
 								//child.frustumCulled = true;
 
