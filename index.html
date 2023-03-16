@@ -186,7 +186,7 @@
 <label for="outdoors-v11">outdoors</label>
 </div>--><!---->
 	
-	<div id="boite-container" class="transition boite-container"></div>
+	<div id="boite-container" class="transition boite-container">
 
 <div id="ret12-cont" class="retour2-container"></div>
 <div id="ret11-cont" class="retour2-container"></div>
@@ -200,7 +200,7 @@
 <div id="ret5-cont" class="retour1-container"></div>
 <div id="ret6-cont" class="retour1-container"></div>
 <div id="ret7-cont" class="retour1-container"></div>
-<div id="ret8-cont" class="retour1-container"></div>
+<div id="ret8-cont" class="retour1-container"></div></div>
 
 <!--	<input
     type="file"
@@ -829,10 +829,10 @@ function makeLine(x1P, y1P, x2P, y2P) {
 		MAD: {
 			origin: [9.230103, 45.462399, 0], 
 			destination: [9.226155, 45.464157, 500], 
-			center: [2.272043600678484,48.8700817475247, 0], 
-			zoom: 14.5, 
+			center: [9.230103, 45.462399, 0], 
+			zoom: 10.5, 
 			pitch: 0, 
-			bearing: 35, 
+			bearing: -90, 
 			scale: 0.5, 
 			timezone: 'Europe/Madrid'
 		},
@@ -860,6 +860,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
 			winPositionX: 12,
 			winPositionY: 0,
 			contourWidth: 60,
+			play_pause_Camera: false,
 			//contour_progressif: true,
 			contour_progressif_plus: true,
 			invert_map: false,
@@ -886,7 +887,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
 	//const inputs = layerList.getElementsByTagName('input');
 
 	var egoExist = true;
-	let lineBlue0 = ['rgba(10, 60,100, 0.9)', 'rgba(130, 60,0, 0.9)',  'rgba(72, 130,197, 0.3)', 'rgba(10, 60,100, 0.9)', 'rgba(130, 130,0, 0.9)'];
+	let lineBlueAfter = ['rgba(10, 60,100, 0.9)', 'rgba(130, 60,0, 0.9)',  'rgba(72, 130,197, 0.3)', 'rgba(10, 60,100, 0.9)', 'rgba(130, 130,0, 0.9)'];
 	let lineBlueColor = ['rgba(72, 130,197, 1)', 'rgba(255, 130,0, 1)',  'rgba(72, 130,197, 1)', 'rgba(72, 130,197, 1)', 'rgba(247, 247,47, 1)'];
 	let lineBlueStrokeColor = ['#144e93', 'rgba(0, 0, 0, 1)', 'rgba(255, 255,197, 1)', 'rgba(0, 0, 0, 1)', 'rgba(247, 247,47, 0.2)'];
 	let skyColor = ['#73b8ed', 'hsl(237, 99%, 6%)', '#1aa7ec', 'hsl(237, 99%, 6%)', 'hsl(237, 99%, 6%)'];
@@ -895,8 +896,8 @@ function makeLine(x1P, y1P, x2P, y2P) {
 	let egoCarCircle;
 	
 	
-	var animLaunched = false; // variable du "play pause camera" boolean
-	var egoLaunched = false; // variable du "play pause car" boolean
+	var animLaunched = true; // variable du "play pause camera" boolean
+	var egoLaunched = true; // variable du "play pause car" boolean
 
 	var calcClic1;
 	var calcClic2;
@@ -904,6 +905,8 @@ function makeLine(x1P, y1P, x2P, y2P) {
 	var clic=0;
 	
 	const pathAlt = turf.lineString(flightPlan.geometry.coordinates);
+	
+
 //	console.log("v    v    v")//////////////////*********************** 
 //	console.log(flightPlan.geometry.coordinates)//////////////////*********************** 
 	const pathDistance = turf.lineDistance(pathAlt);
@@ -1066,7 +1069,6 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 	hermes.send('setWinBorderSmooth_plus', data, true);
 }
 	
-	
 
 	
 	function myBlurWin_set(valeur) {
@@ -1098,10 +1100,12 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 	
 	
 	
-	var bbbox = pathAltClone;
+	//var bbox = [9.209772, 45.447573],[9.208694, 45.485763];
+	//var bboxPolygon = turf.bboxPolygon(bbox);
+	//console.log(bbox);
 	function fit() {
-    	map.fitBounds(bbbox, {padding: 20});
-	}
+    	map.fitBounds([[9.209772, 45.447573],[9.208694, 45.485763]], {padding: 200, bearing:-90, speed: 0.2,});
+	}/**/
 	
 	
 	
@@ -1148,7 +1152,28 @@ window.addEventListener("resize", onresize);
 			bearing: mapConfig.MAD.bearing,
 			interactive: true,
 			attributionControl: false,
+			screenSpeed: 0.4,
+			 
 		});
+			map.fitBounds([[9.209772, 45.447573],[9.208694, 45.485763]], {padding: {
+      top: -100,
+      bottom: 100,
+      left: 100,
+      right: 100
+   }, bearing:-90, speed: 0.2,});
+			
+		/*	map.flyTo({
+			center: [9.230103, 45.462399, 0],
+			essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+			screenSpeed: 0.2,
+			zoom: 14.5,
+			bearing: -90, 
+			pitch: 0,
+			curve: 2.42,
+			easing(t) {
+				return t;
+			}	
+		});*/
 		//mapResize()
 		//await map.once('idle');
 			pathConverted = [];
@@ -1185,13 +1210,13 @@ window.addEventListener("resize", onresize);
 		// we can add Threebox to mapbox to add built-in mouseover/mouseout and click behaviors
 		window.tb = new Threebox(
 			map,
-			map.getCanvas().getContext('2D'),
+			map.getCanvas().getContext('3D'),
 			{
 				realSunlight: true,
 				enableSelectingObjects: true, //change this to false to disable 3D objects selection
 				enableTooltips: true, // change this to false to disable default tooltips on fill-extrusion and 3D models
 				//enableDraggingObjects: true,
-				 willReadFrequently: true,
+				willReadFrequently: true,
 				outlinePass: true,
 				
 				sky: false,
@@ -1207,7 +1232,7 @@ window.addEventListener("resize", onresize);
 
 function addEgoCircle(){
 	clearInterval(addEgoCircle);
-	egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
+	//egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
 	
 }
 			
@@ -1339,8 +1364,7 @@ var egoPresent = false;
 map.on('style.load', function () {
 
 			mapAddEgo();
-			//
-			//}
+
 			map.setFog({ //////////////////////ajout du fog ///////////////
 				'range': [10.0, 20.0],
 				/*'color': 'rgba(255,104,0, 0.2)',*/
@@ -1479,9 +1503,9 @@ console.log("draggg")
 		map.addLayer({
             type: 'line',
             source: 'trace',
-            id: 'lineBlue0',
+            id: 'lineBlueAfter',
             paint: {
-               'line-color': lineBlue0[selectedTheme],/**/
+               'line-color': lineBlueAfter[selectedTheme],/**/
                 'line-width': api.tailleLine,
 				//'line-trim-offset': [0.0,1.0],
 				'line-gradient': [
@@ -1582,19 +1606,19 @@ console.log("draggg")
 			const helper = new THREE.CameraHelper( camera );
 			scene.add( helper );
 					
-					const renderScene = new RenderPass( scene, camera );
+			/*		const renderScene = new RenderPass( scene, camera );
 					
 			const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );//
 			bloomPass.threshold = params.bloomThreshold;
 			bloomPass.strength = params.bloomStrength;
-			bloomPass.radius = params.bloomRadius;/**/
+			bloomPass.radius = params.bloomRadius;
 			bloomPass.renderToScreen = true
 			
 			composer = new EffectComposer( renderer );
 					composer.addPass( renderScene );
 			composer.addPass( bloomPass );
 					
-			console.log("bloomPass.threshold :  " +  bloomPass.threshold)		
+			console.log("bloomPass.threshold :  " +  bloomPass.threshold)*/		
 					//document.body.appendChild(renderer.domElement);
 					
 					
@@ -1664,6 +1688,8 @@ console.log("draggg")
 						egoCarCircle.setRotation({ x: 0, y: 0, z: 0 });
 						/*egoCarCircle.setScale({ x: 1, y: 1, z: 1 }); */
 						egoCarCircle.addTooltip("Car Position Here", true);
+						api.pan = false;
+						console.log("tototo")
 						egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
 						tb.add(egoCarCircle);
 
@@ -1674,6 +1700,7 @@ console.log("draggg")
 							egoExist = false;
 						
 						
+
 //						setTimeout(() => {
 //							let opt = {
 //								coords: mapConfig.MAD.destination, duration: 20000
@@ -1737,6 +1764,11 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 //			easing: easing
 //			});*/
 //	break;
+		case 97:
+		flyto1();
+			
+			break;
+			
 
 //touche ----------[ Maj ]----------  pour deplacer la carte	
 	case 16:		
@@ -1843,7 +1875,7 @@ document.body.onkeydown = function(ev){//raccourcis clavier
     )
     newChildWindow.moveTo(screenDetails.screens[1].left, 0)*/
 			fit();
-			changeScreenSize()
+			//changeScreenSize()
 	  console.log("trucmuche");
  	break;
 
@@ -1867,24 +1899,46 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 		//isPaused = !isPaused; // flips the pause state
 		//egoCarCircle.isPlaying = true;
 			//egoLaunched = !egoLaunched;
-			console.log("isplaying : " );
-			if(document.getElementById('ret9-cont').value) {
-					document.getElementById('ret9-cont').value = false;
-					//document.getElementById('ret11-cont').value = false;
-				api.pan = false;
-				//animONOFF = false;
-				}else{
-					document.getElementById('ret9-cont').value = true;	
-					//document.getElementById('ret11-cont').value = 0;
-					api.pan = true;
-					//animONOFF = true;
-				}
+playPauseEgoCar();
+
 			//document.getElementById('ret11-cont').value = false
 		//console.log(" lettre i ");
 	break;
 		}
 	};
 /////////////////////////////////////Fin Keyboard/////////////////////////////////	
+	
+	function playPauseEgoCar(){
+				if (egoLaunched){
+			console.log("joue" );//////////////////*********************** 
+			egoExist = true;
+			document.getElementById('ret12-cont').value =  document.getElementById('ret11-cont').value;
+			document.getElementById('ret12-cont').innerHTML = String(document.getElementById('ret12-cont').value)
+			//animONOFF = true;
+			document.getElementById('ret9-cont').value = true;	
+			//api.pan = false
+			
+		}else{
+			console.log("arrete");//////////////////*********************** 
+			document.getElementById('ret9-cont').value = false;
+			//api.pan = false
+		}
+			egoLaunched = !egoLaunched;
+	}
+	function playPauseCamera(){
+		
+		if (animLaunched){
+			//egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
+			api.pan = true;
+		}else{
+			//egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
+			api.pan = false;
+		}	
+		animLaunched = !animLaunched; 
+	}
+	
+	
+	
  //ajout gocar + ligne bleue et  de la source (geojson) du trajet ainsi que du chrgt de la gui 
     function changeScreenSize() {        
         window.resizeTo(screen.width-300,screen.height-500, self)   
@@ -1894,50 +1948,23 @@ var animONOFF = true;
 var obj1 = {  // action Play/Pause Camera
 	add:function(){ 
 		console.log("play : " + animLaunched);//////////////////*********************** 
-		if (animLaunched){
-			egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
-
-		}else{
-			egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
-		}	
-		animLaunched = !animLaunched; 
-		
+		playPauseCamera();
 	}
 };
-
+	
+document.getElementById('ret9-cont').value = false;
 var obj2 = { // action Play/Pause Car
 	add:function(){ 
-		if (egoLaunched){
-			console.log("joue" );//////////////////*********************** 
-			egoExist = true;
-			document.getElementById('ret12-cont').value =  document.getElementById('ret11-cont').value;
-			document.getElementById('ret12-cont').innerHTML = String(document.getElementById('ret12-cont').value)
-			//animONOFF = true;
-			document.getElementById('ret9-cont').value = true;	
-			api.pan = true
-			
-		}else{
-			console.log("arrete");//////////////////*********************** 
-			document.getElementById('ret9-cont').value = false;
-			api.pan = false
-		}
-		
+		playPauseEgoCar();
 		const data = {
 			playPauseCar: egoLaunched
 		};
 		hermes.send('setCarPlayPause', data, true);
-		egoLaunched = !egoLaunched;
 	}
 };// action Play/Pause Car
 	
 var obj3 = { // action Reset 
 	add:function(){ 
-		//egoExist = true;
-		//console.log("triuc " + truc)//////////////////*********************** 
-		/*if (!egoExist){
-			//egoExist = true;
-		}*/
-		//delete window.truc;
 		resetPage();
 		winReset();
 	}
@@ -1966,6 +1993,27 @@ console.log("open window")
 		window.open("index2.html", "_blank", "location=yes,height=600px,width=800px,scrollbars=no");
 	}
 };// action Reset 
+	var obj7 = { // action Reset 
+	add:function(){ 
+		// Fly to a random location
+flyto1();
+
+}};// action Reset 
+	
+	function flyto1(){
+		map.flyTo({
+			center: [9.230103, 45.462399],//[9.206611, 45.452461],
+			essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+			screenSpeed: 0.4,
+			zoom: 14.3,
+			bearing: -90, 
+			pitch: 0,
+			curve: 2.42,
+			easing(t) {
+				return t;
+			}	/**/
+		});
+	}
 	
 initGUI();
 	init();
@@ -2005,13 +2053,17 @@ mapOptions.close();
 	mapOptions.add(api, 'Show_Hide_Overlays').onChange(SHOverlays).setValue("none").listen();
 	
 //href="index2.html" target="_blank"
-	gui.add(obj6, 'add').name('Open 2nd Window');
-	gui.add(obj1, 'add').name('play/pause Camera');
-	gui.add(obj4, 'add').name('back to normal timing');
-	gui.add(obj2, 'add').name('play/pause Car');//.onChange(onSelectedChange)
+	const mapButOptions = gui.addFolder('buttons')
+	mapButOptions.add(obj6, 'add').name('Open 2nd Window');
+	//gui.add(obj1, 'add').name('play/pause Camera');
+	mapButOptions.add(obj4, 'add').name('back to normal timing');
+	mapButOptions.add(obj7, 'add').name('flyto1');
 	
-	gui.add(obj5, 'add').name('stop speed');
-	gui.add(obj3, 'add').name('reset').listen();
+	mapButOptions.add(api, "play_pause_Camera").onChange(playPauseCamera);
+	mapButOptions.add(obj2, 'add').name('play/pause Car');//.onChange(onSelectedChange)
+	
+	mapButOptions.add(obj5, 'add').name('stop speed');
+	mapButOptions.add(obj3, 'add').name('reset').listen();
 
 const mapWinOptions = gui.addFolder('Map window')
 	mapWinOptions.add(api, 'windowWidth2', 0, 100).step(1).onChange(changeWinSize2).setValue(0).listen();
@@ -2026,6 +2078,9 @@ const mapWinOptions = gui.addFolder('Map window')
 	/*mapWinOptions.add(api, "contour_progressif").onChange(borderDiffus).setValue(false).listen();*/
 	mapWinOptions.add(api, "contour_progressif_plus").onChange(borderDiffus_plus).setValue(false).listen();/**/
 	mapWinOptions.add(api, "invert_map").onChange(invertMap).setValue(false).listen();/**/
+	//--widget-color:#424242;
+	//obj1.style.setProperty('--widget-color', "ffff00");
+	
 }
 /*
 dragElement(document.getElementById("map"));	
@@ -2116,9 +2171,9 @@ function dragElement(elmnt) {
 			//const myLayer = map.getLayer('line').paint._values['line-width'].value;
 			map.setPaintProperty('lineBlue2', 'line-width', api.tailleLine+23);
 			map.setPaintProperty('lineBlue1', 'line-width', api.tailleLine+2);
-			map.setPaintProperty('lineBlue0', 'line-width', api.tailleLine);
+			map.setPaintProperty('lineBlueAfter', 'line-width', api.tailleLine);
 			//map.getLayer('line').paint._values['line-width'].value.value = api.tailleLine;
-			console.log(map.getLayer('lineBlue0'))//////////////////*********************** 
+			console.log(map.getLayer('lineBlueAfter'))//////////////////*********************** 
 		} //pour changer la durée du parcours
 		function changeCarHeight() {////pour changer la hauteur de l'egocar
 			console.log("altitude slider " + api.carAltitude)//////////////////*********************** 
@@ -2150,12 +2205,14 @@ function dragElement(elmnt) {
 			}
 			changeScale();
 			//////////////////////////////////////////// ici ////////////
-			
-			value1.textContent = String("coords Lon : " + model.coordinates[1]);
-			value2.textContent = String("coords Lat : " + model.coordinates[0]);
+			if (document.getElementById('ret9-cont').value){
+				value1.textContent = String("coords Lon : " + model.coordinates[1]);
+				value2.textContent = String("coords Lat : " + model.coordinates[0]);
+				value6.textContent = String("car rotation " + (-THREE.Math.radToDeg(action.rotation.z)+180).toFixed(2)+"%");
+			}
 			value3.textContent = String("map bearing " + map.getBearing());
 			value4.textContent = String("map pitch " + map.getPitch());
-			value6.textContent = String("car rotation " + (-THREE.Math.radToDeg(action.rotation.z)+180).toFixed(2)+"%");
+			
 			value7.textContent = String("timing " + retour7Container.value.toFixed(4));
 			
 			
@@ -2219,16 +2276,16 @@ pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, p
 
 			value8.textContent = String("altitude " + (elevation));
 
-			map.setPaintProperty('lineBlue0', 'line-gradient', [
+			map.setPaintProperty('lineBlueAfter', 'line-gradient', [
 				'step',
 				['line-progress'],
 				/*'rgba(255, 130,197, 1)',
 				'rgba(130, 130, 0, 1)',*/
-				lineBlue0[selectedTheme], 
-				retour7Container.value,
+				lineBlueAfter[selectedTheme], 
+				retour7Container.value, //valeur de 0 à 1 retournée 0=debut 1=fin
 				lineBlueColor[selectedTheme]
-			]);/**/
-
+			]);
+//console.log("tt : " + retour7Container.value);
 			map.dragRotate.enable();
 			map.touchPitch.enable();
 		}// boucle permettant de bouger l'egocar et retourner les valeurs "retour1-container"
@@ -2387,10 +2444,12 @@ function SHOverlays(){
 			document.getElementById('ret11-cont').value = document.getElementById('ret11-cont').innerHTML = 0;
 			document.getElementById('ret10-cont').value = document.getElementById('ret10-cont').innerHTML = 0;
 			document.getElementById('ret9-cont').innerHTML = 0;
-			document.getElementById('ret9-cont').value = true;
+			document.getElementById('ret9-cont').value = false;
 			map.remove();
 			animONOFF = true;
 			egoExist = true;
+			animLaunched = true; // variable du "play pause camera" boolean
+			egoLaunched = true;
 			init();
 		} //fonction Reset
 		function fly(data) {
