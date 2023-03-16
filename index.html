@@ -1733,6 +1733,7 @@ var truc;
 var deltaPitch = 0.5; // valeur du pitche de la carte, au clavier
 var deltaBearing = 2; // valeur de la rotation autour centre, au clavier
 var deltaZoom = 5; // valeur du zoom sur centre, au clavier
+var clicB = true;
 document.body.onkeyup = function(ev){
 		switch (ev.which) {
 //touche ----------[ Maj ]----------  pour deplacer la carte	
@@ -1878,14 +1879,19 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 			//changeScreenSize()
 	  console.log("trucmuche");
  	break;
-//touche ----------[ b ]---------- boundingbox
-		case 66:
-			api.pan = false;
-			//egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
-			 fit();
-		break;
+    //touche ----------[ b ]---------- boundingbox
+	case 66:
+			if (clicB){
+		api.pan = false;
+		//egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
+		 fit();
+		}else{
+			api.pan = true;
+		}
+			clicB != clicB;
+	break;
 			
-//touche ----------[ i ]----------  pour ralentir l'ego car	
+	//touche ----------[ i ]----------  pour ralentir l'ego car	
 	case 73:
 		console.log("iii "+ value6);
 		resetPage();
