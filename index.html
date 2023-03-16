@@ -1165,6 +1165,7 @@ window.addEventListener("resize", onresize);
 			
 	map.on('flystart', function(){
 		flying = true;
+		console.log("depart fly")
 	});
 			
 	map.on('flyend', function(){
@@ -1173,7 +1174,9 @@ window.addEventListener("resize", onresize);
 	
 	map.on('moveend', function(e){
 	   if(flying){
-		   console.log("ouioui")
+		   console.log("depart end")
+		  playPauseEgoCar();
+		   playPauseCamera()
 		   flying = false;
 		  // tooltip or overlay here
 		 // map.fire(flyend); 
@@ -1876,10 +1879,11 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 		}*/
 			//console.log(document.getElementById('boite-container').style.visibility = "hidden")
 		let vis = gui.domElement.style.visibility;
-		let	vis2 = document.getElementById('boite-container').style.visibility;
+		//let	vis2 = document.getElementById('boite-container').style.visibility;
 			
-		document.getElementById('boite-container').style.visibility = vis2 == "" ? "hidden" : "";	
+		//document.getElementById('boite-container').style.visibility = vis2 == "" ? "hidden" : "";	
 		gui.domElement.style.visibility = vis == "" ? "hidden" : "";
+			gui.domElement.style.visibility = "hidden";
 		break;
 //touche ----------[ j ]----------  pour ralentir l'ego car	
 	case 74:
@@ -2067,7 +2071,7 @@ function initGUI() {
 
 //const selector = themeFolder.add(themeMap, "theme", optionsTheme.theme).setValue("Dacia1");
 folderTheme.add(optionsTheme, "theme", optionsTheme.theme).setValue('NicoMichel').onChange(changeTheme);		
-
+gui.close();
 const mapOptions = gui.addFolder('Map options')
 mapOptions.close();
 	mapOptions.add(api, 'carSize', 12, 21).step(0.1).onChange(changeScale);
