@@ -1878,9 +1878,12 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 			//changeScreenSize()
 	  console.log("trucmuche");
  	break;
-
-			 
-	
+//touche ----------[ b ]---------- boundingbox
+		case 66:
+			api.pan = false;
+			//egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
+			 fit();
+		break;
 			
 //touche ----------[ i ]----------  pour ralentir l'ego car	
 	case 73:
@@ -2000,7 +2003,7 @@ flyto1();
 
 }};// action Reset 
 	
-	function flyto1(){
+	function flyto1(){ 
 		map.flyTo({
 			center: [9.230103, 45.462399],//[9.206611, 45.452461],
 			essential: true, // this animation is considered essential with respect to prefers-reduced-motion
