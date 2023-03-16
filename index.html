@@ -1140,6 +1140,7 @@ window.addEventListener("resize", onresize);
 	let camera;
 	let composer, renderer;
     let scene;
+	let flying = false;
 	function init(){
 		(async () => {
 		 map = new mapboxgl.Map({
@@ -1155,12 +1156,29 @@ window.addEventListener("resize", onresize);
 			screenSpeed: 0.4,
 			 
 		});
-			map.fitBounds([[9.209772, 45.447573],[9.208694, 45.485763]], {padding: {
+	  map.fitBounds([[9.209772, 45.447573],[9.208694, 45.485763]], {padding: {
       top: -100,
       bottom: 100,
       left: 100,
       right: 100
    }, bearing:-90, speed: 0.2,});
+			
+	map.on('flystart', function(){
+		flying = true;
+	});
+			
+	map.on('flyend', function(){
+		flying = false;
+	});
+	
+	map.on('moveend', function(e){
+	   if(flying){
+		   console.log("ouioui")
+		   flying = false;
+		  // tooltip or overlay here
+		 // map.fire(flyend); 
+	   }
+	});
 			
 		/*	map.flyTo({
 			center: [9.230103, 45.462399, 0],
@@ -1421,6 +1439,7 @@ console.log("draggg")
 			
 ////////////////////////////////////////
 	});
+
 
 	async function changeTheme() { ////pour changer le theme de la map
 		console.log("zuut")
@@ -2022,6 +2041,7 @@ flyto1();
 				return t;
 			}	/**/
 		});
+		 map.fire('flystart');
 	}
 	
 initGUI();
