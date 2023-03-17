@@ -274,7 +274,7 @@
 	
 	
 	
-	var flightPlan2;
+	
 	
 /*	 function handleFileSelect(evt) {
         var file = evt.target.files[0]; // Read first selected file
@@ -385,6 +385,18 @@ function makeLine(x1P, y1P, x2P, y2P) {
 	import { EffectComposer } from 'https://unpkg.com/three@0.106.2/examples/jsm/postprocessing/EffectComposer';
 	import { RenderPass } from 'https://unpkg.com/three@0.106.2/examples/jsm/postprocessing/RenderPass';
 	import { UnrealBloomPass } from 'https://unpkg.com/three@0.106.2/examples/jsm/postprocessing/UnrealBloomPass';
+	
+	
+	let flightPlan2 = {
+		"geometry": {
+			"coordinates": [
+				],
+				"type": "LineString"
+			},
+			"type": "Feature",
+			"properties": {}
+		}
+	
 	
 	let flightPlan = {//coordonnées de la route (geojson)
 		"geometry": {
@@ -742,7 +754,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
 	]);
 	
 	
-
+var egocarOpacity = 0;
 	
 	var selectedTheme = 4;
 	let gui = new GUI();
@@ -905,12 +917,12 @@ function makeLine(x1P, y1P, x2P, y2P) {
 	var calcClicR;
 	var clic=0;
 	
-	const pathAlt = turf.lineString(flightPlan.geometry.coordinates);
-	
+	//const pathAlt = turf.lineString(flightPlan.geometry.coordinates);
+	//const pathDistance = turf.lineDistance(pathAlt);
 
 //	console.log("v    v    v")//////////////////*********************** 
 //	console.log(flightPlan.geometry.coordinates)//////////////////*********************** 
-	const pathDistance = turf.lineDistance(pathAlt);
+	
 	
 	
 var sizeWin = document.querySelector(':root');
@@ -1080,25 +1092,36 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 	
 	//var listClone =  flightPlan;
 	var pathAltClone = turf.lineString(flightPlan.geometry.coordinates);
-	var pathAltDist = turf.lineDistance(pathAltClone);
-	const lineDistance = turf.length(pathAltClone);
+	var pathDistClone = turf.lineDistance(pathAltClone);
+	//const lineDistance = turf.length(pathAltClone);
 	var pathAlong = turf.along(pathAltClone, 1);
     //	console.log("longueur de liste : " + lineDistance);
 	var pathConverted = [];
 
-	var steps = 5.00*60*60; // 5 min (x60 secondes) à 60 images par secondes
+	var steps = 1.00*60*60; // 5 min (x60 secondes) à 60 images par secondes
 	//var speedMove = 10;
 	// 
 	//// Draw an arc between the `origin` & `destination` of the two points
-
+	var pathAltClone2 ;
+	var pathDistClone2;
+	
 	function convertPath(){
-		for (var i = 0; i < pathAltDist; i += pathAltDist / steps) {
+		for (var i = 0; i < pathDistClone; i += pathDistClone / steps) {
 			var segment = turf.along(pathAltClone, i);
 			pathConverted.push([segment.geometry.coordinates]);
+			flightPlan2.geometry.coordinates.push(segment.geometry.coordinates);
 		}
+		pathAltClone2 = turf.lineString(flightPlan2.geometry.coordinates);
+	    pathDistClone2 = turf.lineDistance(pathAltClone2);
 		
 	}
 	
+	//const pathAlt = turf.lineString(flightPlan2.geometry.coordinates);
+	
+
+//	console.log("v    v    v")//////////////////*********************** 
+//	console.log(flightPlan.geometry.coordinates)//////////////////*********************** 
+	//const pathDistance = turf.lineDistance(pathAlt);
 	
 	
 	//var bbox = [9.209772, 45.447573],[9.208694, 45.485763];
@@ -1176,7 +1199,7 @@ window.addEventListener("resize", onresize);
 			 
 		});
 	  /*map.fitBounds([[9.209772, 45.447573],[9.208694, 45.485763]], {padding: 100, bearing:-90, speed: 0.2, zoom: ratioZoomWinSize});*/
-	  map.flyTo({
+		map.flyTo({
 			center: [9.230103, 45.462399],//[9.206611, 45.452461],
 			essential: true, // this animation is considered essential with respect to prefers-reduced-motion
 			screenSpeed: 1.2,
@@ -1203,11 +1226,9 @@ window.addEventListener("resize", onresize);
 		   console.log("depart end")
 		   egoLaunched = true;
 		   animLaunched = true;
-		  playPauseEgoCar();
+		   playPauseEgoCar();
 		   playPauseCamera()
 		   flying = false;
-		  // tooltip or overlay here
-		 // map.fire(flyend); 
 	   }
 	});
 			
@@ -1227,8 +1248,11 @@ window.addEventListener("resize", onresize);
 		//await map.once('idle');
 			pathConverted = [];
 			convertPath();
-			console.log("C----> " + pathConverted)
-			console.log("F----> " + flightPlan.geometry.coordinates)
+			
+
+			/*console.log(pathConverted[1])
+			console.log(flightPlan2.geometry.coordinates[1])
+			console.log(flightPlan.geometry.coordinates[1])*/
 	//clic sur un de themes de carte (en haut à gauche)
 	/*	for (const input of inputs) {
 			input.onclick = (layer) => {
@@ -1309,7 +1333,7 @@ draggableDiv.addEventListener("mousedown", dragStart);
 draggableDiv.addEventListener("mouseup", dragEnd);
 draggableDiv.addEventListener("mousemove", dragIt);
 //draggableDiv.addEventListener("mouseout", dragOut);
-var toto;
+var egoDragCoordinates;
 var point;
 var pointX;
 var pointY;
@@ -1321,8 +1345,8 @@ function dragStart(e) {
   sizeWin.style.setProperty('--transiMap', 0.5 + "s" );
   isDragging = true;
   
-		    toto = egoCarCircle.coordinates;
-			point = map.project(toto);
+		    egoDragCoordinates = egoCarCircle.coordinates;
+			point = map.project(egoDragCoordinates);
 			//hautLigne = drag7.style.top;
 			//largeLigne = drag7.style.left;
 	
@@ -1359,8 +1383,8 @@ function dragEnd(e) {
 			//	hautLigne = 310 + "px";
 			//	largeLigne = 915 + "px";
 			//}
-			toto = egoCarCircle.coordinates;
-			point = map.project(toto);
+			egoDragCoordinates = egoCarCircle.coordinates;
+			point = map.project(egoDragCoordinates);
 	  		pointX = point.x;
 			pointY = point.y + 90;
 			//makeLine(largeLigne, hautLigne , pointX, pointY);
@@ -1382,8 +1406,8 @@ function dragIt(e) {
 	setTranslate(currentX, currentY, draggableOverlay);
 	//setTranslate(currentX, currentY, draggableLine);
 	  
-	  		toto = egoCarCircle.coordinates;
-			point = map.project(toto);
+	  		egoDragCoordinates = egoCarCircle.coordinates;
+			point = map.project(egoDragCoordinates);
 			//if (hautLigne != "" || largeLigne != ""){
 			//	hautLigne = drag7.style.top;
 			//	largeLigne = drag7.style.left;
@@ -1502,11 +1526,12 @@ console.log("draggg")
                 'properties': {},
                 'geometry': {
                     'type': 'LineString',
-                    'coordinates': pathConverted
+                    'coordinates': flightPlan2.geometry.coordinates
                 }
             }
         });
 		
+
 			/*map.addLayer({
 			"id": "points_shadow",
 
@@ -1549,7 +1574,7 @@ console.log("draggg")
 		console.log("selectedTheme] : " + selectedTheme)
 		map.addLayer({
             type: 'line',
-            source: 'trace',
+            source: 'trajetCar',
             id: 'lineBlue1',
             paint: {
                 'line-color': lineBlueStrokeColor[selectedTheme],
@@ -1577,7 +1602,7 @@ console.log("draggg")
 		/////////////////////////////////////////// la ligne trajet ////////////////////////
 		map.addLayer({
             type: 'line',
-            source: 'trace',
+            source: 'trajetCar',
             id: 'lineBlueAfter',
             paint: {
                'line-color': lineBlueAfter[selectedTheme],/**/
@@ -1615,7 +1640,20 @@ console.log("draggg")
         });
 
     
-		
+		/*map.addLayer({
+            type: 'line',
+            source: 'trajetCar',
+            id: 'lineRed1',
+            paint: {
+                'line-color': "#ff0000",
+                'line-width': 10//api.tailleLine+2,
+
+            },
+            layout: {
+                'line-cap': 'round',
+                'line-join': 'round'
+            }
+        });*/
 		
 		// ajout de l'egocar
 		map.addLayer({ // ajout de l'egocar
@@ -1731,29 +1769,29 @@ console.log("draggg")
 							//console.log("child.name " + child.name)
 							if ( child.isMesh && child.name=="Socle") {
 							 //console.log("Disc")
-							child.material = new THREE.MeshPhongMaterial( {color: 'rgba(247, 247,47, 1)' , transparent: true, opacity:0,  depthTest: false} );
+							child.material = new THREE.MeshPhongMaterial( {color: 'rgba(247, 247,47, 1)' , transparent: true, opacity:egocarOpacity,  depthTest: false} );
 							}
 							if ( child.isMesh && child.name=="CylinderExt") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshPhongMaterial( {color: '#fff' /*'#024DD9'*/, transparent: true, opacity:0,  depthTest: false} );
+								child.material = new THREE.MeshPhongMaterial( {color: '#fff' /*'#024DD9'*/, transparent: true, opacity:egocarOpacity,  depthTest: false} );
 								
 								/*child.material = new THREE.MeshPhysicalMaterial({ color: "#00baff", emissive:"#191919", reflectivity: 1,  roughness: 0.5, metalness: 0, transmission: 0.8, ior: 2.3, opacity: 0,  thickness: 0, clearcoat: 0 });*/
 							}
 							if ( child.isMesh && child.name=="CylinderEpais") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshPhongMaterial( {color: 'rgba(0, 0, 0, 1)' /*'#3274ee'*/, transparent: true, opacity:0,  depthTest: false} );
+								child.material = new THREE.MeshPhongMaterial( {color: 'rgba(0, 0, 0, 1)' /*'#3274ee'*/, transparent: true, opacity:egocarOpacity,  depthTest: false} );
 
 							}
 							if ( child.isMesh && child.name=="Cylinder") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)', transparent: true, opacity:0,  depthTest: false} );
+								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)', transparent: true, opacity:egocarOpacity,  depthTest: false} );
 								//child.castShadow = true;
 								//child.frustumCulled = true;
 								
 							}
 							if ( child.isMesh && child.name=="fleche") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)' /*'#0222B0'*/, transparent: true, opacity:0,  depthTest: false} );
+								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)' /*'#0222B0'*/, transparent: true, opacity:egocarOpacity,  depthTest: false} );
 								//child.castShadow = true;
 								//child.frustumCulled = true;
 
@@ -1763,7 +1801,7 @@ console.log("draggg")
 								const loader = new THREE.TextureLoader();
 								//console.log("cercleExter")
 								//child.material = new THREE.MeshLambertMaterial( {color: '#000', transparent: true, opacity:0.3,  depthTest: false} );/**/
-								child.material = new THREE.MeshBasicMaterial( {   opacity:0, transparent: true,} );
+								child.material = new THREE.MeshBasicMaterial( {   opacity:egocarOpacity, transparent: true,} );
 								//child.castShadow = true;
 								//console.log("youpiiiii")
 								
@@ -1776,7 +1814,7 @@ console.log("draggg")
 						egoCarCircle.setRotation({ x: 0, y: 0, z: 0 });
 						
 						/*egoCarCircle.setScale({ x: 1, y: 1, z: 1 }); */
-						egoCarCircle.addTooltip("Car Position Here", true);
+						//egoCarCircle.addTooltip("Car Position Here", true);
 						api.pan = false;
 						console.log("tototo")
 						egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
@@ -1785,7 +1823,7 @@ console.log("draggg")
 						console.log("mapConfig.MAD.origin : " + mapConfig.MAD.origin);
 							console.log("egoExist " + egoExist)
 							console.log("fly actif " + egoExist)
-							truc = fly(flightPlan);
+							truc = fly(flightPlan2);
 							egoExist = false;
 						
 						
@@ -2256,9 +2294,9 @@ function dragElement(elmnt) {
 			map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': api.terrain });
 		} //pour changer la hauteur du sol
 		function changetime() { ////pour changer la durée du parcours
-			console.log("time : " + secondsToTime(api.time))//////////////////*********************** 
-			console.log("gui.time " + gui.api)//////////////////*********************** 
-			console.log(egoCarCircle.animationQueue[0].parameters.duration)//////////////////*********************** 
+			//console.log("time : " + secondsToTime(api.time))//////////////////*********************** 
+			//console.log("gui.time " + gui.api)//////////////////*********************** 
+			//console.log(egoCarCircle.animationQueue[0].parameters.duration)//////////////////*********************** 
 			egoCarCircle.animationQueue[0].parameters.duration = api.time*100;
 		} //pour changer la durée du parcours
 		
@@ -2293,9 +2331,11 @@ function dragElement(elmnt) {
 	    var modelCoordLat = 9.230103;
 		var modelBearing = -90;
 		var newPathDistance;
+	let model;
+	//var alongPath;
 
 		function onObjectChanged(e) {//// boucle permettant de bouger l'egocar et retourner les valeurs "retour1-container"
-			let model = e.detail.object; //here's the object already modified
+			 model = e.detail.object; //here's the object already modified
 			let action = e.detail.action;
 			let selected = e.detail.selected;
 			//console.log(model)
@@ -2303,7 +2343,7 @@ function dragElement(elmnt) {
 			
 			if (api.pan) {
 				map.setBearing(-THREE.Math.radToDeg(action.rotation.z)+180);
-				map.panTo(model.coordinates, {duration: 100});
+				map.panTo(model.coordinates, {duration: 200});
 				
 				modelBearing = -THREE.Math.radToDeg(action.rotation.z)+180;
 				//map.panBy([model.coordinates[0], model.coordinates[1]], {duration: 10});
@@ -2321,11 +2361,12 @@ function dragElement(elmnt) {
 			value3.textContent = String("map bearing " + map.getBearing());
 			value4.textContent = String("map pitch " + map.getPitch());
 			
-			value7.textContent = String("timing " + retour7Container.value.toFixed(4));
+			value7.textContent = String("timing " + retour7Container.value);
 			
 			
 			//pour retrouver l'altitude du terrain pour listClone 
-			const alongPath = turf.along(pathAltClone, pathDistance * retour7Container.value);
+			//const alongPath = turf.along(pathAltClone, pathDistance * retour7Container.value);
+			var alongPath = turf.along(pathAltClone2, pathDistClone2 * retour7Container.value);
 			//newPathDistance = turf.lineDistance(pathConverted); //2.1352441159688587
 			pathConverted = pathConverted.slice(1, pathConverted.length);
 			//newPathDistance = turf.lineDistance(pathConverted);
@@ -2354,6 +2395,7 @@ pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, p
 				lng: alongPath.geometry.coordinates[0],
 				lat: alongPath.geometry.coordinates[1]
 			};
+			//console.log()
 
 			
 			const elevation = Math.floor(
@@ -2363,16 +2405,16 @@ pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, p
 
 			model.position.z = api.carAltitude;
 			//console.log("lllllnnnnggg : " + alongPath.geometry.coordinates[0] + "," + alongPath.geometry.coordinates[1])
-			//model.coordinates = (alongPath.geometry.coordinates[0], alongPath.geometry.coordinates[1]);
-			//console.log("CC : " + model.coordinates)
+			model.coordinates = (alongPath.geometry.coordinates[0], alongPath.geometry.coordinates[1]);
+			//console.log("CC : " + toto)
 			
 			model.traverse( function ( child ) {
 
 				if ( child.isMesh && child.name=="Circle") {
 					child.position.x =  0.05;
 					child.position.y =  -api.carAltitude * 1.02 -0.04;
-					var value = 0.5-api.carAltitude;
-					child.material = new THREE.MeshBasicMaterial( { /*map: loader.load('./images/circleShadow.png'),*/ color: '#000', opacity: 0, transparent: true, depthTest: false, } );
+					var value = egocarOpacity - 0.5 - api.carAltitude;
+					child.material = new THREE.MeshBasicMaterial( { /*map: loader.load('./images/circleShadow.png'),*/ color: '#000', opacity: value, transparent: true, depthTest: false, } );
 					//child.material = new THREE.MeshBasicMaterial( {color: '#ff0', map: loader.load('./images/circleShadow.png'),  depthTest: false, opacity:1, transparent: true} );
 
 					child.scale.x = child.scale.y = api.carAltitude*0.7 +0.3;

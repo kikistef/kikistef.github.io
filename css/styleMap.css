@@ -871,8 +871,8 @@ color: #FF0004;
 	
 .retour1-container {
 	/*position: absolute;
-				top: 50px;*/
-	visibility: hidden;
+				top: 50px;
+	visibility: visible;*/
 	position: relative;
 	width: 90%;
 	left: 20px;
@@ -883,7 +883,7 @@ color: #FF0004;
 	/*position: absolute;
 				top: 50px;*/
 	position: relative;
-	visibility:hidden;/**/
+	/*visibility:visible;*/
 	height: 40px;
 	width: 90%;
 	left: 20px;
