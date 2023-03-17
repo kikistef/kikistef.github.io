@@ -1809,83 +1809,86 @@ var deltaPitch = 0.5; // valeur du pitche de la carte, au clavier
 var deltaBearing = 2; // valeur de la rotation autour centre, au clavier
 var deltaZoom = 5; // valeur du zoom sur centre, au clavier
 var clicB = true;
+	
+document.body.onkeypress= function(ev){
+	switch (ev.which) {
+	case 109:	
+		egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);	
+		map.easeTo({ zoom: map.getZoom() - 1, duration: 2000});
+		var data = {
+			mapZoom: map.getZoom() - 0.1
+		};
+		hermes.send('setZoom', data, true);
+	break;
+			
+//touche ----------[ + ]----------  pour zoomer	
+	case 107:
+		egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);	
+		map.easeTo({ zoom: map.getZoom() + 1, duration: 2000});
+		var data = {
+			mapZoom: map.getZoom() + 0.1
+		};
+		hermes.send('setZoom', data, true);
+	break;
+			}
+}
 document.body.onkeyup = function(ev){
-		switch (ev.which) {
+	switch (ev.which) {
 //touche ----------[ Maj ]----------  pour deplacer la carte	
-			case 16:		
-				clicMap = false;
-				//console.log("je clique : " + clicMap);
-			break;
+	case 16:		
+		clicMap = false;
+	break;
+//touche ----------[ - ]----------  pour dézoomer
+	case 109:	
+		egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
+	break;
+//touche ----------[ + ]----------  pour zoomer					
+	case 107:
+		egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
+	break;
 		}
 }
-		
+
 document.body.onkeydown = function(ev){//raccourcis clavier
 	switch (ev.which) {
-//touche "<- " pour passer au point de vue precedent
-//	case 37:
-//			console.log(" fleche <- ");//////////////////*********************** 
-//				map.setBearing = map.getBearing() - deltaBearing;
-//			/*map.jumpTo({
-//			bearing: map.getBearing() - deltaBearing,
-//			easing: easing
-//			});*/
-//	break;
-//
-////touche " -> " pour passer au point de vue suivant				
-//	case 39:
-//		console.log(" fleche -> ");//////////////////*********************** 
-//			map.setBearing = map.getBearing() + deltaBearing;
-//			/*map.jumpTo({
-//			bearing: map.getBearing() + deltaBearing,
-//			easing: easing
-//			});*/
-//	break;
+			
+//touche ----------[ 1 ]----------  pour zoomer sur l'egocar, lancer l'egocar et le suivi camera
 	case 97:
 	flyto1();
 	break;
 			
-
 //touche ----------[ Maj ]----------  pour deplacer la carte	
 	case 16:		
 		clicMap = true;
 		//console.log("je clique : " + clicMap);
 	break;
 						
-			
+//touche ----------[ - ]----------  pour dézoomer			
 	case 109:	
-		/*map.easeTo({
-			zoom: 16,
-			//easing: easing
-			});*/
+		egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);	
 		map.easeTo({ zoom: map.getZoom() - 1, duration: 2000});
 		var data = {
 			mapZoom: map.getZoom() - 0.1
 		};
 		hermes.send('setZoom', data, true);
-			
-			
 	break;
 			
-//touche ----------[ + ]----------  pour ralentir l'ego car	
+//touche ----------[ + ]----------  pour zoomer	
 	case 107:
-		//map.setZoom(map.getZoom() + 0.1);
-						
-			map.easeTo({ zoom: map.getZoom() + 1, duration: 2000});
-			
-			
-			
+		egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);	
+		map.easeTo({ zoom: map.getZoom() + 1, duration: 2000});
 		var data = {
 			mapZoom: map.getZoom() + 0.1
 		};
 		hermes.send('setZoom', data, true);
 	break;
-	//touche ----------[ T ]----------  pour le tilt		
+			
+//touche ----------[ T ]----------  pour le tilt		
 	case 84:
 		console.log("pitch + : " + map.getPitch() + deltaPitch);
 			map.easeTo({
 			pitch: map.getPitch() + deltaPitch,
 			easing: easing
-
 			});
 
 			
@@ -1929,7 +1932,7 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 	break;
 //touche ----------[ h ]----------  pour ralentir l'ego car	
 	case 72:
-		console.log("hh ");
+		
 			//console.log(gui.isVisible)
 			//gui.visible = false;
 		/*if (document.getElementById('boite-container').style.display = "block"){
@@ -1942,8 +1945,15 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 		//let	vis2 = document.getElementById('boite-container').style.visibility;
 			
 		//document.getElementById('boite-container').style.visibility = vis2 == "" ? "hidden" : "";	
-		gui.domElement.style.visibility = vis == "" ? "hidden" : "";
-		gui.domElement.style.visibility = "hidden";
+		//gui.domElement.style.visibility = vis == "" ? "hidden" : "";
+		//gui.domElement.style.visibility = "hidden";
+		if(	vis == "hidden" ){
+			console.log("hh1 " + vis);
+			gui.domElement.style.visibility = "visible";
+		}else if(vis == "visible" ){
+			console.log("hh2 " + vis);
+			gui.domElement.style.visibility = "hidden";
+			}
 		break;
 //touche ----------[ j ]----------  pour ralentir l'ego car	
 	case 74:
@@ -2114,9 +2124,10 @@ function initGUI() {
 
 	//gui = new GUI()
 	//gui.domElement.attr("hidden", true);
-	//gui.toggleHide();
+	
 	gui.domElement.id = 'gui_css';
-
+	gui.domElement.style.visibility = "hidden";
+//gui.toggleHide();
 	// ajout du menu de selection de theme
 	//gui.add(optionsTheme, 'theme', optionsTheme.theme).onChange(changeTheme).setValue(optionsTheme.theme.streets_A);
 	const folderTheme = gui.addFolder('Map Themes');
