@@ -41,7 +41,7 @@
 	<script src="https://unpkg.com/three@0.106.2/examples/js/postprocessing/RenderPass.js"></script>
 	<script src="https://unpkg.com/three@0.106.2/examples/js/postprocessing/BloomPass.js"></script> -->
 
-<script src='distrib/mapbox-gl-framerate.js'></script>
+<script src="distrib/mapbox-gl-framerate.js"></script>
 	
 	
 <script src="mapbox-gl-traffic.js"></script>
@@ -131,9 +131,9 @@
 				<div class="driveKmNum driveKmNumG">info</div>
 				<div class="driveKm">here</div>
 				<div class="bgBox "></div>
-			</div>-->
+			</div>
 
-		</div>
+		</div>-->
 	<!--</div>-->
 	
 	<!--<div class="filtreFlou">-->
@@ -185,8 +185,8 @@
 <input id="outdoors-v11" type="radio" name="rtoggle" value="outdoors">
 <label for="outdoors-v11">outdoors</label>
 </div>--><!--
-	
-	<div id="boite-container" class="transition boite-container">-->
+	-->
+	<div id="boite-container" class="transition boite-container">
 
 <div id="ret12-cont" class="retour2-container"></div>
 <div id="ret11-cont" class="retour2-container"></div>
@@ -200,7 +200,8 @@
 <div id="ret5-cont" class="retour1-container"></div>
 <div id="ret6-cont" class="retour1-container"></div>
 <div id="ret7-cont" class="retour1-container"></div>
-<div id="ret8-cont" class="retour1-container"></div></div>
+<div id="ret8-cont" class="retour1-container"></div>
+		</div>
 
 <!--	<input
     type="file"
@@ -829,8 +830,8 @@ function makeLine(x1P, y1P, x2P, y2P) {
 		MAD: {
 			origin: [9.230103, 45.462399, 0], 
 			destination: [9.226155, 45.464157, 500], 
-			center: [9.230103, 45.462399, 0], 
-			zoom: 10.5, 
+			center: [9.226155, 45.464157, 0], 
+			zoom: 4, 
 			pitch: 0, 
 			bearing: -90, 
 			scale: 0.5, 
@@ -840,13 +841,13 @@ function makeLine(x1P, y1P, x2P, y2P) {
 			customLayer: "custom-layer"
 		}
 	}
-	let timeMinMax = [200, 15000];
+	let timeMinMax = [200, 55000];
 	let api = {
 			fixedZoom: true,
 			pan: true,
 			carSize: 17.3,
 			terrain: 0.0001,
-			time: 12000,
+			time: 40000,
 			path_Position: 0,
 			tailleLine: 5,
 			carAltitude: 0.001,
@@ -1085,7 +1086,7 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
     //	console.log("longueur de liste : " + lineDistance);
 	var pathConverted = [];
 
-	var steps = 35.00*60*60; // 5 min (x60 secondes) à 60 images par secondes
+	var steps = 5.00*60*60; // 5 min (x60 secondes) à 60 images par secondes
 	//var speedMove = 10;
 	// 
 	//// Draw an arc between the `origin` & `destination` of the two points
@@ -1104,10 +1105,24 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 	//var bboxPolygon = turf.bboxPolygon(bbox);
 	//console.log(bbox);
 	function fit() {
-    	map.fitBounds([[9.209772, 45.447573],[9.208694, 45.485763]], {padding: 200, bearing:-90, speed: 0.2,});
+    	/*map.fitBounds([[9.209772, 45.447573],[9.208694, 45.485763]], {padding: 400, 
+																	  
+		pitch: 0, bearing:-90, speed: 0.2, zoom: ratioZoomWinSize});*/
+			map.flyTo({
+			center: [9.230103, 45.462399],//[9.206611, 45.452461],
+			essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+			screenSpeed: 1.2,
+			zoom: 13.3,
+			bearing: -90, 
+			pitch: 0,
+			curve: 2.42,
+			easing(t) {
+				return t;
+			}	/**/
+		});
 	}/**/
 	
-	
+
 	
 	
 	
@@ -1141,6 +1156,10 @@ window.addEventListener("resize", onresize);
 	let composer, renderer;
     let scene;
 	let flying = false;
+	var ratioZoomWinSize = (window.innerWidth / window.innerHeight ) * 8;
+	var calcRatioZoomWinSize = ratioZoomWinSize
+	console.log("ratioZoomWinSize : " + ratioZoomWinSize)
+	
 	function init(){
 		(async () => {
 		 map = new mapboxgl.Map({
@@ -1156,12 +1175,19 @@ window.addEventListener("resize", onresize);
 			screenSpeed: 0.4,
 			 
 		});
-	  map.fitBounds([[9.209772, 45.447573],[9.208694, 45.485763]], {padding: {
-      top: -100,
-      bottom: 100,
-      left: 100,
-      right: 100
-   }, bearing:-90, speed: 0.2,});
+	  /*map.fitBounds([[9.209772, 45.447573],[9.208694, 45.485763]], {padding: 100, bearing:-90, speed: 0.2, zoom: ratioZoomWinSize});*/
+	  map.flyTo({
+			center: [9.230103, 45.462399],//[9.206611, 45.452461],
+			essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+			screenSpeed: 1.2,
+			zoom: 13.3,
+			bearing: -90, 
+			pitch: 0,
+			curve: 2.42,
+			easing(t) {
+				return t;
+			}	/**/
+		});
 			
 	map.on('flystart', function(){
 		flying = true;
@@ -1175,6 +1201,8 @@ window.addEventListener("resize", onresize);
 	map.on('moveend', function(e){
 	   if(flying){
 		   console.log("depart end")
+		   egoLaunched = true;
+		   animLaunched = true;
 		  playPauseEgoCar();
 		   playPauseCamera()
 		   flying = false;
@@ -1512,7 +1540,19 @@ console.log("draggg")
             id: 'lineBlue1',
             paint: {
                 'line-color': lineBlueStrokeColor[selectedTheme],
-                'line-width': api.tailleLine+2,
+                'line-width': [
+				  "interpolate",
+				  ["exponential", 1.5],
+				  ["zoom"],
+				  11,
+				  0,
+				  13.3,
+				  7,
+				  18,
+				  20,
+				  21,
+				  70
+				]//api.tailleLine+2,
 
             },
             layout: {
@@ -1528,7 +1568,20 @@ console.log("draggg")
             id: 'lineBlueAfter',
             paint: {
                'line-color': lineBlueAfter[selectedTheme],/**/
-                'line-width': api.tailleLine,
+			   'line-width': [
+				  "interpolate",
+				  ["exponential", 1.5],
+				  ["zoom"],
+				  11,
+				  0,
+				  13.3,
+				  5,
+				  18,
+				  16,
+				  21,
+				  60
+				],//api.tailleLine+2,
+                //'line-width': api.tailleLine,
 				//'line-trim-offset': [0.0,1.0],
 				'line-gradient': [
                     'interpolate',
@@ -1787,10 +1840,9 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 //			easing: easing
 //			});*/
 //	break;
-		case 97:
-		flyto1();
-			
-			break;
+	case 97:
+	flyto1();
+	break;
 			
 
 //touche ----------[ Maj ]----------  pour deplacer la carte	
@@ -1805,7 +1857,7 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 			zoom: 16,
 			//easing: easing
 			});*/
-		map.setZoom(map.getZoom() - 0.1);
+		map.easeTo({ zoom: map.getZoom() - 1, duration: 2000});
 		var data = {
 			mapZoom: map.getZoom() - 0.1
 		};
@@ -1816,7 +1868,12 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 			
 //touche ----------[ + ]----------  pour ralentir l'ego car	
 	case 107:
-		map.setZoom(map.getZoom() + 0.1);
+		//map.setZoom(map.getZoom() + 0.1);
+						
+			map.easeTo({ zoom: map.getZoom() + 1, duration: 2000});
+			
+			
+			
 		var data = {
 			mapZoom: map.getZoom() + 0.1
 		};
@@ -1828,7 +1885,10 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 			map.easeTo({
 			pitch: map.getPitch() + deltaPitch,
 			easing: easing
+
 			});
+
+			
 			var data = {
 			mapPitch: map.getPitch() + deltaPitch
 		};
@@ -2032,13 +2092,13 @@ flyto1();
 
 }};// action Reset 
 	
-	function flyto1(){ 
+function flyto1(){ 
 		map.flyTo({
-			center: [9.230103, 45.462399],//[9.206611, 45.452461],
+			center: [modelCoordLat, modelCoordLon],//[9.206611, 45.452461],
 			essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-			screenSpeed: 0.4,
-			zoom: 14.3,
-			bearing: -90, 
+			screenSpeed: 1.2,
+			zoom: 18.3,
+			bearing: modelBearing, 
 			pitch: 0,
 			curve: 2.42,
 			easing(t) {
@@ -2221,7 +2281,9 @@ function dragElement(elmnt) {
 	
 	
 	
-	
+		var modelCoordLon= 45.462399;
+	    var modelCoordLat = 9.230103;
+		var modelBearing = -90;
 		var newPathDistance;
 
 		function onObjectChanged(e) {//// boucle permettant de bouger l'egocar et retourner les valeurs "retour1-container"
@@ -2234,6 +2296,8 @@ function dragElement(elmnt) {
 			if (api.pan) {
 				map.setBearing(-THREE.Math.radToDeg(action.rotation.z)+180);
 				map.panTo(model.coordinates, {duration: 100});
+				
+				modelBearing = -THREE.Math.radToDeg(action.rotation.z)+180;
 				//map.panBy([model.coordinates[0], model.coordinates[1]], {duration: 10});
 			}
 			changeScale();
@@ -2242,6 +2306,9 @@ function dragElement(elmnt) {
 				value1.textContent = String("coords Lon : " + model.coordinates[1]);
 				value2.textContent = String("coords Lat : " + model.coordinates[0]);
 				value6.textContent = String("car rotation " + (-THREE.Math.radToDeg(action.rotation.z)+180).toFixed(2)+"%");
+				
+				modelCoordLon = model.coordinates[1];
+				modelCoordLat = model.coordinates[0];
 			}
 			value3.textContent = String("map bearing " + map.getBearing());
 			value4.textContent = String("map pitch " + map.getPitch());
@@ -2287,8 +2354,6 @@ pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, p
 			);
 
 			model.position.z = api.carAltitude;
-			//console.log("x : " + model.position.x)
-			//console.log("y : " + model.position.y)
 			//console.log("lllllnnnnggg : " + alongPath.geometry.coordinates[0] + "," + alongPath.geometry.coordinates[1])
 			//model.coordinates = (alongPath.geometry.coordinates[0], alongPath.geometry.coordinates[1]);
 			//console.log("CC : " + model.coordinates)
@@ -2303,9 +2368,8 @@ pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, p
 					//child.material = new THREE.MeshBasicMaterial( {color: '#ff0', map: loader.load('./images/circleShadow.png'),  depthTest: false, opacity:1, transparent: true} );
 
 					child.scale.x = child.scale.y = api.carAltitude*0.7 +0.3;
-					//child.set.opacity = api.carAltitude;
 				}
-			} );
+			});
 
 			value8.textContent = String("altitude " + (elevation));
 
@@ -2314,11 +2378,11 @@ pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, p
 				['line-progress'],
 				/*'rgba(255, 130,197, 1)',
 				'rgba(130, 130, 0, 1)',*/
-				lineBlueAfter[selectedTheme], 
+				lineBlueAfter[selectedTheme], //couleur du trajet après passage de l'egocar
 				retour7Container.value, //valeur de 0 à 1 retournée 0=debut 1=fin
 				lineBlueColor[selectedTheme]
 			]);
-//console.log("tt : " + retour7Container.value);
+
 			map.dragRotate.enable();
 			map.touchPitch.enable();
 		}// boucle permettant de bouger l'egocar et retourner les valeurs "retour1-container"
