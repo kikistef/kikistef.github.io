@@ -1227,6 +1227,8 @@ window.addEventListener("resize", onresize);
 		//await map.once('idle');
 			pathConverted = [];
 			convertPath();
+			console.log("C----> " + pathConverted)
+			console.log("F----> " + flightPlan.geometry.coordinates)
 	//clic sur un de themes de carte (en haut à gauche)
 	/*	for (const input of inputs) {
 			input.onclick = (layer) => {
@@ -1492,7 +1494,18 @@ console.log("draggg")
                 }
             }
         });
-		
+		map.addSource('trajetCar', {
+            type: 'geojson',
+			lineMetrics: true,
+            data: {
+                'type': 'Feature',
+                'properties': {},
+                'geometry': {
+                    'type': 'LineString',
+                    'coordinates': pathConverted
+                }
+            }
+        });
 		
 			/*map.addLayer({
 			"id": "points_shadow",
@@ -1718,29 +1731,29 @@ console.log("draggg")
 							//console.log("child.name " + child.name)
 							if ( child.isMesh && child.name=="Socle") {
 							 //console.log("Disc")
-							child.material = new THREE.MeshPhongMaterial( {color: 'rgba(247, 247,47, 1)' , transparent: true, opacity:1,  depthTest: false} );
+							child.material = new THREE.MeshPhongMaterial( {color: 'rgba(247, 247,47, 1)' , transparent: true, opacity:0,  depthTest: false} );
 							}
 							if ( child.isMesh && child.name=="CylinderExt") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshPhongMaterial( {color: '#fff' /*'#024DD9'*/, transparent: true, opacity:1,  depthTest: false} );
+								child.material = new THREE.MeshPhongMaterial( {color: '#fff' /*'#024DD9'*/, transparent: true, opacity:0,  depthTest: false} );
 								
 								/*child.material = new THREE.MeshPhysicalMaterial({ color: "#00baff", emissive:"#191919", reflectivity: 1,  roughness: 0.5, metalness: 0, transmission: 0.8, ior: 2.3, opacity: 0,  thickness: 0, clearcoat: 0 });*/
 							}
 							if ( child.isMesh && child.name=="CylinderEpais") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshPhongMaterial( {color: 'rgba(0, 0, 0, 1)' /*'#3274ee'*/, transparent: true, opacity:1,  depthTest: false} );
+								child.material = new THREE.MeshPhongMaterial( {color: 'rgba(0, 0, 0, 1)' /*'#3274ee'*/, transparent: true, opacity:0,  depthTest: false} );
 
 							}
 							if ( child.isMesh && child.name=="Cylinder") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)', transparent: true, opacity:1,  depthTest: false} );
+								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)', transparent: true, opacity:0,  depthTest: false} );
 								//child.castShadow = true;
 								//child.frustumCulled = true;
 								
 							}
 							if ( child.isMesh && child.name=="fleche") {
 								//console.log("cercleExter")
-								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)' /*'#0222B0'*/, transparent: true, opacity:1,  depthTest: false} );
+								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)' /*'#0222B0'*/, transparent: true, opacity:0,  depthTest: false} );
 								//child.castShadow = true;
 								//child.frustumCulled = true;
 
@@ -1750,7 +1763,7 @@ console.log("draggg")
 								const loader = new THREE.TextureLoader();
 								//console.log("cercleExter")
 								//child.material = new THREE.MeshLambertMaterial( {color: '#000', transparent: true, opacity:0.3,  depthTest: false} );/**/
-								child.material = new THREE.MeshBasicMaterial( {   opacity:1, transparent: true,} );
+								child.material = new THREE.MeshBasicMaterial( {   opacity:0, transparent: true,} );
 								//child.castShadow = true;
 								//console.log("youpiiiii")
 								
@@ -1761,6 +1774,7 @@ console.log("draggg")
 						
 						egoCarCircle = model.setCoords(mapConfig.MAD.origin);
 						egoCarCircle.setRotation({ x: 0, y: 0, z: 0 });
+						
 						/*egoCarCircle.setScale({ x: 1, y: 1, z: 1 }); */
 						egoCarCircle.addTooltip("Car Position Here", true);
 						api.pan = false;
@@ -1932,29 +1946,13 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 	break;
 //touche ----------[ h ]----------  pour ralentir l'ego car	
 	case 72:
-		
-			//console.log(gui.isVisible)
-			//gui.visible = false;
-		/*if (document.getElementById('boite-container').style.display = "block"){
-			document.getElementById('boite-container').style.display = "none";
-		}else if (document.getElementById('boite-container').style.display = "none"){
-			document.getElementById('boite-container').style.display = "block";
-		}*/
-			//console.log(document.getElementById('boite-container').style.visibility = "hidden")
 		let vis = gui.domElement.style.visibility;
-		//let	vis2 = document.getElementById('boite-container').style.visibility;
-			
-		//document.getElementById('boite-container').style.visibility = vis2 == "" ? "hidden" : "";	
-		//gui.domElement.style.visibility = vis == "" ? "hidden" : "";
-		//gui.domElement.style.visibility = "hidden";
 		if(	vis == "hidden" ){
-			console.log("hh1 " + vis);
 			gui.domElement.style.visibility = "visible";
 		}else if(vis == "visible" ){
-			console.log("hh2 " + vis);
 			gui.domElement.style.visibility = "hidden";
-			}
-		break;
+		}
+	break;
 //touche ----------[ j ]----------  pour ralentir l'ego car	
 	case 74:
 //document.getElementById('boite-container').style.visibility = "";
@@ -2097,29 +2095,28 @@ console.log("open window")
 };// action Reset 
 	var obj7 = { // action Reset 
 	add:function(){ 
-		// Fly to a random location
+		// Fly to the egocar location
 flyto1();
-
-}};// action Reset 
+}};
 	
 function flyto1(){ 
-		map.flyTo({
-			center: [modelCoordLat, modelCoordLon],//[9.206611, 45.452461],
-			essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-			screenSpeed: 1.2,
-			zoom: 18.3,
-			bearing: modelBearing, 
-			pitch: 0,
-			curve: 2.42,
-			easing(t) {
-				return t;
-			}	/**/
-		});
-		 map.fire('flystart');
-	}
+	map.flyTo({
+		center: [modelCoordLat, modelCoordLon],//[9.206611, 45.452461],
+		essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+		screenSpeed: 1.2,
+		zoom: 18.3,
+		bearing: modelBearing, 
+		pitch: 0,
+		curve: 2.42,
+		easing(t) {
+			return t;
+		}	/**/
+	});
+	map.fire('flystart');
+}
 	
 initGUI();
-	init();
+init();
 function initGUI() {
 
 	//gui = new GUI()
@@ -2273,7 +2270,7 @@ function dragElement(elmnt) {
 		function changeLineWidth() { ////pour changer la durée du parcours
 			console.log("changeLineWidth : " + api.tailleLine)//////////////////*********************** 
 			//const myLayer = map.getLayer('line').paint._values['line-width'].value;
-			map.setPaintProperty('lineBlue2', 'line-width', api.tailleLine+23);
+			//map.setPaintProperty('lineBlue2', 'line-width', api.tailleLine+23); //fausse ombre portée 
 			map.setPaintProperty('lineBlue1', 'line-width', api.tailleLine+2);
 			map.setPaintProperty('lineBlueAfter', 'line-width', api.tailleLine);
 			//map.getLayer('line').paint._values['line-width'].value.value = api.tailleLine;
@@ -2375,7 +2372,7 @@ pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, p
 					child.position.x =  0.05;
 					child.position.y =  -api.carAltitude * 1.02 -0.04;
 					var value = 0.5-api.carAltitude;
-					child.material = new THREE.MeshBasicMaterial( { /*map: loader.load('./images/circleShadow.png'),*/ color: '#000', opacity: value, transparent: true, depthTest: false, } );
+					child.material = new THREE.MeshBasicMaterial( { /*map: loader.load('./images/circleShadow.png'),*/ color: '#000', opacity: 0, transparent: true, depthTest: false, } );
 					//child.material = new THREE.MeshBasicMaterial( {color: '#ff0', map: loader.load('./images/circleShadow.png'),  depthTest: false, opacity:1, transparent: true} );
 
 					child.scale.x = child.scale.y = api.carAltitude*0.7 +0.3;
