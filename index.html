@@ -401,7 +401,7 @@ function makeLine(x1P, y1P, x2P, y2P) {
 	let flightPlan = {//coordonnées de la route (geojson)
 		"geometry": {
 			"coordinates": [
-		         [9.230103, 45.462399],
+		          [9.230103, 45.462399],
                 [9.228135, 45.462407],
                 [9.227947, 45.462399],
                 [9.227813, 45.462377],
@@ -410,24 +410,29 @@ function makeLine(x1P, y1P, x2P, y2P) {
                 [9.227271, 45.462177],
                 [9.225705, 45.462191],
                 [9.224315, 45.462208],
-                [9.224219, 45.462211],
-                [9.224154, 45.462177],
-                [9.224144, 45.462118],
-                [9.224164, 45.460651],
-                [9.224184, 45.459183],
-                [9.224229, 45.456296],
-                [9.224224, 45.456247],
-                [9.224203, 45.456199],
-                [9.224117, 45.456176],
-                [9.223768, 45.456199],
-                [9.223666, 45.456195],
+                [9.223741, 45.462215],
+                [9.223682, 45.462193],
+                [9.223672, 45.462117],
+                [9.223688, 45.460657],
+                [9.223693, 45.459179],
+                [9.223709, 45.458651],
+                [9.223629, 45.457948],
+                [9.223591, 45.457602],
+                [9.223613, 45.457481],
+                [9.223747, 45.456613],
+                [9.223736, 45.456473],
+                [9.223672, 45.456368],
+                [9.223554, 45.45621],
+                [9.223478, 45.456187],
+                [9.223387, 45.456184],
                 [9.222939, 45.456184],
                 [9.22211, 45.456168],
                 [9.222003, 45.45618],
                 [9.221853, 45.456236],
-                [9.221842, 45.456277],
-                [9.221842, 45.456909],
-                [9.221848, 45.45747],
+                [9.221842, 45.456289],
+                [9.221848, 45.456511],
+                [9.221842, 45.457399],
+                [9.221842, 45.457463],
                 [9.221815, 45.457523],
                 [9.22173, 45.457534],
                 [9.22067, 45.457529],
@@ -908,7 +913,6 @@ var egocarOpacity = 0;
 	let map;
 	let egoCarCircle;
 	
-	
 	var animLaunched = true; // variable du "play pause camera" boolean
 	var egoLaunched = true; // variable du "play pause car" boolean
 
@@ -938,8 +942,7 @@ var sizeWin = document.querySelector(':root');
 	var drag1 = document.getElementById("mydiv");	
 	drag1.addEventListener('pointerdown', function(e) { dragging = true; console.log("clclcl")});
 	drag1.addEventListener('pointerup', function(e) { dragging = false; console.log("frfrfr") });
-	
-		drag1.addEventListener('pointermove', function(e) {
+	drag1.addEventListener('pointermove', function(e) {
 		if (dragging) {
 			const data = {
 				/*x: e.pageX / window.innerWidth,
@@ -954,8 +957,7 @@ var sizeWin = document.querySelector(':root');
 	var drag2 = document.getElementById("mydiv2");	
 	drag2.addEventListener('pointerdown', function(e) { dragging2 = true});
 	drag2.addEventListener('pointerup', function(e) { dragging2 = false});
-	
-		drag2.addEventListener('pointermove', function(e) {
+	drag2.addEventListener('pointermove', function(e) {
 		if (dragging2) {
 			const data = {
 				x2: drag2.style.left,
@@ -967,8 +969,7 @@ var sizeWin = document.querySelector(':root');
 	var drag4 = document.getElementById("mydiv4");	
 	drag4.addEventListener('pointerdown', function(e) { dragging4 = true});
 	drag4.addEventListener('pointerup', function(e) { dragging4 = false});
-	
-		drag4.addEventListener('pointermove', function(e) {
+	drag4.addEventListener('pointermove', function(e) {
 		if (dragging4) {
 			const data = {
 				x4: drag4.style.left,
@@ -980,8 +981,7 @@ var sizeWin = document.querySelector(':root');
 	var drag5 = document.getElementById("mydiv5");	
 	drag5.addEventListener('pointerdown', function(e) { dragging5 = true});
 	drag5.addEventListener('pointerup', function(e) { dragging5 = false});
-	
-		drag5.addEventListener('pointermove', function(e) {
+	drag5.addEventListener('pointermove', function(e) {
 		if (dragging5) {
 			const data = {
 				x5: drag5.style.left,
@@ -994,8 +994,7 @@ var sizeWin = document.querySelector(':root');
 	var drag6 = document.getElementById("mydiv6");	
 	drag6.addEventListener('pointerdown', function(e) { dragging6 = true});
 	drag6.addEventListener('pointerup', function(e) { dragging6 = false});
-	
-		drag6.addEventListener('pointermove', function(e) {
+	drag6.addEventListener('pointermove', function(e) {
 		if (dragging6) {
 			const data = {
 				x6: drag6.style.left,
@@ -1015,9 +1014,6 @@ function myResizeWin_set2(valeur) { //////////////////***********************
 	};
 	hermes.send('setWinWidth2', data, true);
 }
-	
-	
-	
 	
 function myResizeWin_set(valeur) { //////////////////*********************** 
 	sizeWin.style.setProperty('--larg', valeur);
@@ -1055,7 +1051,7 @@ function myPositionWinY_set(valeur) { //////////////////***********************
 	hermes.send('setWinPosY', data, true);
 }
 	
-function myWinInvert_set(valeur) { //////////////////*********************** 
+function myWinInvert_set(valeur) {
 	sizeWin.style.setProperty('--invertWin', valeur)
 	console.log("boubouboubou " + String(valeur))
 	const data = {
@@ -1064,7 +1060,7 @@ function myWinInvert_set(valeur) { //////////////////***********************
 	hermes.send('setWinInvert', data, true);
 }
 	
-function myWinEffect_set(valeur) { //////////////////*********************** 
+function myWinEffect_set(valeur) {
 	console.log("itemmm " + String(valeur));
 	sizeWin.style.setProperty('--contour', String(valeur));	
 	const data = {
@@ -1073,7 +1069,7 @@ function myWinEffect_set(valeur) { //////////////////***********************
 	hermes.send('setWinBorderSmooth', data, true);
 }
 	
-function myWinEffectPlus_set(valeur) { //////////////////*********************** 
+function myWinEffectPlus_set(valeur) {
 	console.log("itemmm " + valeur);
 	sizeWin.style.setProperty('--contourVisible', valeur);	
 	const data = {
@@ -1082,12 +1078,10 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 	hermes.send('setWinBorderSmooth_plus', data, true);
 }
 	
-
-	
-	function myBlurWin_set(valeur) {
-		console.log("SSheihght " + valeur) //////////////////*********************** 
-		sizeWin.style.setProperty('--blurHeight', valeur + 'px')
-	}
+function myBlurWin_set(valeur) {
+	console.log("SSheihght " + valeur)
+	sizeWin.style.setProperty('--blurHeight', valeur + 'px')
+}
 	
 	
 	//var listClone =  flightPlan;
@@ -1096,7 +1090,7 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 	//const lineDistance = turf.length(pathAltClone);
 	var pathAlong = turf.along(pathAltClone, 1);
     //	console.log("longueur de liste : " + lineDistance);
-	var pathConverted = [];
+	//var pathConverted = [];
 
 	var steps = 1.00*60*60; // 5 min (x60 secondes) à 60 images par secondes
 	//var speedMove = 10;
@@ -1108,7 +1102,7 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 	function convertPath(){
 		for (var i = 0; i < pathDistClone; i += pathDistClone / steps) {
 			var segment = turf.along(pathAltClone, i);
-			pathConverted.push([segment.geometry.coordinates]);
+			//pathConverted.push([segment.geometry.coordinates]);
 			flightPlan2.geometry.coordinates.push(segment.geometry.coordinates);
 		}
 		pathAltClone2 = turf.lineString(flightPlan2.geometry.coordinates);
@@ -1119,8 +1113,7 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 	//const pathAlt = turf.lineString(flightPlan2.geometry.coordinates);
 	
 
-//	console.log("v    v    v")//////////////////*********************** 
-//	console.log(flightPlan.geometry.coordinates)//////////////////*********************** 
+
 	//const pathDistance = turf.lineDistance(pathAlt);
 	
 	
@@ -1141,9 +1134,9 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 			curve: 2.42,
 			easing(t) {
 				return t;
-			}	/**/
+			}	
 		});
-	}/**/
+	}
 	
 
 	
@@ -1151,16 +1144,8 @@ function myWinEffectPlus_set(valeur) { //////////////////***********************
 	
 	
 var onresize = function() {
-   //your code here
-   //this is just an example
    var width = document.body.clientWidth;
    var height = document.body.clientHeight;
-	//console.log("width Doc : " + width + " -- " + "height Doc : " + height)
-	//console.log(" taille ego : " + egoCarCircle)setFov
-	//console.log(" map style : "  )
-	
-	//egoCarCircle.stop();;
-	//console.log("mapConfig.MAD.origin : " + mapConfig.MAD.origin);
 	document.getElementById('winFeedback').innerHTML = "W: " + width + "px - H: " + height + "px";
 	 
 }
@@ -1209,7 +1194,7 @@ window.addEventListener("resize", onresize);
 			curve: 2.42,
 			easing(t) {
 				return t;
-			}	/**/
+			}	
 		});
 			
 	map.on('flystart', function(){
@@ -1231,23 +1216,7 @@ window.addEventListener("resize", onresize);
 		   flying = false;
 	   }
 	});
-			
-		/*	map.flyTo({
-			center: [9.230103, 45.462399, 0],
-			essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-			screenSpeed: 0.2,
-			zoom: 14.5,
-			bearing: -90, 
-			pitch: 0,
-			curve: 2.42,
-			easing(t) {
-				return t;
-			}	
-		});*/
-		//mapResize()
-		//await map.once('idle');
-			pathConverted = [];
-			convertPath();
+	convertPath();
 			
 
 			/*console.log(pathConverted[1])
@@ -1307,8 +1276,7 @@ window.addEventListener("resize", onresize);
 
 function addEgoCircle(){
 	clearInterval(addEgoCircle);
-	//egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
-	
+	//egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);	
 }
 			
 			
@@ -1333,20 +1301,20 @@ draggableDiv.addEventListener("mousedown", dragStart);
 draggableDiv.addEventListener("mouseup", dragEnd);
 draggableDiv.addEventListener("mousemove", dragIt);
 //draggableDiv.addEventListener("mouseout", dragOut);
-var egoDragCoordinates;
+var egoCoord;
 var point;
 var pointX;
 var pointY;
 function dragStart(e) {
 	egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
-	//if (clicMap) { //console.log("toto")}
+
   initialX = e.clientX - xOffset;
   initialY = e.clientY - yOffset;
   sizeWin.style.setProperty('--transiMap', 0.5 + "s" );
   isDragging = true;
   
-		    egoDragCoordinates = egoCarCircle.coordinates;
-			point = map.project(egoDragCoordinates);
+		    egoCoord = egoCarCircle.coordinates;
+			point = map.project(egoCoord);
 			//hautLigne = drag7.style.top;
 			//largeLigne = drag7.style.left;
 	
@@ -1383,8 +1351,8 @@ function dragEnd(e) {
 			//	hautLigne = 310 + "px";
 			//	largeLigne = 915 + "px";
 			//}
-			egoDragCoordinates = egoCarCircle.coordinates;
-			point = map.project(egoDragCoordinates);
+			egoCoord = egoCarCircle.coordinates;
+			point = map.project(egoCoord);
 	  		pointX = point.x;
 			pointY = point.y + 90;
 			//makeLine(largeLigne, hautLigne , pointX, pointY);
@@ -1406,8 +1374,8 @@ function dragIt(e) {
 	setTranslate(currentX, currentY, draggableOverlay);
 	//setTranslate(currentX, currentY, draggableLine);
 	  
-	  		egoDragCoordinates = egoCarCircle.coordinates;
-			point = map.project(egoDragCoordinates);
+	  		egoCoord = egoCarCircle.coordinates;
+			point = map.project(egoCoord);
 			//if (hautLigne != "" || largeLigne != ""){
 			//	hautLigne = drag7.style.top;
 			//	largeLigne = drag7.style.left;
@@ -1505,7 +1473,6 @@ console.log("draggg")
 	function mapAddEgo(){ //ajout gocar + ligne bleue et  de la source (geojson) du trajet ainsi que du chrgt de la gui
 		//ajout de la source
 		//egoPresent = true;
-		//console.log("laaaaaa " + egoPresent)
 		map.addSource('trace', {
             type: 'geojson',
 			lineMetrics: true,
@@ -1661,46 +1628,7 @@ console.log("draggg")
 				type: 'custom',
 				renderingMode: '3d',
 				onAdd: function (map, mbxContext) {
-					 // use the Mapbox GL JS map canvas for three.js
-					//this.camera = new THREE.Camera();
-					/*this.scene = new THREE.Scene();
-					// create two three.js lights to illuminate the model
-					const directionalLight = new THREE.DirectionalLight(0xff00ff);
-					directionalLight.position.set(0, -70, 100).normalize();
-					this.scene.add(directionalLight);
-
-					const directionalLight2 = new THREE.DirectionalLight(0xff0000);
-					directionalLight2.position.set(0, 70, 100).normalize();
-					this.scene.add(directionalLight2);*/
-					
-
-
-					
-					
-				//console.log("QQQQQQ")	
-				//const composer = new THREE.EffectComposer(this.renderer);	
-				/*const bloomPass = new THREE.BloomPass(
-				  1,    // strength
-				  25,   // kernel size
-				  4,    // sigma ?
-				  256,  // blur render target resolution
-			  );*/
-									//const renderScene = new RenderPass( scene, camera );
-
-				/*const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ));
-				bloomPass.threshold = 0;
-				bloomPass.strength = 3;
-				bloomPass.radius = 0; ///params.bloomRadius*/
-
-				/*composer = new EffectComposer( renderer );
-				composer.addPass( renderScene );
-				composer.addPass( bloomPass );*/
-					
-
-					/*let geometry = new THREE.CylinderGeometry( 50, 50, 0.1, 32 );
-					var material = new THREE.MeshBasicMaterial( {color: 0xff0000, opacity:0.8});
-					let cube = new THREE.Mesh(geometry, material);*/
-					var sphereAxis = new THREE.AxesHelper(0.5);
+					//var sphereAxis = new THREE.AxesHelper(0.5);
 					
 					let options = {
 						obj: './models/vehicles/egoCarCircleShadow2.gltf', //'./models/vehicles/egoCarCircle.fbx',
@@ -1708,7 +1636,7 @@ console.log("draggg")
 						scale: mapConfig.MAD.scale,
 						rotation: { x: 90, y: 0, z: 0 },
 						anchor: 'center',
-						bbox: true
+						bbox: false
 					}
 
 					renderer = new THREE.WebGLRenderer({
@@ -1717,96 +1645,50 @@ console.log("draggg")
 					  antialias: true,
 					});
 					renderer.autoClear = true;
-					//this.renderer.setSize( window.innerWidth, window.innerHeight );
-					//this.renderer.setPixelRatio( window.devicePixelRatio );
 					renderer.toneMapping = THREE.ReinhardToneMapping;
 			
-					
-					
-					
-					
+
 			scene = new THREE.Scene();		
 			camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );		
 			camera.position.set( 0, 0, 0 );	
 			scene.add( camera );
-			const helper = new THREE.CameraHelper( camera );
-			scene.add( helper );
-					
-			/*		const renderScene = new RenderPass( scene, camera );
-					
-			const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );//
-			bloomPass.threshold = params.bloomThreshold;
-			bloomPass.strength = params.bloomStrength;
-			bloomPass.radius = params.bloomRadius;
-			bloomPass.renderToScreen = true
-			
-			composer = new EffectComposer( renderer );
-					composer.addPass( renderScene );
-			composer.addPass( bloomPass );
-					
-			console.log("bloomPass.threshold :  " +  bloomPass.threshold)*/		
-					//document.body.appendChild(renderer.domElement);
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
+			//const helper = new THREE.CameraHelper( camera );
+			//scene.add( helper );
 					
 
-
-					if (api.fixedZoom) options.fixedZoom = 19.8;
-					if (egoExist){
+				//if (api.fixedZoom) options.fixedZoom = 19.8;
+				if (egoExist){
 					tb.loadObj(options, function (model) {
 						model.traverse( function ( child ) {
 							
-							//console.log("child.name " + child.name)
+
 							if ( child.isMesh && child.name=="Socle") {
-							 //console.log("Disc")
-							child.material = new THREE.MeshPhongMaterial( {color: 'rgba(247, 247,47, 1)' , transparent: true, opacity:egocarOpacity,  depthTest: false} );
+								child.material = new THREE.MeshPhongMaterial( {color: 'rgba(247, 247,47, 1)' , transparent: true, opacity:egocarOpacity,  depthTest: false} );
 							}
 							if ( child.isMesh && child.name=="CylinderExt") {
-								//console.log("cercleExter")
 								child.material = new THREE.MeshPhongMaterial( {color: '#fff' /*'#024DD9'*/, transparent: true, opacity:egocarOpacity,  depthTest: false} );
-								
 								/*child.material = new THREE.MeshPhysicalMaterial({ color: "#00baff", emissive:"#191919", reflectivity: 1,  roughness: 0.5, metalness: 0, transmission: 0.8, ior: 2.3, opacity: 0,  thickness: 0, clearcoat: 0 });*/
 							}
 							if ( child.isMesh && child.name=="CylinderEpais") {
-								//console.log("cercleExter")
 								child.material = new THREE.MeshPhongMaterial( {color: 'rgba(0, 0, 0, 1)' /*'#3274ee'*/, transparent: true, opacity:egocarOpacity,  depthTest: false} );
-
 							}
 							if ( child.isMesh && child.name=="Cylinder") {
-								//console.log("cercleExter")
 								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)', transparent: true, opacity:egocarOpacity,  depthTest: false} );
 								//child.castShadow = true;
 								//child.frustumCulled = true;
-								
 							}
 							if ( child.isMesh && child.name=="fleche") {
-								//console.log("cercleExter")
 								child.material = new THREE.MeshBasicMaterial( {color: 'rgba(247, 247,47, 1)' /*'#0222B0'*/, transparent: true, opacity:egocarOpacity,  depthTest: false} );
 								//child.castShadow = true;
 								//child.frustumCulled = true;
-
-								
 							}
 							if ( child.isMesh && child.name=="Circle") {
 								const loader = new THREE.TextureLoader();
-								//console.log("cercleExter")
-								//child.material = new THREE.MeshLambertMaterial( {color: '#000', transparent: true, opacity:0.3,  depthTest: false} );/**/
+								//child.material = new THREE.MeshLambertMaterial( {color: '#000', transparent: true, opacity:0.3,  depthTest: false} );
 								child.material = new THREE.MeshBasicMaterial( {   opacity:egocarOpacity, transparent: true,} );
 								//child.castShadow = true;
 								//console.log("youpiiiii")
-								
-							}/**/
-							
+							}
 						})
 						//model.add(sphereAxis);
 						
@@ -1816,17 +1698,14 @@ console.log("draggg")
 						/*egoCarCircle.setScale({ x: 1, y: 1, z: 1 }); */
 						//egoCarCircle.addTooltip("Car Position Here", true);
 						api.pan = false;
-						console.log("tototo")
 						egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
 						tb.add(egoCarCircle);
 
-						console.log("mapConfig.MAD.origin : " + mapConfig.MAD.origin);
+						    /*console.log("mapConfig.MAD.origin : " + mapConfig.MAD.origin);
 							console.log("egoExist " + egoExist)
-							console.log("fly actif " + egoExist)
-							truc = fly(flightPlan2);
+							console.log("fly actif " + egoExist)*/
+							fly(flightPlan2);
 							egoExist = false;
-						
-						
 
 //						setTimeout(() => {
 //							let opt = {
@@ -1843,12 +1722,8 @@ console.log("draggg")
 				render: function (gl, matrix) {
 					if (animONOFF == true){
 						tb.update();
-						//console.log("truc")
-			
-				
 					}
 				}
-			
 			})
 		} 
 	})();
@@ -1861,9 +1736,11 @@ var deltaPitch = 0.5; // valeur du pitche de la carte, au clavier
 var deltaBearing = 2; // valeur de la rotation autour centre, au clavier
 var deltaZoom = 5; // valeur du zoom sur centre, au clavier
 var clicB = true;
+var clicC = true;
 	
 document.body.onkeypress= function(ev){
 	switch (ev.which) {
+//touche ----------[ - ]----------  pour dézoomer	
 	case 109:	
 		egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);	
 		map.easeTo({ zoom: map.getZoom() - 1, duration: 2000});
@@ -1971,16 +1848,15 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 			bearing: map.getBearing() + deltaBearing,
 			easing: easing
 			});
-			
 	break;
 
 //touche ----------[ F ]----------  pour la rotation		
 	case 70:
 		console.log("bearing - : " + (map.getBearing() - deltaBearing));
-			map.easeTo({
-			bearing: map.getBearing() - deltaBearing,
-			easing: easing
-			});
+		map.easeTo({
+		bearing: map.getBearing() - deltaBearing,
+		easing: easing
+		});
 	break;
 //touche ----------[ h ]----------  pour ralentir l'ego car	
 	case 72:
@@ -2006,9 +1882,9 @@ document.body.onkeydown = function(ev){//raccourcis clavier
     newChildWindow.moveTo(screenDetails.screens[1].left, 0)*/
 			fit();
 			//changeScreenSize()
-	  console.log("trucmuche");
+
  	break;
-    //touche ----------[ b ]---------- boundingbox
+//touche ----------[ b ]---------- boundingbox
 	case 66:
 			if (clicB){
 		api.pan = false;
@@ -2019,20 +1895,22 @@ document.body.onkeydown = function(ev){//raccourcis clavier
 		}
 			clicB != clicB;
 	break;
+//touche ----------[ c ]---------- playpause camera
+	case 67:
+playPauseCamera()
 			
-	//touche ----------[ i ]----------  pour ralentir l'ego car	
+	break;		
+			
+			
+//touche ----------[ i ]----------  pour ralentir l'ego car	
 	case 73:
 		console.log("iii "+ value6);
 		resetPage();
-
-		//isPaused = !isPaused; // flips the pause state
-		
-		//console.log(" lettre i ");
 	break;
 		
-	//touche ----------[ p ]----------  pour ralentir l'ego car	
+//touche ----------[ p ]----------  pour ralentir l'ego car	
 	case 80:
-			//egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
+		//egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
 		//console.log("isplaying : " + action);
 		//isPaused = !isPaused; // flips the pause state
 		//egoCarCircle.isPlaying = true;
@@ -2046,41 +1924,35 @@ playPauseEgoCar();
 	};
 /////////////////////////////////////Fin Keyboard/////////////////////////////////	
 	
-	function playPauseEgoCar(){
-				if (egoLaunched){
-			console.log("joue" );//////////////////*********************** 
-			egoExist = true;
-			document.getElementById('ret12-cont').value =  document.getElementById('ret11-cont').value;
-			document.getElementById('ret12-cont').innerHTML = String(document.getElementById('ret12-cont').value)
-			//animONOFF = true;
-			document.getElementById('ret9-cont').value = true;	
-			//api.pan = false
-			
-		}else{
-			console.log("arrete");//////////////////*********************** 
-			document.getElementById('ret9-cont').value = false;
-			//api.pan = false
-		}
-			egoLaunched = !egoLaunched;
+function playPauseEgoCar(){
+	if (egoLaunched){
+		egoExist = true;
+		document.getElementById('ret12-cont').value =  document.getElementById('ret11-cont').value;
+		document.getElementById('ret12-cont').innerHTML = String(document.getElementById('ret12-cont').value)
+		document.getElementById('ret9-cont').value = true;	
+		api.pan = true
+	}else{
+		document.getElementById('ret9-cont').value = false;
+		api.pan = false
 	}
-	function playPauseCamera(){
-		
-		if (animLaunched){
-			//egoCarCircle.addEventListener('ObjectChanged', onObjectChanged, false);
-			api.pan = true;
-		}else{
-			//egoCarCircle.removeEventListener('ObjectChanged', onObjectChanged, false);
-			api.pan = false;
-		}	
-		animLaunched = !animLaunched; 
-	}
+		egoLaunched = !egoLaunched;
+}
+
+function playPauseCamera(){
+	if (animLaunched){
+		api.pan = true;
+	}else{
+		api.pan = false;
+	}	
+	animLaunched = !animLaunched; 
+}
 	
 	
 	
- //ajout gocar + ligne bleue et  de la source (geojson) du trajet ainsi que du chrgt de la gui 
-    function changeScreenSize() {        
-        window.resizeTo(screen.width-300,screen.height-500, self)   
-    }
+//ajout gocar + ligne bleue et  de la source (geojson) du trajet ainsi que du chrgt de la gui 
+function changeScreenSize() {        
+	window.resizeTo(screen.width-300,screen.height-500, self)   
+}
 
 var animONOFF = true;	
 var obj1 = {  // action Play/Pause Camera
@@ -2091,6 +1963,7 @@ var obj1 = {  // action Play/Pause Camera
 };
 	
 document.getElementById('ret9-cont').value = false;
+	
 var obj2 = { // action Play/Pause Car
 	add:function(){ 
 		playPauseEgoCar();
@@ -2113,15 +1986,13 @@ var obj4 = { // action
 		document.getElementById('ret11-cont').value = document.getElementById('ret11-cont').innerHTML =0;	
 	}
 }	
-var obj5 = { // action 
+var obj5 = { // action sur le compteur de vitesses
 	add:function(){
 		//document.getElementById('ret11-cont').value = document.getElementById('ret11-cont').innerHTML =0;	
 		trucStep = !trucStep;
 		if (trucStep){
-			console.log("YYYYYYESSSSS")
 			animate(text1, getRandomIntInclusive(40, 60) , getRandomIntInclusive(40, 60), 14000);
 		}else{
-			console.log("NOOOOOOOOOOO")
 		}
 	}
 }	
@@ -2190,8 +2061,7 @@ mapOptions.close();
 	mapOptions.add(api, 'fov', 2.5, 55.0).step(0.1).onChange(changeFOV); 
 	mapOptions.add(api, 'label').onChange(labelChange);
 	mapOptions.add(api, 'Show_Hide_Overlays').onChange(SHOverlays).setValue("none").listen();
-	
-//href="index2.html" target="_blank"
+
 	const mapButOptions = gui.addFolder('buttons')
 	mapButOptions.add(obj6, 'add').name('Open 2nd Window');
 	//gui.add(obj1, 'add').name('play/pause Camera');
@@ -2201,7 +2071,7 @@ mapOptions.close();
 	mapButOptions.add(api, "play_pause_Camera").onChange(playPauseCamera);
 	mapButOptions.add(obj2, 'add').name('play/pause Car');//.onChange(onSelectedChange)
 	
-	mapButOptions.add(obj5, 'add').name('stop speed');
+	//mapButOptions.add(obj5, 'add').name('stop speed');
 	mapButOptions.add(obj3, 'add').name('reset').listen();
 
 const mapWinOptions = gui.addFolder('Map window')
@@ -2221,49 +2091,7 @@ const mapWinOptions = gui.addFolder('Map window')
 	//obj1.style.setProperty('--widget-color', "ffff00");
 	
 }
-/*
-dragElement(document.getElementById("map"));	
-	
-function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(elmnt.id)) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id).onmousedown = dragMouseDown;
-  } else {
-    // otherwise, move the DIV from anywhere inside the DIV:
-    elmnt.onmousedown = dragMouseDown;
-  }
 
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
-
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
-
-  function closeDragElement() {
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}*/
 	
 	
 	
@@ -2274,7 +2102,6 @@ function dragElement(elmnt) {
 			for (const num in  optionsTheme2){
 				if(val == optionsTheme2[num]){
 					selectedTheme = num;
-					console.log("vla le numero : " + selectedTheme)
 					map.setStyle('mapbox://styles/' + val);	
 					const data = {
 						mapTheme: val
@@ -2294,15 +2121,10 @@ function dragElement(elmnt) {
 			map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': api.terrain });
 		} //pour changer la hauteur du sol
 		function changetime() { ////pour changer la durée du parcours
-			//console.log("time : " + secondsToTime(api.time))//////////////////*********************** 
-			//console.log("gui.time " + gui.api)//////////////////*********************** 
-			//console.log(egoCarCircle.animationQueue[0].parameters.duration)//////////////////*********************** 
 			egoCarCircle.animationQueue[0].parameters.duration = api.time*100;
 		} //pour changer la durée du parcours
 		
 		function changePosPath(e) { ////pour changer la position de l'egocar sur le parcours
-			console.log("valeur : " + e)//////////////////*********************** 
-
 		} //pour changer la position de l'egocar sur le parcours
 	
 		function changeLineWidth() { ////pour changer la durée du parcours
@@ -2330,82 +2152,72 @@ function dragElement(elmnt) {
 		var modelCoordLon= 45.462399;
 	    var modelCoordLat = 9.230103;
 		var modelBearing = -90;
-		var newPathDistance;
-	let model;
+		//var newPathDistance;
 	//var alongPath;
-
+//var model;
+	
+	var lngLat;
+	
+	
+	
+	///////////////////////////////////ONOBJECTCHANGED/////////////////////////////////////////////
+	
+	
 		function onObjectChanged(e) {//// boucle permettant de bouger l'egocar et retourner les valeurs "retour1-container"
-			 model = e.detail.object; //here's the object already modified
-			let action = e.detail.action;
-			let selected = e.detail.selected;
+
+			//let selected = e.detail.selected;
 			//console.log(model)
 			//////////////////////////////////////////// ici ////////////
+			//pour retrouver l'altitude du terrain pour listClone 
+			//const alongPath = turf.along(pathAltClone, pathDistance * retour7Container.value);
+			var alongPath = turf.along(pathAltClone2, pathDistClone2 * retour7Container.value);
+
+			lngLat = {
+				lng: alongPath.geometry.coordinates[0],
+				lat: alongPath.geometry.coordinates[1]
+			};
+//console.log("lng : " + lngLat.lng)
+			//model.coordinates = [lngLat.lng, lngLat.lat];
+			const elevation = Math.floor(
+			// Do not use terrain exaggeration to get actual meter values
+				map.queryTerrainElevation(lngLat, { exaggerated: false })
+			);
+			
+			
+			let model = e.detail.object; //here's the object already modified
+			let action = e.detail.action;
+			console.log([lngLat.lng, lngLat.lat])
+			
 			
 			if (api.pan) {
 				map.setBearing(-THREE.Math.radToDeg(action.rotation.z)+180);
-				map.panTo(model.coordinates, {duration: 200});
-				
+				map.panTo([lngLat.lng, lngLat.lat], {duration: 0});
+				//map.panTo(model.coordinates, {duration: 200});
 				modelBearing = -THREE.Math.radToDeg(action.rotation.z)+180;
 				//map.panBy([model.coordinates[0], model.coordinates[1]], {duration: 10});
 			}
 			changeScale();
 			//////////////////////////////////////////// ici ////////////
 			if (document.getElementById('ret9-cont').value){
-				value1.textContent = String("coords Lon : " + model.coordinates[1]);
-				value2.textContent = String("coords Lat : " + model.coordinates[0]);
+				value1.textContent = String("coords Lon : " + lngLat.lat);
+				value2.textContent = String("coords Lat : " + lngLat.lng);
 				value6.textContent = String("car rotation " + (-THREE.Math.radToDeg(action.rotation.z)+180).toFixed(2)+"%");
-				
-				modelCoordLon = model.coordinates[1];
-				modelCoordLat = model.coordinates[0];
+				value7.textContent = String("timing " + retour7Container.value);
+				modelCoordLon = lngLat.lat;
+				modelCoordLat = lngLat.lng;
 			}
 			value3.textContent = String("map bearing " + map.getBearing());
 			value4.textContent = String("map pitch " + map.getPitch());
 			
-			value7.textContent = String("timing " + retour7Container.value);
 			
 			
-			//pour retrouver l'altitude du terrain pour listClone 
-			//const alongPath = turf.along(pathAltClone, pathDistance * retour7Container.value);
-			var alongPath = turf.along(pathAltClone2, pathDistClone2 * retour7Container.value);
-			//newPathDistance = turf.lineDistance(pathConverted); //2.1352441159688587
-			pathConverted = pathConverted.slice(1, pathConverted.length);
-			//newPathDistance = turf.lineDistance(pathConverted);
-	/*		
-pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, pathAltClone.geometry.coordinates.length);*/
-			var toto = model.coordinates;
-			var point = map.project(toto);
-			
-				
-			var pointX = point.x;
-			var pointY = point.y + 90;
 			
 
-			
-			//console.log("coor X Y egocar : " + point.x + " -- " + point.y)
-			// if (hautLigne != "" || largeLigne != ""){
-			//	hautLigne = drag7.style.top;
-			//	largeLigne = drag7.style.left;
-
-			// }else{
-			//	hautLigne = 310;
-			//	largeLigne = 915;
-			// }
-			//makeLine(largeLigne, hautLigne , pointX, pointY);
-			const lngLat = {
-				lng: alongPath.geometry.coordinates[0],
-				lat: alongPath.geometry.coordinates[1]
-			};
-			//console.log()
-
-			
-			const elevation = Math.floor(
-			// Do not use terrain exaggeration to get actual meter values
-				map.queryTerrainElevation(lngLat, { exaggerated: false })
-			);
 
 			model.position.z = api.carAltitude;
 			//console.log("lllllnnnnggg : " + alongPath.geometry.coordinates[0] + "," + alongPath.geometry.coordinates[1])
-			model.coordinates = (alongPath.geometry.coordinates[0], alongPath.geometry.coordinates[1]);
+			//model.coordinates = (alongPath.geometry.coordinates[0], alongPath.geometry.coordinates[1]);
+			//model.coordinates = [lngLat.lng, lngLat.lat];
 			//console.log("CC : " + toto)
 			
 			model.traverse( function ( child ) {
@@ -2417,7 +2229,7 @@ pathAltClone.geometry.coordinates = pathAltClone.geometry.coordinates.slice(1, p
 					child.material = new THREE.MeshBasicMaterial( { /*map: loader.load('./images/circleShadow.png'),*/ color: '#000', opacity: value, transparent: true, depthTest: false, } );
 					//child.material = new THREE.MeshBasicMaterial( {color: '#ff0', map: loader.load('./images/circleShadow.png'),  depthTest: false, opacity:1, transparent: true} );
 
-					child.scale.x = child.scale.y = api.carAltitude*0.7 +0.3;
+					child.scale.x = child.scale.y = api.carAltitude * 0.7 + 0.3;
 				}
 			});
 
@@ -2597,6 +2409,7 @@ function SHOverlays(){
 			egoExist = true;
 			animLaunched = true; // variable du "play pause camera" boolean
 			egoLaunched = true;
+			flightPlan2.geometry.coordinates = [];
 			init();
 		} //fonction Reset
 		function fly(data) {
